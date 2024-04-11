@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.bill.mapper.BillMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+
+	<select id="selectList" parameterType="billVo" resultType="billVo">
+		SELECT * FROM BILL_FILE
+		ORDER BY REG_DT ASC    
+	</select>
+	
+	<select id="selectOne" parameterType="billVo" resultType="billVo">
+		SELECT * FROM BILL_FILE
+	    WHERE BILL_FILE_ID=#{BILL_FILE_ID}
+	</select>
+
+	<!--  id 생성 -->
+	<select id="createId" parameterType="billVo" resultType="java.lang.String">
+		SELECT 
+		CONCAT(
+			'BILL'
+			,LPAD(IFNULL(MAX( SUBSTR(BILL_FILE_ID,5,2) ),-1)+1,2,'0')
+			,DATE_FORMAT(CURDATE(),'%Y%m%d')
+		)
+		FROM BILL_FILE a
+		WHERE 1=1 
+		AND <![CDATA[ REG_DT >= CURDATE() AND REG_DT < CURDATE() + INTERVAL 1 DAY ]]>
+	</select>
+
+	<!-- 사용자 등록 -->
+	<insert id="insert" parameterType="billVo">
+	    
+	    <selectKey resultType="billVo" keyProperty="BILL_PRIOR" order="BEFORE">
+		    SELECT IFNULL(MAX(BILL_PRIOR),0)+1 AS BILL_PRIOR FROM BILL_FILE
+		</selectKey>
+	    
+		INSERT INTO BILL_FILE(
+			 BILL_FILE_ID
+			,BILL_NAME
+			,BILL_PRIOR
+			,REG_DT
+		)
+		VALUES (
+			 #{BILL_FILE_ID}
+			,#{BILL_NAME}
+			,#{BILL_PRIOR}
+			,curdate()
+		)
+	</insert>
+	
+	<update id="firstNumber" parameterType="billVo">
+	    
+	    <selectKey resultType="billVo" keyProperty="BILL_PRIOR" order="BEFORE">
+		    SELECT BILL_PRIOR FROM BILL_FILE WHERE BILL_FILE_ID=#{BILL_FILE_ID}
+		</selectKey>
+	    
+	    UPDATE BILL_FILE
+			SET BILL_PRIOR     = BILL_PRIOR + 1
+			WHERE BILL_PRIOR <![CDATA[ < ]]> #{BILL_PRIOR}
+	    ;
+	    UPDATE BILL_FILE
+			SET BILL_PRIOR     = 1
+	    WHERE BILL_FILE_ID=#{BILL_FILE_ID}
+	</update>
+	
+	
+	
+	<update id="update" parameterType="billVo">
+	    UPDATE BILL_FILE
+			SET
+			 BILL_NAME      = #{BILL_NAME}
+	    WHERE BILL_FILE_ID=#{BILL_FILE_ID}
+	</update>
+	
+	
+		<!-- 사용자 삭제 -->
+	<delete id="delete" parameterType="billVo">
+		DELETE FROM BILL_FILE 
+		WHERE BILL_FILE_ID IN
+		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+	</delete>
+	
+</mapper>

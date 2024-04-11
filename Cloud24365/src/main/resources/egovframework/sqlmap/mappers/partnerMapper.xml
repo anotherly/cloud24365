@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.partner.mapper.PartnerMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+
+	<select id="selectList" parameterType="partnerVo" resultType="partnerVo">
+		SELECT A.*,B.* FROM 
+		PARTNER_INFO A
+		LEFT JOIN 
+		(SELECT FILE_ID,FILE_DIR,FILE_NAME,FILE_ORIGIN FROM FILE_INFO) B
+		ON A.PARTNER_ID=B.FILE_ORIGIN
+		ORDER BY A.REG_DT DESC, A.PARTNER_ID DESC    
+	</select>
+	
+	<select id="selectOne" parameterType="partnerVo" resultType="partnerVo">
+		SELECT A.*,B.* FROM 
+		PARTNER_INFO A
+		LEFT JOIN 
+		(SELECT FILE_ID,FILE_DIR,FILE_NAME,FILE_ORIGIN FROM FILE_INFO) B
+		ON A.PARTNER_ID=B.FILE_ORIGIN
+	    WHERE A.PARTNER_ID=#{PARTNER_ID}
+	</select>
+
+	<!--  id 생성 -->
+	<select id="createId" parameterType="partnerVo" resultType="java.lang.String">
+		SELECT 
+		CONCAT(
+			'PTN'
+			,LPAD(IFNULL(MAX( SUBSTR(PARTNER_ID,4,2) ),-1)+1,2,'0')
+			,DATE_FORMAT(CURDATE(),'%Y%m%d')
+		) 
+		FROM PARTNER_INFO a
+		WHERE 1=1 
+		AND <![CDATA[ REG_DT >= CURDATE() AND REG_DT < CURDATE() + INTERVAL 1 DAY ]]>
+	</select>
+
+	<!-- 사용자 등록 -->
+	<insert id="insert" parameterType="partnerVo">
+		INSERT INTO PARTNER_INFO(
+			 PARTNER_ID
+			,PARTNER_NAME
+			,PARTNER_URL
+			,CONTENTS
+		)
+		VALUES (
+			 #{PARTNER_ID}
+			,#{PARTNER_NAME}
+			,#{PARTNER_URL}
+			,#{CONTENTS}
+		)
+	</insert>
+	
+	<update id="update" parameterType="partnerVo">
+	    UPDATE PARTNER_INFO
+			SET
+			 PARTNER_NAME	= #{PARTNER_NAME}
+			,PARTNER_URL	= #{PARTNER_URL}
+			,CONTENTS		= #{CONTENTS}
+	    WHERE PARTNER_ID=#{PARTNER_ID}
+	</update>
+	
+	
+		<!-- 사용자 삭제 -->
+	<delete id="delete" parameterType="partnerVo">
+		DELETE FROM PARTNER_INFO 
+		WHERE PARTNER_ID = #{PARTNER_ID}
+	</delete>
+	
+</mapper>

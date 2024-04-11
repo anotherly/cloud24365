@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.company.mapper.CompanyMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+
+<select id="serviceCnt"  parameterType="companyVo" resultType="companyVo">
+    	SELECT
+    	<![CDATA[ 
+    		 (SELECT COUNT(COMPANY_ID) FROM company_info) AS SVC_ALL
+			,(SELECT COUNT(COMPANY_ID) FROM company_info WHERE CONTRACT_EDT >= CURDATE()) AS SVC_NOW
+			,(SELECT COUNT(COMPANY_ID) FROM company_info WHERE CONTRACT_EDT < CURDATE()) AS SVC_END
+		]]>
+		FROM DUAL
+</select>    
+
+<select id="selectCompanyList" parameterType="companyVo" resultType="companyVo">
+		SELECT 
+			 COMPANY_ID,BR_NUMBER,COMPANY_NAME
+			 ,RP_NAME,BR_ADDRESS,BILLER_PHONE,BILLER_EMAIL,RP_PHONE
+			,MANAGER_ID,MANAGER_NAME,MANAGER_EMAIL,MANAGER_DEPT
+			,MANAGER_RANK,MANAGER_PHONE,COMPANY_ADDRESS
+			,MSP_NHN,MSP_NAVER,MSP_KT,MSP_AWS,MSP_RESALE
+			,IAAS_NHN,IAAS_KT,IAAS_NAVER,IAAS_AWS
+			,SDR_NHN,SDR_NAVER,SDR_KT
+			,MSPB_LITE,MSPB_STANDARD,MSPB_PREMIUM
+			,CONTRACT_STDT,CONTRACT_EDT
+			,BILL_DT,BILL_RFDT,TAX_DT
+			,RES_SALES,RES_MANAGER,CONTRACT
+			,EVIDENCE,COM_DIV,ENROLL_ID,ENROLL_NAME
+			,CASE 
+				WHEN CONTRACT_EDT >= CURDATE() THEN '서비스중'
+				ELSE '서비스종료' END AS SVC_YN
+			<![CDATA[ 
+			,(SELECT COUNT(COMPANY_ID) FROM company_info)AS SVC_ALL
+			,(SELECT COUNT(COMPANY_ID) FROM company_info WHERE CONTRACT_EDT >= CURDATE())AS SVC_NOW
+			,(SELECT COUNT(COMPANY_ID) FROM company_info WHERE CONTRACT_EDT < CURDATE())AS SVC_END
+			 ]]>
+		FROM
+			COMPANY_INFO
+			WHERE 1=1
+			<if test="COMPANY_ID !=null and COMPANY_ID neq ''">
+				and COMPANY_ID=#{COMPANY_ID}
+			</if>
+			<!-- 서비스 상태 여부 -->
+			<if test="searchRadio1 !=null and searchRadio1 neq ''">
+		        <choose>
+					<when test="searchRadio1 eq 'svcNow'">
+					    AND <![CDATA[ CONTRACT_EDT >= CURDATE() ]]>
+					</when>
+					<otherwise>
+					    AND <![CDATA[ CONTRACT_EDT < CURDATE() ]]>
+					</otherwise>
+		        </choose>
+			</if>
+			<!-- 계약일(검색기간) -->	
+			<choose>
+			    <when test="searchRadio2 !=null and searchRadio2 neq ''">
+					AND <![CDATA[ contract_stdt >= CURDATE() - INTERVAL #{searchRadio2} MONTH ]]>
+			    </when>
+			    <otherwise>
+			        <if test="sDate !=null and sDate neq '' and eDate !=null and eDate neq '' ">
+					    AND <![CDATA[ CONTRACT_STDT >= #{sDate}  AND CONTRACT_STDT <= #{eDate} ]]>
+					</if>
+			    </otherwise>
+			</choose>
+			<!-- 검색어 -->
+			<if test="searchValue !=null and searchValue neq ''"> 
+				<choose>
+				    <when test="searchType eq 'companyId'">
+						AND COMPANY_ID LIKE CONCAT('%',#{searchValue},'%')	        
+				    </when>
+				    <when test="searchType eq 'companyName'">
+				        AND COMPANY_NAME LIKE CONCAT('%',#{searchValue},'%')	
+				    </when>
+				    <when test="searchType eq 'managerId'">
+				        AND MANAGER_ID LIKE CONCAT('%',#{searchValue},'%')	
+				    </when>
+				    <otherwise>
+				        AND RP_NAME LIKE CONCAT('%',#{searchValue},'%')	
+				    </otherwise>
+				</choose>
+			</if>
+			ORDER BY CONTRACT_STDT DESC
+	</select>
+	
+
+<select id="selectCompany" parameterType="companyVo" resultType="companyVo">
+		SELECT 
+			 COMPANY_ID,BR_NUMBER,COMPANY_NAME
+			 ,RP_NAME,BR_ADDRESS,BILLER_PHONE,BILLER_EMAIL,RP_PHONE
+			,MANAGER_ID,MANAGER_NAME,MANAGER_EMAIL,MANAGER_DEPT
+			,MANAGER_RANK,MANAGER_PHONE,COMPANY_ADDRESS
+			,MSP_NHN,MSP_NAVER,MSP_KT,MSP_AWS,MSP_RESALE
+			,IAAS_NHN,IAAS_KT,IAAS_NAVER,IAAS_AWS
+			,SDR_NHN,SDR_NAVER,SDR_KT
+			,MSPB_LITE,MSPB_STANDARD,MSPB_PREMIUM
+			,CONTRACT_STDT,CONTRACT_EDT
+			,BILL_DT,BILL_RFDT,TAX_DT
+			,RES_SALES,RES_MANAGER,CONTRACT
+			,EVIDENCE,COM_DIV,ENROLL_ID,ENROLL_NAME
+			,CASE 
+				WHEN CONTRACT_EDT >= CURDATE() THEN '서비스중'
+				ELSE '서비스종료' END AS SVC_YN
+			<![CDATA[ 
+			,(SELECT COUNT(COMPANY_ID) FROM company_info)AS SVC_ALL
+			,(SELECT COUNT(COMPANY_ID) FROM company_info WHERE CONTRACT_EDT >= CURDATE())AS SVC_NOW
+			,(SELECT COUNT(COMPANY_ID) FROM company_info WHERE CONTRACT_EDT < CURDATE())AS SVC_END
+			 ]]>
+		FROM
+			COMPANY_INFO
+			WHERE 1=1
+			<if test="COMPANY_ID !=null and COMPANY_ID neq ''">
+				and COMPANY_ID=#{COMPANY_ID}
+			</if>
+			<if test="searchValue !=null and searchValue neq ''"> 
+				<choose>
+				    <when test="searchType eq 'COMPANY_ID'">
+						AND A.COMPANY_ID LIKE '%'||#{searchValue}||'%'	        
+				    </when>
+				    <otherwise>
+				        AND A.COMPANY_NAME LIKE '%'||#{searchValue}||'%'	
+				    </otherwise>
+				</choose>
+			</if>	
+			ORDER BY CONTRACT_STDT DESC
+	</select>
+	
+	<select id="creComId" resultType="java.lang.String">
+		SELECT LPAD(A.COMPANY_ID+1,4,'0') FROM
+		(
+			SELECT COMPANY_ID FROM COMPANY_INFO 
+			ORDER BY COMPANY_ID DESC LIMIT 1
+		)A
+		
+	</select>
+
+	
+	<!-- 사용자 등록 -->
+	<insert id="insertCompany" parameterType="companyVo">
+		INSERT INTO COMPANY_INFO(
+			 COMPANY_ID
+			,COMPANY_NAME
+	    	<if test="BR_NUMBER !=null and BR_NUMBER neq ''">
+	    	 	,BR_NUMBER
+	    	</if>
+			<if test="RP_NAME !=null and RP_NAME neq ''">
+				,RP_NAME
+			</if>
+			<if test="BR_ADDRESS !=null and BR_ADDRESS neq ''">
+				,BR_ADDRESS
+			</if>
+			<if test="BILLER_PHONE !=null and BILLER_PHONE neq ''">
+				,BILLER_PHONE
+			</if>
+			<if test="BILLER_EMAIL !=null and BILLER_EMAIL neq ''">
+				,BILLER_EMAIL
+			</if>
+			<if test="RP_PHONE !=null and RP_PHONE neq ''">
+				,RP_PHONE
+			</if>
+			<if test="MANAGER_ID !=null and MANAGER_ID neq ''">
+				,MANAGER_ID
+			</if>
+			<if test="MANAGER_NAME !=null and MANAGER_NAME neq ''">
+				,MANAGER_NAME
+			</if>
+			<if test="MANAGER_EMAIL !=null and MANAGER_EMAIL neq ''">
+				,MANAGER_EMAIL
+			</if>
+			<if test="MANAGER_DEPT !=null and MANAGER_DEPT neq ''">
+				,MANAGER_DEPT
+			</if>
+			<if test="MANAGER_RANK !=null and MANAGER_RANK neq ''">
+				,MANAGER_RANK
+			</if>
+			<if test="MANAGER_PHONE !=null and MANAGER_PHONE neq ''">
+				,MANAGER_PHONE
+			</if>
+			<if test="COMPANY_ADDRESS !=null and COMPANY_ADDRESS neq ''">			
+				,COMPANY_ADDRESS
+			</if>
+			
+			<if test="MSP_NHN !=null and MSP_NHN neq ''"> 
+				,MSP_NHN
+			</if>
+			<if test="MSP_NAVER !=null and MSP_NAVER neq ''"> 
+				,MSP_NAVER
+			</if>
+			<if test="MSP_KT !=null and MSP_KT neq ''"> 
+				,MSP_KT
+			</if>
+			<if test="MSP_AWS !=null and MSP_AWS neq ''"> 
+				,MSP_AWS
+			</if>
+			<if test="MSP_RESALE !=null and MSP_RESALE neq ''"> 
+				,MSP_RESALE
+			</if>
+			<if test="IAAS_NHN !=null and IAAS_NHN neq ''"> 
+				,IAAS_NHN
+			</if>
+			<if test="IAAS_NAVER !=null and IAAS_NAVER neq ''"> 
+				,IAAS_NAVER
+			</if>
+			<if test="IAAS_KT !=null and IAAS_KT neq ''"> 
+				,IAAS_KT
+			</if>
+			<if test="IAAS_AWS !=null and IAAS_AWS neq ''"> 
+				,IAAS_AWS
+			</if>
+			<if test="SDR_NHN !=null and SDR_NHN neq ''"> 
+				,SDR_NHN
+			</if>
+			<if test="SDR_NAVER !=null and SDR_NAVER neq ''"> 
+				,SDR_NAVER
+			</if>
+			<if test="SDR_KT !=null and SDR_KT neq ''"> 
+				,SDR_KT
+			</if>
+			<if test="MSPB_LITE !=null and MSPB_LITE neq ''"> 
+				,MSPB_LITE
+			</if>
+			<if test="MSPB_STANDARD !=null and MSPB_STANDARD neq ''"> 
+				,MSPB_STANDARD
+			</if>
+			<if test="MSPB_PREMIUM !=null and MSPB_PREMIUM neq ''"> 
+				,MSPB_PREMIUM
+			</if>
+			,CONTRACT_STDT
+			,CONTRACT_EDT
+			,BILL_DT
+			,BILL_RFDT
+			,TAX_DT
+			
+			,RES_SALES
+			,RES_MANAGER
+			,CONTRACT
+			,EVIDENCE
+			,COM_DIV
+			,ENROLL_ID
+			,ENROLL_NAME
+		)
+		VALUES (
+			 #{COMPANY_ID}
+			,#{COMPANY_NAME}
+	    	<if test="BR_NUMBER !=null and BR_NUMBER neq ''">
+	    	 	,#{BR_NUMBER}
+	    	</if>
+			<if test="RP_NAME !=null and RP_NAME neq ''">
+				,#{RP_NAME}
+			</if>
+			<if test="BR_ADDRESS !=null and BR_ADDRESS neq ''">
+				,#{BR_ADDRESS}
+			</if>
+			<if test="BILLER_PHONE !=null and BILLER_PHONE neq ''">
+				,#{BILLER_PHONE}
+			</if>
+			<if test="BILLER_EMAIL !=null and BILLER_EMAIL neq ''">
+				,#{BILLER_EMAIL}
+			</if>
+			<if test="RP_PHONE !=null and RP_PHONE neq ''">
+				,#{RP_PHONE}
+			</if>
+			<if test="MANAGER_ID !=null and MANAGER_ID neq ''">
+				,#{MANAGER_ID}
+			</if>
+			<if test="MANAGER_NAME !=null and MANAGER_NAME neq ''">
+				,#{MANAGER_NAME}
+			</if>
+			<if test="MANAGER_EMAIL !=null and MANAGER_EMAIL neq ''">
+				,#{MANAGER_EMAIL}
+			</if>
+			<if test="MANAGER_DEPT !=null and MANAGER_DEPT neq ''">
+				,#{MANAGER_DEPT}
+			</if>
+			<if test="MANAGER_RANK !=null and MANAGER_RANK neq ''">
+				,#{MANAGER_RANK}
+			</if>
+			<if test="MANAGER_PHONE !=null and MANAGER_PHONE neq ''">
+				,#{MANAGER_PHONE}
+			</if>
+			<if test="COMPANY_ADDRESS !=null and COMPANY_ADDRESS neq ''">			
+				,#{COMPANY_ADDRESS}
+			</if>
+			
+			<if test="MSP_NHN !=null and MSP_NHN neq ''"> 
+				,#{MSP_NHN}
+			</if>
+			<if test="MSP_NAVER !=null and MSP_NAVER neq ''"> 
+				,#{MSP_NAVER}
+			</if>
+			<if test="MSP_KT !=null and MSP_KT neq ''"> 
+				,#{MSP_KT}
+			</if>
+			<if test="MSP_AWS !=null and MSP_AWS neq ''"> 
+				,#{MSP_AWS}
+			</if>
+			<if test="MSP_RESALE !=null and MSP_RESALE neq ''"> 
+				,#{MSP_RESALE}
+			</if>
+			<if test="IAAS_NHN !=null and IAAS_NHN neq ''"> 
+				,#{IAAS_NHN}
+			</if>
+			<if test="IAAS_NAVER !=null and IAAS_NAVER neq ''"> 
+				,#{IAAS_NAVER}
+			</if>
+			<if test="IAAS_KT !=null and IAAS_KT neq ''"> 
+				,#{IAAS_KT}
+			</if>
+			<if test="IAAS_AWS !=null and IAAS_AWS neq ''"> 
+				,#{IAAS_AWS}
+			</if>
+			<if test="SDR_NHN !=null and SDR_NHN neq ''"> 
+				,#{SDR_NHN}
+			</if>
+			<if test="SDR_NAVER !=null and SDR_NAVER neq ''"> 
+				,#{SDR_NAVER}
+			</if>
+			<if test="SDR_KT !=null and SDR_KT neq ''"> 
+				,#{SDR_KT}
+			</if>
+			
+			<if test="MSPB_LITE !=null and MSPB_LITE neq ''"> 
+				,#{MSPB_LITE}
+			</if>
+			<if test="MSPB_STANDARD !=null and MSPB_STANDARD neq ''"> 
+				,#{MSPB_STANDARD}
+			</if>
+			<if test="MSPB_PREMIUM !=null and MSPB_PREMIUM neq ''"> 
+				,#{MSPB_PREMIUM}
+			</if>
+			
+			,#{CONTRACT_STDT}
+			,#{CONTRACT_EDT}
+			,#{BILL_DT}
+			,#{BILL_RFDT}
+			,#{TAX_DT}
+			
+			,#{RES_SALES}
+			,#{RES_MANAGER}
+			,#{CONTRACT}
+			,#{EVIDENCE}
+			,#{COM_DIV}
+			,#{ENROLL_ID}
+			,#{ENROLL_NAME}
+		)
+	</insert>
+	
+	<update id="updateCompany" parameterType="companyVo">
+	    UPDATE COMPANY_INFO
+	    SET
+			COMPANY_NAME         =#{COMPANY_NAME}
+	    	<if test="BR_NUMBER !=null and BR_NUMBER neq ''">
+	    	 	,BR_NUMBER            =#{BR_NUMBER}
+	    	</if>
+			<if test="RP_NAME !=null and RP_NAME neq ''">
+			,RP_NAME              =#{RP_NAME}
+			</if>
+			<if test="BR_ADDRESS !=null and BR_ADDRESS neq ''">
+			,BR_ADDRESS           =#{BR_ADDRESS}
+			</if>
+			<if test="BILLER_PHONE !=null and BILLER_PHONE neq ''">
+			,BILLER_PHONE         =#{BILLER_PHONE}
+			</if>
+			<if test="BILLER_EMAIL !=null and BILLER_EMAIL neq ''">
+			,BILLER_EMAIL         =#{BILLER_EMAIL}
+			</if>
+			<if test="RP_PHONE !=null and RP_PHONE neq ''">
+			,RP_PHONE             =#{RP_PHONE}
+			</if>
+			<if test="MANAGER_ID !=null and MANAGER_ID neq ''">
+			,MANAGER_ID           =#{MANAGER_ID}
+			</if>
+			<if test="MANAGER_NAME !=null and MANAGER_NAME neq ''">
+			,MANAGER_NAME         =#{MANAGER_NAME}
+			</if>
+			<if test="MANAGER_EMAIL !=null and MANAGER_EMAIL neq ''">
+			,MANAGER_EMAIL        =#{MANAGER_EMAIL}
+			</if>
+			<if test="MANAGER_DEPT !=null and MANAGER_DEPT neq ''">
+			,MANAGER_DEPT         =#{MANAGER_DEPT}
+			</if>
+			<if test="MANAGER_RANK !=null and MANAGER_RANK neq ''">
+			,MANAGER_RANK         =#{MANAGER_RANK}
+			</if>
+			<if test="MANAGER_PHONE !=null and MANAGER_PHONE neq ''">
+			,MANAGER_PHONE        =#{MANAGER_PHONE}
+			</if>
+			<if test="COMPANY_ADDRESS !=null and COMPANY_ADDRESS neq ''">			
+			,COMPANY_ADDRESS      =#{COMPANY_ADDRESS}
+			</if>
+			
+			<if test="MSP_NHN !=null and MSP_NHN neq ''"> 
+			,MSP_NHN              =#{MSP_NHN}
+			</if>
+			<if test="MSP_NAVER !=null and MSP_NAVER neq ''"> 
+			,MSP_NAVER            =#{MSP_NAVER}
+			</if>
+			<if test="MSP_KT !=null and MSP_KT neq ''"> 
+			,MSP_KT               =#{MSP_KT}
+			</if>
+			<if test="MSP_AWS !=null and MSP_AWS neq ''"> 
+			,MSP_AWS              =#{MSP_AWS}
+			</if>
+			<if test="MSP_RESALE !=null and MSP_RESALE neq ''"> 
+			,MSP_RESALE           =#{MSP_RESALE}
+			</if>
+			<if test="IAAS_NHN !=null and IAAS_NHN neq ''"> 
+			,IAAS_NHN             =#{IAAS_NHN}
+			</if>
+			<if test="IAAS_NAVER !=null and IAAS_NAVER neq ''"> 
+			,IAAS_NAVER           =#{IAAS_NAVER}
+			</if>
+			<if test="IAAS_KT !=null and IAAS_KT neq ''"> 
+			,IAAS_KT              =#{IAAS_KT}
+			</if>
+			<if test="IAAS_AWS !=null and IAAS_AWS neq ''"> 
+			,IAAS_AWS             =#{IAAS_AWS}
+			</if>
+			<if test="SDR_NHN !=null and SDR_NHN neq ''"> 
+			,SDR_NHN              =#{SDR_NHN}
+			</if>
+			<if test="SDR_NAVER !=null and SDR_NAVER neq ''"> 
+			,SDR_NAVER            =#{SDR_NAVER}
+			</if>
+			<if test="SDR_KT !=null and SDR_KT neq ''"> 
+			,SDR_KT               =#{SDR_KT}
+			</if>
+			
+			,MSPB_LITE            =#{MSPB_LITE}
+			,MSPB_STANDARD        =#{MSPB_STANDARD}
+			,MSPB_PREMIUM         =#{MSPB_PREMIUM}
+			,CONTRACT_STDT        =#{CONTRACT_STDT}
+			,CONTRACT_EDT         =#{CONTRACT_EDT}
+			,BILL_DT              =#{BILL_DT}
+			,BILL_RFDT            =#{BILL_RFDT}
+			,TAX_DT               =#{TAX_DT}
+			
+			,RES_SALES     =#{RES_SALES}
+			,RES_MANAGER   =#{RES_MANAGER}
+			,CONTRACT      =#{CONTRACT}
+			,EVIDENCE      =#{EVIDENCE}
+			,COM_DIV       =#{COM_DIV}
+			,ENROLL_ID     =#{ENROLL_ID}
+			,ENROLL_NAME   =#{ENROLL_NAME}
+	    WHERE
+	    	COMPANY_ID           =#{COMPANY_ID}
+	</update>
+	
+		<!-- 사용자 삭제 -->
+	<delete id="deleteCompany" parameterType="companyVo">
+		DELETE FROM COMPANY_INFO 
+		WHERE COMPANY_ID IN
+		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+	</delete>
+	
+	<!-- msp 구매 관련	 -->	
+	
+	<select id="selectMspList" parameterType="mspVo" resultType="mspVo">
+		SELECT
+		 COMPANY_ID
+		,CLOUD_TYPE
+		,CASE 
+			WHEN CLOUD_TYPE=0 THEN 'NAVER'
+			WHEN CLOUD_TYPE=1 THEN 'NHN'
+			WHEN CLOUD_TYPE=2 THEN 'KT'
+			WHEN CLOUD_TYPE=3 THEN 'AWS'
+			ELSE 'RESALE' 
+		END AS CLOUD_TYPE_NM
+		
+		,SERVICE_TYPE
+		,CASE
+		 	WHEN SERVICE_TYPE=0 THEN 'LITE'
+			WHEN SERVICE_TYPE=1 THEN 'STANDARD'
+			ELSE 'PREMIUM' 
+		END AS SERVICE_TYPE_NM
+		
+		,BUY_CNT
+		FROM MSP_CHARGE
+	</select>
+		
+	<insert id="subListInsert" parameterType="java.util.List">
+	    INSERT INTO MSP_CHARGE 
+	    (
+	    	 COMPANY_ID
+	    	,CLOUD_TYPE
+	    	,SERVICE_TYPE
+	    	,BUY_CNT
+	    )
+	    VALUES
+		<foreach collection="list" item="item" separator=",">
+		    (
+				 #{item.COMPANY_ID}
+				,#{item.CLOUD_TYPE}
+	        	,#{item.SERVICE_TYPE}
+				,#{item.BUY_CNT}
+		    )
+        </foreach>
+	</insert>
+	
+	<select id="selectMspOne" parameterType="mspVo" resultType="mspVo">
+		SELECT
+		 COMPANY_ID
+		,CLOUD_TYPE
+		,CASE 
+			WHEN CLOUD_TYPE=0 THEN 'NAVER'
+			WHEN CLOUD_TYPE=1 THEN 'NHN'
+			WHEN CLOUD_TYPE=2 THEN 'KT'
+			WHEN CLOUD_TYPE=3 THEN 'AWS'
+			ELSE 'RESALE' 
+		END AS CLOUD_TYPE_NM
+		
+		,SERVICE_TYPE
+		,CASE
+		 	WHEN SERVICE_TYPE=0 THEN 'LITE'
+			WHEN SERVICE_TYPE=1 THEN 'STANDARD'
+			ELSE 'PREMIUM' 
+		END AS SERVICE_TYPE_NM
+		
+		,BUY_CNT
+		FROM MSP_CHARGE
+		WHERE COMPANY_ID=#{COMPANY_ID}
+	</select>
+		
+	<insert id="subListUpdate" parameterType="java.util.List">
+	   	<!-- INSERT INTO MSP_CHARGE 
+	    (COMPANY_ID ,CLOUD_TYPE ,SERVICE_TYPE ,BUY_CNT) 
+	    VALUES 
+	    <foreach collection="list" item="item" index="index" separator=",">
+            (
+            	 #{item.COMPANY_ID}
+            	,#{item.CLOUD_TYPE}
+            	,#{item.SERVICE_TYPE}
+            	,#{item.BUY_CNT}
+            )
+        </foreach>
+	    ON DUPLICATE KEY UPDATE
+	     CLOUD_TYPE = VALUE(CLOUD_TYPE)
+	    ,SERVICE_TYPE = VALUE(SERVICE_TYPE)
+	    ,BUY_CNT = VALUE(BUY_CNT) -->
+	</insert>
+	
+	<delete id="deleteMsp" parameterType="companyVo">
+		DELETE from MSP_CHARGE 
+		WHERE COMPANY_ID=#{COMPANY_ID}
+	</delete>
+	
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.comm.file.mapper.FileMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+	<select id="selectFileList" parameterType="fileVo" resultType="fileVo">
+		SELECT * FROM FILE_INFO
+		WHERE 1=1 
+		<if test=" FILE_ID !=null and FILE_ID neq '' ">
+		    AND FILE_ID=#{FILE_ID}
+		</if>    
+		<if test=" FILE_ORIGIN !=null and FILE_ORIGIN neq '' ">
+		    AND FILE_ORIGIN=#{FILE_ORIGIN}
+		</if>    
+	</select>
+
+	<insert id="insertFile"  parameterType="fileVo">
+	    
+	    INSERT INTO FILE_INFO 
+	    (FILE_ID, FILE_NAME,FILE_DIR,FILE_ORIGIN,REG_DT) 
+	    VALUES 
+	    <foreach collection="list" item="item" index="index" separator=",">
+            (
+            	 #{item.FILE_ID}
+            	,#{item.FILE_NAME}
+            	,#{item.FILE_DIR}
+            	,#{item.FILE_ORIGIN}
+            	,NOW()
+            )
+        </foreach>
+	    ON DUPLICATE KEY UPDATE
+	    FILE_NAME = VALUE(FILE_NAME)
+	</insert>
+
+	
+	<!-- 
+		이건 오라클이 아니라 마리아디비다 ㅡㅡ
+		마리아디비에 merge into는 없음 ㅡㅡ
+		이런 젠장
+		마리아디비에서는 insert 한다음에 
+		ON DUPLICATE KEY UPDATE
+		이거 써야함..
+	 -->
+<!-- 	<update id="update" parameterType="java.util.List">
+	    MERGE INTO FILE_INFO A
+	    USING(
+	    	<foreach collection="list" item="item" open="" close="" index="index" separator="UNION">
+				SELECT 
+					 #{item.FILE_ID} AS FILE_ID
+					,#{item.FILE_NAME} AS FILE_NAME
+					,#{item.FILE_DIR} AS FILE_DIR
+					,#{item.FILE_ORIGIN} AS FILE_ORIGIN
+					,#{item.REG_DT} AS REG_DT
+				FROM DUAL
+	    	</foreach>
+	    )T1
+	    
+	    ON(
+			A.FILE_ID = T1.FILE_ID
+			AND A.FILE_ORIGIN = T1.FILE_ORIGIN
+		)
+		
+	    WHEN MATCHED THEN
+		    UPDATE FILE_INFO
+				SET
+					 A.FILE_NAME      =  T1.FILE_NAME
+					,A.FILE_DIR       =  T1.FILE_DIR
+					
+		    WHERE 	 A.FILE_ID        =  T1.FILE_ID
+		    
+		WHEN NOT MATCHED THEN
+			INSERT INTO FILE_INFO 
+		    (FILE_ID, FILE_NAME,FILE_DIR,FILE_ORIGIN,REG_DT) 
+		    VALUES 
+            (
+            	 T1.FILE_ID
+            	,T1.FILE_NAME
+            	,T1.FILE_DIR
+            	,T1.FILE_ORIGIN
+            	,NOW()
+            )
+	</update> -->
+	
+	<!--  삭제 -->
+	<delete id="delete" parameterType="fileVo">
+		DELETE FROM FILE_INFO 
+		WHERE FILE_ORIGIN=#{FILE_ORIGIN}
+	</delete>
+	
+	<!--다중 삭제 -->
+	<delete id="deleteAll" parameterType="fileVo">
+		DELETE FROM FILE_INFO 
+		WHERE FILE_ORIGIN IN
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.FILE_ORIGIN}
+        </foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,1690 @@
+@charset "utf-8";
+/* Ver 1.01 (2023.07.10) ****************/
+/* 1. 폰트설정 font style */
+/* 2. nexwiz Component Style */
+/* 3. 추가스타일 Add Component Style ( webix, nexwiz 기본클래스 적용 앞에 선언 .webix_layout_form ) */
+/* 4. webix 스타일 redesign component style */
+/* 5. 프로젝트별 신규 스타일 정의 */
+
+/* 1. 폰트설정 font style Start ************************************************/
+body,
+th,
+td,
+input,
+select,
+textarea,
+button,
+div {
+  font-family: '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+}
+
+.webix_view,
+.webix_control input,
+.webix_control button,
+.webix_control textarea,
+.webix_el_label,
+.webix_inp_label,
+.webix_inp_top_label,
+.webix_inp_bottom_label {
+  font-family: '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+}
+
+.webix_inp_label,
+.webix_inp_top_label,
+legend.webix_forminput_label,
+.webix_el_label .webix_el_box {
+  font-family: '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+}
+
+.webix_ss_header,
+.webix_hcolumn,
+.webix_ss_vscroll_header,
+.webix_dd_drag_column,
+.webix_hs_left,
+.webix_hs_center,
+.webix_hs_right {
+  font-family: '맑은 고딕', 'Malgun Gothic', '돋움', dotum, sans-serif;
+}
+
+/* 1. 폰트설정 font style End **************************************************/
+
+/* 2. nexwiz Component Style Start ************************************************/
+/* chart(차트) nexwiz_chart */
+.neo_chart,
+.nexwiz_chart {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  background-color: transparent;
+}
+
+/* 에디터 */
+.nexwiz_editor {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  background-color: transparent;
+}
+.nexwiz_editor .tox-tinymce {
+  border: 1px solid #DADEE0;
+  border-radius: 2px;
+}
+.nexwiz_editor .tox-tinymce iframe {
+  border: none;
+}
+
+/* rows */
+.nexwiz_nrows {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  background-color: transparent;
+}
+.nexwiz_nrows .webix_el_radio .webix_el_box {position: relative;}
+
+/* form */
+.nexwiz_nform {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: 0;
+  background-color: transparent;
+}
+.nexwiz_nform .webix_el_radio .webix_el_box {position: relative;}
+
+/* group(그룹) nexwiz_group */
+.neo_group,
+.nexwiz_group {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: transparent;
+}
+
+/* img(이미지) nexwiz_image - 명칭 및 위치 수정필요 */
+.neowix_neoimage,
+.nexwiz_image {
+  margin: 0;
+  padding: 0;
+}
+
+/* 알림, 확인 메시지 Start *******************/
+.webix_modal_box {
+  min-width: 360px;
+  width: 360px;
+  box-shadow: 0 0 10px 10px rgba(36, 60, 82, 0.13) !important;
+  border-radius: 15px;
+  border: 0;
+}
+
+.webix_alert .webix_popup_title,
+.webix_confirm .webix_popup_title {
+  box-shadow: none;
+  background-color: #121e3b;
+  color: #ffffff;
+  font-size: 18px;
+  padding: 12px 16px;
+}
+
+.webix_popup_title+div.webix_popup_text {
+  padding: 30px 20px;
+  font-size: 14px;
+  line-height: 24px !important;
+  font-weight: 400;
+  color: #999999;
+  letter-spacing: -0.3px;
+  box-shadow: none;
+}
+
+.webix_modal_box .webix_popup_controls {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  padding: 13px;
+  background: #f4f4f6;
+}
+
+.webix_modal_box .webix_popup_button {
+  margin-top: 0px;
+}
+
+.webix_popup_button {
+  border-radius: 40px;
+  box-shadow: none;
+  font-size: 16px;
+  font-weight: 500;
+  color: #1e1e1e;
+  background: #fff;
+  border: 1px solid #e9e9ea;
+  height: 44px;
+  line-height: 44px;
+}
+
+.webix_popup_button:hover {
+  background: #1b65d4;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.webix_popup_button.confirm {
+  color: #FFFFFF;
+  background: #1b65d4;
+  border: 1px solid #1b65d4;
+}
+
+.webix_popup_button.confirm:hover {
+  color: #FFFFFF;
+  background: #1154ba;
+  border: 1px solid #1154ba;
+}
+
+/* 알림, 확인 메시지 End *********************/
+
+/* 2. nexwiz Component Style End **************************************************/
+
+/* 3. 추가스타일 Add Component Style Start ************************************************/
+/* 그룹 영역 박스 */
+.webix_view.group_round {
+  border-radius: 5px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* 화면 타이틀 ttl_page */
+.webix_el_label.ttl_page .webix_el_box {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* 항목 라벨 ttl_box */
+.webix_el_label.ttl_box .webix_el_box {
+  font-weight: 700;
+  padding-left: 10px;
+}
+
+.webix_el_label.ttl_box::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translate(0px, -50%);
+  left: 0;
+  width: 4px;
+  height: 15px;
+  background: #ff6438;
+  border-radius: 3px;
+}
+
+/* 서브타이틀 ttl_sub_content */
+.webix_el_label.ttl_sub_content .webix_el_box {
+  font-size: 18px;
+  font-weight: 700;
+  padding-left: 20px;
+}
+
+.webix_el_label.ttl_sub_content::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translate(0px, -50%);
+  left: 0;
+  width: 12px;
+  height: 12px;
+  background: #ffffff;
+  border: 3px solid #ff3333;
+  border-radius: 3px;
+  box-sizing: border-box;
+}
+
+/* 설명글 template */
+.webix_view.label_info {
+  border: 0;
+  background-color: transparent;
+}
+
+.webix_view.label_info .webix_template {
+  font-size: 12px;
+  font-weight: 300;
+  color: #7e57c2;
+  padding: 0;
+}
+
+.webix_view.label_info .webix_el_box {
+  font-size: 12px;
+  font-weight: 300;
+  color: #7e57c2;
+  padding: 0;
+  line-height: 16px !important;
+}
+
+/* 외각라인 제거(그리드 등) no_border */
+.webix_layout_form .no_border {
+  border-color: #fff;
+}
+
+/* 3. 추가스타일 Add Component Style End **************************************************/
+
+/* 4. webix 스타일 redesign component style Start ************************************************/
+/* 이미지 */
+.webix_view.webix_el_image {
+  border: 0;
+  background-color: transparent;
+}
+
+.webix_view.webix_el_image .webix_template {
+  padding: 0;
+}
+
+/* webix 스타일 기본값 */
+.webix_el_box {
+  padding: 0;
+}
+
+/* 폼 라인 컬러 */
+.webix_el_text input,
+.webix_el_search input,
+.webix_el_combo input,
+.webix_el_datepicker input,
+.webix_el_colorpicker input,
+div.webix_inp_static,
+.webix_el_textarea textarea {
+  border-color: #dadee0;
+}
+
+/* 버튼 수정 */
+.webix_secondary .webix_button {
+  font-weight: 500;
+  font-size: 14px;
+  background: #f8f8f8;
+  color: #475466;
+  border: 1px solid #dadee0;
+  box-shadow: inset 0px -2px 0px 0px rgba(0, 0, 0, 0.05);
+}
+
+.webix_secondary .webix_button:hover,
+.webix_secondary .webix_button:focus,
+.webix_secondary .webix_button:active {
+  background: #ffffff;
+  color: #5c6066;
+  border: 1px solid #5c6066;
+  box-shadow: none;
+}
+
+.webix_secondary .webix_button .webix_icon,
+.webix_secondary .webix_button .webix_img_btn_text,
+.webix_secondary .webix_button .webix_icon_btn {
+  color: #ffffff;
+}
+
+.webix_secondary .webix_pressed .webix_button {
+  color: #5c6066;
+  background-color: #ffffff;
+}
+
+/* 인풋 기본 */
+.webix_el_text .webix_el_box,
+.webix_el_textarea .webix_el_box,
+.webix_el_search .webix_el_box,
+.webix_el_colorpicker .webix_el_box,
+.webix_el_combo .webix_el_box,
+.webix_el_selectbox .webix_el_box {
+  padding: 0;
+}
+
+/* 인풋 input, 텍스트에리어 textarea */
+.webix_el_search input:focus,
+.webix_el_text input:focus,
+.webix_el_combo input:focus,
+.webix_el_colorpicker input:focus,
+.webix_el_datepicker input:focus,
+.webix_el_textarea textarea:focus {
+  border: 1px solid #5c6066;
+}
+
+/* 그룹버튼 */
+.webix_segment_0,
+.webix_segment_1,
+.webix_segment_N {
+  color: #5c6066;
+}
+
+.webix_segment_0.webix_selected,
+.webix_segment_1.webix_selected,
+.webix_segment_N.webix_selected {
+  border-color: #5c6066;
+  background-color: #5c6066;
+}
+
+.webix_selected.webix_segment_0:hover,
+.webix_selected.webix_segment_1:hover,
+.webix_selected.webix_segment_N:hover {
+  background-color: #5c6066;
+}
+
+.webix_selected.webix_segment_0:focus,
+.webix_selected.webix_segment_1:focus,
+.webix_selected.webix_segment_N:focus {
+  background-color: #5c6066;
+}
+
+/* 스위치 */
+.webix_switch_box.webix_switch_on {
+  background-color: #5c6066;
+}
+
+/* 컬러피커 */
+.webix_el_richselect .webix_inp_static:focus,
+.webix_el_datepicker .webix_inp_static:focus,
+.webix_el_colorpicker .webix_inp_static:focus {
+  border: 1px solid #5c6066;
+}
+
+.webix_color_out_text:focus {
+  border: 1px solid #5c6066;
+}
+
+.webix_el_colorpicker .webix_input_icon {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  right: 6px !important;
+}
+
+/* 카운터 */
+.webix_inp_counter_prev,
+.webix_inp_counter_next {
+  color: #5c6066;
+}
+
+/* 이미지 */
+.webix_view.webix_el_image {
+  border: 0;
+  background-color: transparent;
+}
+
+.webix_view.webix_el_image .webix_template {
+  padding: 0;
+}
+
+/* 셀렉트 */
+.webix_el_selectbox select {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #DADEE0;
+  border-radius: 2px;
+  padding: 0px 9px;
+}
+
+.webix_el_selectbox select:focus {
+  border: 1px solid #5c6066;
+}
+
+/* 그리드 */
+.webix_dtable .webix_ss_header .webix_hcolumn div.webix_last_row,
+.webix_dtable .webix_ss_header .webix_span.webix_last_row {
+  border-bottom: 1px solid #DADEE0;
+}
+
+.webix_dtable div.webix_ss_vscroll_header {
+  border-bottom-color: #DADEE0;
+}
+
+.webix_dtable .webix_select_mark>div.webix_row_select {
+  box-shadow: inset 2px 0 #5c6066;
+}
+
+/* 리스트 */
+.webix_list_item.webix_selected {
+  box-shadow: inset 2px 0 #5c6066;
+}
+
+/* 메뉴 */
+.webix_list_item {
+  color: #475466;
+}
+
+.webix_menu-x .webix_list_item {
+  background: #5c6066;
+  color: #ffffff;
+}
+
+.webix_menu-x .webix_list_item:hover,
+.webix_menu-x .webix_list_item:active,
+.webix_menu-x .webix_list_item:focus {
+  background-color: #5c6066;
+  color: #ffffff;
+}
+
+/* 체크박스 checkbox */
+.webix_custom_checkbox {
+  width: 24px;
+  margin-top: 0;
+}
+
+.webix_custom_checkbox::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 20px;
+  width: 20px;
+  background: #F4F5F9;
+  border-radius: 3px;
+  box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.3), inset 0px 1px 3px rgba(0, 0, 0, 0.2), inset 0px 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.webix_checkbox_1 .webix_custom_checkbox::before {
+  content: "";
+}
+
+.webix_checkbox_1 .webix_custom_checkbox::after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 15%;
+  top: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid #5c6066;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg) translate(-50%, -50%);
+}
+
+.webix_el_checkbox .webix_inp_label {
+  /* display: none; */
+  padding-right: 0px;
+}
+
+.webix_el_checkbox .webix_label_right {
+  padding-top: 0px;
+}
+
+/* 레디오 radio */
+.webix_custom_radio {
+  position: relative;
+  width: 24px;
+}
+
+.webix_el_radio .webix_custom_radio::before {
+  content: "";
+  position: relative;
+  left: 0px;
+  top: 1px;
+  height: 20px;
+  width: 20px;
+  background: #F4F5F9;
+  border-radius: 50%;
+  box-shadow: 0px 1px 1px rgba(255, 255, 255, 0.3), inset 0px 1px 3px rgba(0, 0, 0, 0.2), inset 0px 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.webix_el_radio .webix_radio_1 .webix_custom_radio::before {
+  content: "";
+}
+
+.webix_el_radio .webix_radio_1 .webix_custom_radio:after {
+  content: "";
+  position: absolute;
+  display: block;
+  left: 5px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  background: #5c6066;
+  border-radius: 50%;
+}
+
+.webix_el_radio .webix_inp_label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-top: 0px;
+}
+
+.webix_el_radio .webix_el_group {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+/* 팝업 Start ***********************/
+.webix_view.webix_window {
+  box-shadow: 0 0 10px 10px rgba(36, 60, 82, 0.13) !important;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.webix_view.webix_window .webix_win_body>.webix_view {
+  background: #fff;
+}
+
+.head_none.webix_view.webix_window .webix_win_head .webix_view.webix_layout_line {
+  /* 팝업 헤더 투명 (head_none) */
+  background: transparent !important;
+}
+
+.webix_view.webix_window .webix_win_head .webix_view.webix_layout_line {
+  background: #121e3b !important;
+}
+
+.webix_view.webix_window .webix_win_head .webix_view.webix_layout_line .webix_header {
+  color: #fff;
+  font-weight: 400;
+  text-align: left;
+  overflow: visible;
+}
+
+.webix_view.webix_window .webix_win_head .webix_view.webix_layout_line .webix_header .webix_template {
+  font-size: 18px;
+  padding-left: 0;
+  margin-left: -20px;
+}
+
+.webix_view.webix_window .webix_icon_button .webix_icon {
+  color: #fff;
+}
+
+.webix_view.webix_window .webix_icon_button:hover:before {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.webix_view.webix_window .webix_win_head {
+  border-bottom: 0;
+}
+
+.webix_view.webix_window .webix_header.webix_win_title {
+  /* close 비활성 */
+  color: #fff;
+  font-weight: 400;
+  text-align: center;
+  background: #121e3b !important;
+}
+
+/* 팝업 하단 펑션 버튼영역 */
+.webix_view.webix_window .pop_fuction {
+  border-top: 1px solid #DADEE0;
+  background-color: #f5f5f7;
+}
+
+.webix_view.webix_window .pop_fuction .webix_el_button .webix_el_box {
+  padding: 0
+}
+
+.webix_view.webix_window .pop_fuction .webix_el_button .webix_button {
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.webix_view.webix_window .pop_fuction .webix_el_button.btn_pri .webix_button {
+  background-color: #ff3333;
+  border: none;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.webix_view.webix_window .pop_fuction .webix_el_button.btn_pri .webix_button:hover,
+.webix_view.webix_window .pop_fuction .webix_el_button.btn_pri .webix_button:focus,
+.webix_view.webix_window .pop_fuction .webix_el_button.btn_pri .webix_button:active {
+  background: #eb1919;
+  color: #ffffff;
+  border-radius: 4px;
+  border: none;
+}
+
+/* 팝업 펑션 */
+.webix_view.webix_window .pop_control_flex {
+  background: #f4f4f6;
+  gap: 10px;
+}
+
+.webix_view.webix_window .btn_pop .webix_button {
+  border-radius: 40px;
+  box-shadow: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #1e1e1e;
+  background: #fff;
+  border: 1px solid #e9e9ea;
+}
+
+.webix_view.webix_window .btn_pop .webix_button:hover {
+  background: #1b65d4;
+  color: #ffffff;
+  transition: all 0.2s;
+}
+
+.webix_view.webix_window .btn_pop.pri .webix_button {
+  color: #FFFFFF;
+  background: #1b65d4;
+  border: 1px solid #1b65d4;
+}
+
+.webix_view.webix_window .btn_pop.pri .webix_button:hover {
+  color: #FFFFFF;
+  background: #1154ba;
+  border: 1px solid #1154ba;
+}
+
+/* 팝업 End ***********************/
+
+/* 라벨 */
+.webix_inp_label {
+  padding-left: 0px;
+  box-sizing: border-box;
+}
+
+.webix_inp_label .webix_el_box {
+  font-weight: 800;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+
+.webix_inp_label.info::before {
+  background: #a39e9e;
+}
+
+.webix_inp_label .info {
+  font-size: 12px;
+  color: #83868a;
+  font-weight: 400;
+}
+
+/* 헥사 차트 */
+.webix_layout_form .cube {
+  background: transparent;
+  transform-style: preserve-3d;
+}
+
+.webix_layout_form .cube div.box01:before {
+  background: transparent;
+  border-color: #cce7ff;
+  border-style: solid;
+  border-width: 1px 1px 0 0;
+  bottom: 0;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+  content: '';
+  height: 100%;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.webix_layout_form .cube .hex_name {
+  color: #fff;
+  font-size: 18px;
+  font-weight: normal;
+  letter-spacing: -1px;
+  text-align: center;
+  width: 100% !important;
+}
+
+.webix_layout_form .cube .hex_value {
+  color: #fff;
+  font-size: 28px;
+  left: -33px !important;
+  text-align: center;
+  width: 100% !important;
+}
+
+.webix_layout_form .cube_or.dev .hex_name,
+.webix_layout_form .cube.dev .hex_name {
+  margin-top: 20px;
+  position: absolute;
+}
+
+.webix_layout_form .cube_or.dev .hex_value,
+.webix_layout_form .cube.dev .hex_value {
+  margin-top: 70px;
+  position: absolute;
+}
+
+.webix_layout_form .cube_or {
+  background: transparent;
+  transform-style: preserve-3d;
+}
+
+.webix_layout_form .cube_or .hex_name {
+  color: #fff;
+  font-size: 14px;
+  font-weight: normal;
+  letter-spacing: -1px;
+  padding: 19px 28px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.webix_layout_form .cube_or .hex_name {
+  color: #ffffff;
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.4);
+}
+
+.webix_layout_form .cube_or .hex_name.rolling {
+  color: #ffffff;
+  text-shadow: none;
+}
+
+.webix_layout_form .cube_or .hex_value {
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  padding: 19px 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.webix_layout_form .hex_name span {
+  word-break: break-word;
+  white-space: break-spaces;
+  font-size: 15px;
+  display: table-cell;
+  vertical-align: middle;
+  transform: skewX(-0.05deg);
+}
+
+.webix_layout_form .hex_value span {
+  font-size: 14px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 3px 13px;
+}
+
+/* section_ttl (page_404) */
+.webix_layout_form .section_ttl .webix_el_box {
+  color: #29292b;
+  font-size: 60px;
+  text-align: center;
+  text-shadow: none;
+}
+
+.webix_layout_form .section_ttl .webix_el_box::before {
+  content: '';
+  display: block;
+  width: 62px;
+  height: 2px;
+  position: absolute;
+  left: 50%;
+  margin-left: -31px;
+  bottom: 0;
+  background: #f63955;
+}
+
+/* section_txt (page_404) */
+.webix_layout_form .section_txt .webix_el_box {
+  color: #68baf1;
+  font-size: 42px;
+  line-height: 45px !important;
+  text-align: left;
+  text-shadow: none;
+  letter-spacing: -1px;
+}
+
+.webix_layout_form .section_txt .webix_el_box i {
+  color: #35566d;
+  font-size: 20px;
+  line-height: 32px !important;
+  font-style: normal;
+  text-align: center;
+  text-shadow: none;
+}
+
+.webix_layout_form .btn_error.webix_secondary .webix_button {
+  background: #fff;
+  color: #339adf;
+  font-size: 24px;
+  border-radius: 50px;
+  box-shadow: none;
+  border: 2px solid #339adf;
+}
+
+.webix_layout_form .btn_error.webix_secondary .webix_button:hover,
+.webix_layout_form .btn_error.webix_secondary .webix_button:active,
+.webix_layout_form .btn_error.webix_secondary .webix_button:focus {
+  background: #339adf;
+  color: #fff;
+  font-size: 24px;
+  border: 0px;
+  border-radius: 50px;
+  box-shadow: none;
+}
+
+/* error_page, error_code, error_txt */
+.webix_layout_form.error_page {
+  margin: 0 auto;
+}
+
+.webix_layout_form .error_code .webix_el_box {
+  color: #339adf;
+  font-size: 70px;
+  font-weight: 800;
+  text-shadow: none;
+}
+
+.webix_layout_form .error_txt .webix_el_box {
+  color: #339adf;
+  font-size: 42px;
+  text-align: left;
+  text-shadow: none;
+}
+
+.webix_layout_form .error_txt.sub .webix_el_box {
+  color: #35566d;
+  font-size: 20px;
+  line-height: 32px !important;
+  text-align: left;
+  text-shadow: none;
+}
+
+/* sidebar menu 구성 *****************/
+/* menu_ver(수직) */
+.webix_tree.webix_sidebar {
+  border: 0;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item {
+  position: relative;
+}
+
+.webix_tree.webix_sidebar .webix_scroll_cont>.webix_tree_leaves {
+  display: block;
+  padding: 0;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item {
+  height: 34px;
+  line-height: 34px;
+  padding-left: 0;
+  color: #475466;
+  cursor: pointer;
+}
+
+.webix_tree.webix_sidebar .webix_tree_branch_1>.webix_tree_item {
+  height: 40px;
+  line-height: 40px;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item.webix_sidebar_selected .webix_tree_open,
+.webix_tree.webix_sidebar .webix_tree_item.webix_sidebar_selected .webix_tree_close {
+  color: #1CA1C1;
+  font-weight: 300;
+}
+
+.webix_tree.webix_sidebar .webix_tree_leaves .webix_tree_leaves {
+  margin-left: 0px;
+}
+
+.webix_tree.webix_sidebar .webix_tree_branch_1>.webix_tree_item {
+  padding-left: 0px;
+}
+
+.webix_tree.webix_sidebar .webix_tree_branch_2>.webix_tree_item {
+  padding-left: 10px;
+}
+
+.webix_tree.webix_sidebar .webix_tree_branch_3>.webix_tree_item {
+  padding-left: 20px;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item {
+  background-color: transparent;
+  transition: all 0.3s ease-out;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item:hover {
+  background-color: #edeff5;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item.webix_selected {
+  background-color: #F4F5F9;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item.webix_selected span {
+  font-weight: 700;
+}
+
+.webix_tree.webix_sidebar .webix_tree_item.webix_selected,
+.webix_tree.webix_sidebar .webix_tree_item.webix_sidebar_selected {
+  color: #1CA1C1;
+  font-weight: 700;
+}
+
+.webix_tree.webix_sidebar .webix_tree_branch_2>.webix_tree_item::before {
+  content: '';
+  position: absolute;
+  left: 17px;
+  width: 5px;
+  height: 5px;
+  top: 15px;
+  border-radius: 3px;
+  background: #97a2c2;
+  display: none;
+}
+
+.webix_tree.webix_sidebar .webix_tree_branch_2>.webix_tree_item.webix_selected::before {
+  background: #1CA1C1;
+}
+
+/* menu_hor(수평) */
+.webix_tree.webix_sidebar.menu_hor {
+  overflow: visible !important;
+  border: 0;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1 {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1>.webix_tree_item {
+  text-align: center;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1>.webix_tree_leaves {
+  position: absolute;
+  min-width: 200px;
+  padding: 5px 0;
+  border-radius: 2px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item span {
+  width: 100%;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_selected,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_sidebar_selected,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_selected span {
+  font-weight: 400;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item .webix_tree_none,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item .webix_tree_close,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item .webix_tree_open {
+  position: absolute;
+  right: 3px;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_sidebar_selected+.webix_tree_leaves .webix_tree_item,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_selected,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_sidebar_selected {
+  box-shadow: none;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1>.webix_tree_item.webix_selected,
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1>.webix_tree_item.webix_sidebar_selected {
+  box-shadow: inset 0px -2px #1CA1C1;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item.webix_selected {
+  background-color: transparent;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_2>.webix_tree_item::before {
+  display: none;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_3>.webix_tree_item::before {
+  content: '';
+  position: absolute;
+  left: 10px;
+  width: 6px;
+  height: 2px;
+  top: 16px;
+  border-radius: 3px;
+  background: #97a2c2;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item .webix_tree_close::before {
+  margin-left: 2px;
+  content: "\F003";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_item .webix_tree_open::before {
+  margin-left: 2px;
+  content: "\F001";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1>.webix_tree_item>.webix_tree_close::before {
+  margin-left: 2px;
+  content: "\F001";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_hor .webix_tree_branch_1>.webix_tree_item>.webix_tree_open::before {
+  margin-left: 2px;
+  content: "\F004";
+  font-size: 18px;
+}
+
+/* menu_ver(수직) typeA */
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item {
+  position: relative;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_1>.webix_tree_item {
+  padding-left: 18px;
+  padding-right: 22px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_2>.webix_tree_item {
+  padding-left: 25px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_3>.webix_tree_item {
+  padding-left: 35px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_1>.webix_tree_item::before {
+  content: '';
+  position: absolute;
+  top: 11px;
+  left: 6px;
+  width: 4px;
+  height: 18px;
+  border-radius: 3px;
+  background: #97a2c2;
+  border: none;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_2>.webix_tree_item::before {
+  content: '';
+  position: absolute;
+  left: 12px;
+  width: 6px;
+  height: 2px;
+  top: 48%;
+  border-radius: 3px;
+  background: #97a2c2;
+  display: block;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_3>.webix_tree_item::before {
+  content: '';
+  position: absolute;
+  left: 24px;
+  width: 3px;
+  height: 3px;
+  top: 48%;
+  border-radius: 3px;
+  background: #97a2c2;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item .webix_tree_none,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item .webix_tree_close,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item .webix_tree_open {
+  position: absolute;
+  right: 4px;
+  line-height: 36px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item .webix_tree_close::before {
+  margin-left: 2px;
+  content: "\F003";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item .webix_tree_open::before {
+  margin-left: 2px;
+  content: "\F001";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item.webix_sidebar_selected+.webix_tree_leaves .webix_tree_item,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item.webix_selected,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_item.webix_sidebar_selected {
+  box-shadow: none;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_1>.webix_tree_item.webix_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_1>.webix_tree_item.webix_sidebar_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_2>.webix_tree_item.webix_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_2>.webix_tree_item.webix_sidebar_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeA .webix_tree_branch_3>.webix_tree_item.webix_selected::before {
+  background: #1CA1C1;
+}
+
+/* menu_hor(수평) typeA */
+.webix_tree.webix_sidebar.menu_hor.typeA .webix_tree_branch_1>.webix_tree_item {
+  padding-left: 18px;
+  padding-right: 18px;
+  margin-right: 6px;
+}
+
+.webix_tree.webix_sidebar.menu_hor.typeA .webix_tree_branch_1>.webix_tree_item::before {
+  display: none;
+}
+
+.webix_tree.webix_sidebar.menu_hor.typeA .webix_tree_item .webix_tree_close::before {
+  margin-left: 2px;
+  content: "\F003";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_hor.typeA .webix_tree_item .webix_tree_open::before {
+  margin-left: 2px;
+  content: "\F001";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_hor.typeA .webix_tree_branch_1>.webix_tree_item>.webix_tree_close::before {
+  margin-left: 2px;
+  content: "\F001";
+  font-size: 18px;
+}
+
+.webix_tree.webix_sidebar.menu_hor.typeA .webix_tree_branch_1>.webix_tree_item>.webix_tree_open::before {
+  margin-left: 2px;
+  content: "\F004";
+  font-size: 18px;
+}
+
+/* menu_ver(수직) typeB Start ******************/
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item {
+  position: relative;
+  color: #797979;
+  font-size: 18px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px;
+  letter-spacing: -0.5px;
+  border-radius: 10px;
+}
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item:hover {
+  background-color: #f2f4f7;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_leaves {
+  padding-bottom: 5px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_selected span,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_sidebar_selected span {
+  font-weight: 500;
+  color: #000000;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_selected {
+  background-color: #f2f9f8;
+  box-shadow: inset 0 0 0 1px #13dbb3 !important;
+}
+
+/* 1depth 이미지 */
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item>.menu_img{display: none;}
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item>.menu_img{
+  display: block;
+  position: absolute;
+  left: 20px;
+  width: 24px;
+  height: 24px;
+  top: calc(50% - 12px);
+  opacity: 0.55;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item.webix_selected>.menu_img,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item.webix_sidebar_selected>.menu_img {
+  opacity: 1;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item>.menu_img>img{
+  border: 0;
+  display: block;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item {
+  padding-left: 56px;
+  padding-right: 22px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_2>.webix_tree_item {
+  padding-left: 68px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_3>.webix_tree_item {
+  padding-left: 80px;
+  font-size: 17px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_2>.webix_tree_item::before {
+  content: '';
+  position: absolute;
+  left: 50px;
+  width: 7px;
+  height: 7px;
+  top: calc(50% - 4px);
+  border-radius: 4px;
+  background: #97a2c2;
+  display: block;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_3>.webix_tree_item::before {
+  content: '\f020';
+  background: none;
+  font-family: "Webix Material Icons";
+  font-size: 16px;
+  text-align: center;
+  color: transparent;
+  position: absolute;
+  left: 57px;
+  top: calc(50% - 10px);
+  display: block;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item .webix_tree_none,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item .webix_tree_close,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item .webix_tree_open {
+  position: absolute;
+  right: 10px;
+  line-height: 36px;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item .webix_tree_close::before {
+  margin-left: 2px;
+  content: "\F001";
+  font-size: 20px;
+  color: #959a95;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item .webix_tree_open::before {
+  margin-left: 2px;
+  content: "\F004";
+  font-size: 20px;
+  color: #4d534c;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_sidebar_selected+.webix_tree_leaves .webix_tree_item,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_selected,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_sidebar_selected {
+  box-shadow: none;
+}
+
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item.webix_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_1>.webix_tree_item.webix_sidebar_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_2>.webix_tree_item.webix_selected::before,
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_2>.webix_tree_item.webix_sidebar_selected::before {
+  background: #009376;
+}
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_branch_3>.webix_tree_item.webix_selected::before {
+  color: #009376;
+}
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_sidebar_selected .webix_tree_open {
+  color: #959a95;
+} 
+.webix_tree.webix_sidebar.menu_ver.typeB .webix_tree_item.webix_sidebar_selected .webix_tree_close {
+  color: #4d534c;
+}
+/* menu_ver(수직) typeB End ********************/
+
+/* 워드클라우드cssc추가 */
+.wordLabel {
+  position: absolute;
+  border: 1px solid #fff;
+  box-shadow: 0 0 4px 0 #008, inset 0 0 4px 0 #008;
+  padding: 2px;
+  pointer-events: none;
+  border-radius: 4px;
+}
+
+.wordSpan::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: calc(50% - 10px);
+  z-index: -2;
+  width: 0px;
+  height: 0px;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid rgb(56, 56, 221);
+}
+
+.wordSpan {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgb(56, 56, 221);
+  color: #fff;
+  margin-top: 15px;
+  padding: 0.5em 1em;
+  border-radius: 0.5em;
+  font-weight: bold;
+  white-space: nowrap;
+  box-sizing: border-box;
+  border: 2px solid rgb(56, 56, 221);
+  transform: scale(1.2);
+  overflow: visible;
+}
+
+/* Timer */
+.webix_el_ntimer .webix_img_btn>.webix_icon_btn {
+  background-color: transparent;
+  vertical-align: top;
+  height: 100%;
+}
+
+.webix_el_ntimer .webix_img_btn>.webix_icon_btn::before {
+  content: "";
+  background: transparent url('../../img/img_timer.png') no-repeat 0 0;
+  width: 24px;
+  height: 100%;
+  display: inline-block;
+}
+
+.webix_el_ntimer .webix_img_btn>.webix_icon_btn.play::before {
+  background: transparent url('../../img/img_timer.png') no-repeat left center;
+}
+
+.webix_el_ntimer .webix_img_btn>.webix_icon_btn.stop::before {
+  background: transparent url('../../img/img_timer.png') no-repeat right center;
+}
+
+/* timer_round */
+.timer_round.webix_el_ntimer .webix_img_btn {
+  border-radius: 60px;
+}
+
+
+
+/* timer_switch */
+.timer_switch.webix_el_ntimer .webix_img_btn {
+  display: block;
+  position: relative;
+  top: 50%;
+  margin-top: -12px;
+  height: 24px;
+  line-height: 22px !important;
+  cursor: pointer;
+  background-color: #F4F5F9;
+  border: 1px solid #DADEE0;
+  border-radius: 60px;
+  transition: background-color 0.4s ease;
+  color: #666;
+  text-align: right;
+  padding-right: 12px;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  box-shadow: none;
+}
+
+.timer_switch.webix_el_ntimer .webix_pressed .webix_img_btn {
+  background-color: #5c6066;
+  color: #fff;
+  text-align: left;
+  padding-left: 12px;
+}
+
+.timer_switch.webix_el_ntimer .webix_img_btn>.webix_icon_btn {
+  background-color: #ffffff;
+  border: 0;
+  border-radius: 60px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+  width: 22px;
+  height: 22px;
+  display: block;
+  position: absolute;
+  top: 0;
+  margin-right: 6px;
+  margin-left: 0px;
+}
+
+.timer_switch.webix_el_ntimer .webix_pressed .webix_img_btn>.webix_icon_btn {
+  top: 0;
+  right: 0;
+  margin-right: 0px;
+  margin-left: 6px;
+}
+
+.timer_switch.webix_el_ntimer .webix_img_btn>.webix_icon_btn::before {
+  display: none;
+}
+
+/* 4. webix 스타일 redesign component style End ********************************************/
+/* 5. 프로젝트별 신규 스타일 정의 Start ************************************************/
+
+/* flex_area 영역 Start ***************/
+.flex_area {
+  background-color: #eee;
+}
+
+.flex_area>div {
+  box-shadow: inset 0 0 1px #f33;
+}
+
+/* 확인용 꾸밈 */
+.webix_view.webix_flexlayout.flex_area_box {
+  background-color: #eee;
+}
+
+/* flex layout 기본 구성 */
+.webix_view.webix_flexlayout.flex_area_box {
+  position: fixed !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 2열 column(col_2) */
+.webix_view.webix_flexlayout.flex_area_box.col_2{
+  padding:20px !important;
+}
+.webix_view.webix_flexlayout.flex_area_box.col_2 > div {
+  flex-grow: 1 !important;
+  height:100% !important;
+}
+
+/* 2행 row_2 */
+/* .webix_view.webix_flexlayout.flex_area_box.row_2{
+  padding:20px !important;
+} */
+.webix_view.webix_flexlayout.flex_area_box.row_2 > .col_3{
+  flex-grow: 0 !important;
+}
+
+.webix_view.webix_flexlayout.flex_area_box.row_2 > div.col_all{
+  /* height:calc(100% - 150px) !important; */
+  /* height:100% !important; */
+  flex-basis: auto !important;
+  flex-grow: 1 !important;
+}
+
+/* 3단락(col_3) */
+.webix_view.webix_flexlayout.col_3 {
+  overflow: visible;
+}
+.webix_view.webix_flexlayout.flex_area_box.col_3 {
+  padding: 20px !important;
+}
+.webix_view.webix_flexlayout.col_3 > div {
+  flex-grow: 1 !important;
+}
+.webix_view.webix_flexlayout.flex_area_box > div.col_all {
+  flex-grow: 1 !important;
+}
+
+/* 차트 width, height 100% */
+.chartbox_all{
+  width:100% !important;
+  height:100% !important;
+  border:0;  
+}
+
+/* 모바일 대응 */
+@media (max-width: 767px) {
+  .webix_view.webix_flexlayout.flex_mobile {
+    flex-direction: column !important;
+    overflow: auto;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    flex-wrap: nowrap !important;
+    padding: 20px 0 !important;
+  }
+  .webix_view.webix_flexlayout.flex_mobile.box_inner {
+    height: initial !important;
+    padding: 0 !important;
+    overflow: visible;
+  }
+  .webix_view.webix_flexlayout.flex_mobile.box_inner > div {    
+    width: 100% !important;
+  }
+  .webix_view.webix_flexlayout.flex_mobile_col {
+    align-items: center !important;
+    justify-content: flex-start !important;
+    place-content: flex-start !important;
+    flex-wrap: wrap !important;
+    overflow: auto;
+  }
+  .webix_view.webix_flexlayout.flex_area_box.col_2 > div {
+    height: initial !important;
+  }
+  .webix_view.webix_flexlayout.flex_mobile.col_3 > div {
+    width: 100%;
+  }
+  .webix_view.webix_flexlayout.row_2.flex_mobile{
+    align-items: center !important;
+    justify-content: flex-start !important;
+  }
+  .webix_view.webix_flexlayout.row_2.flex_mobile > div {
+    min-height: 450px !important;
+    height: initial !important;
+    width: 100% !important;
+    min-width: initial !important;
+    flex-basis: initial !important;
+  }  
+}
+/* flex_area 영역 End *****************/
+
+/* 5. 프로젝트별 신규 스타일 정의 End **************************************************/
+/* 셀렉트 별도 화살표 이미지 적용 */
+.webix_el_selectbox.sel_arrow .webix_el_box::after {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  position: absolute;
+  top: 50%;
+  right: 4px;
+  background: transparent url('../../img/select_arrow.png') no-repeat center center;
+  transform: translate(0px, -50%);
+  pointer-events: none;
+}
+
+.webix_el_selectbox.sel_arrow select {
+  appearance: none;
+}
+/* 자동차 사이버보안 대응 시스템 CSMS */
+.csms_bg > .webix_scroll_cont > .webix_view.webix_abslayout{
+  background-color: #384275;}
+.csms_box_01{
+  border-radius: 30px;
+  background-color: #22284b;
+}
+.csms_box_02{
+  border-radius: 30px;
+  background-color: #1e2342;
+}
+.csms_box_01 .webix_view[role="region"]{
+  background-color: transparent;
+  border:0;
+}
+.csms_box_02 .webix_view[role="region"]{
+  background-color: transparent;
+  border:0;
+}
+
+
+/* 토글 */
+.webix_el_toggle .webix_img_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.webix_el_toggle .webix_img_btn > .webix_icon_btn::before {
+  content: "";
+  background: transparent url('../../img/img_timer.png') no-repeat 0 0;
+  width: 24px;
+  height: 100%;
+  min-height: 30px;
+  display: inline-block;
+}
+
+.webix_el_toggle .webix_img_btn > .webix_icon_btn.play::before {
+  background: transparent url('../../img/img_timer.png') no-repeat left center;
+}
+
+.webix_el_toggle .webix_img_btn > .webix_icon_btn.pause::before {
+  background: transparent url('../../img/img_timer.png') no-repeat right center;
+}
+
+/* 수직배치 rows_box */
+:root{
+  --rows-padding:10px;
+  --rows-height:40px;
+}
+.rows_box{
+  overflow:visible;
+  box-sizing: border-box;
+  background-color: #eeeeee;
+  border-radius:10px;
+}
+.rows_box > div{
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2);
+}
+.rows_box .webix_el_box {
+  margin-top: var(--rows-padding);
+  height: var(--rows-height) !important;
+}
+.rows_box .webix_inp_label {
+  line-height: var(--rows-height) !important;
+}
+.rows_box .webix_inp_static {
+  line-height: var(--rows-height) !important;
+  height: var(--rows-height) !important;
+}
+
+.rows_box2{
+  box-sizing: border-box;
+  background-color: #eeeeee;
+  border-radius:10px;
+}
+
+.rows_box2 > div{
+  background-color: transparent;
+}
+body.webix_full_screen{
+  overflow-y: auto !important;
+}
+
+/* 오류값 노출 스타일 */
+.webix_invalid .webix_inp_bottom_label {
+  position: absolute;
+}
+
+.webix_invalid.nexwiz_editor .tox-tinymce {
+  border: 1px solid #ff8d82;
+}

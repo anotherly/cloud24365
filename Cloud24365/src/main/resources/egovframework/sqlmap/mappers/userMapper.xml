@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.user.mapper.UserMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+
+	<!-- 전체 사용자 조회 -->
+	<select id="selectUserList" parameterType="userVO" resultType="userVO">
+	    SELECT C.*,D.COMPANY_NAME FROM
+	    (
+		    SELECT A.*,B.AUTH_NAME FROM
+		    (
+			SELECT 
+				 USER_ID	
+				,USER_PW	
+				,USER_NAME	
+				,USER_PHONE	
+				,USER_EMAIL	
+				,USER_DEPT	
+				,USER_RANK	
+				,USE_YN	
+				,date_format(REG_DT, '%Y-%m-%d') as REG_DT	
+				,AUTH_CODE	
+				,INTRO_YN	
+				,AUTH_PHONE	
+				,COMPANY_ID	
+			FROM
+				USER_INFO 
+				WHERE 1=1
+				<if test="USER_ID !=null and USER_ID neq ''"> 
+					AND USER_ID=#{USER_ID}
+				</if>
+				<if test="searchValue !=null and searchValue neq ''"> 
+					<choose>
+					    <when test="searchType eq 'userId'">
+							AND A.USER_ID LIKE '%'||#{searchValue}||'%'	        
+					    </when>
+					    <otherwise>
+					        AND A.USER_NAME LIKE '%'||#{searchValue}||'%'	
+					    </otherwise>
+					</choose>
+				</if>	
+				
+				<choose>
+				    <when test="searchRadio !=null and searchRadio neq ''">
+						AND <![CDATA[ REG_DT >= CURDATE() - INTERVAL #{searchRadio} MONTH ]]>
+				    </when>
+				    <otherwise>
+				        <if test="sDate !=null and sDate neq '' and eDate !=null and eDate neq '' ">
+						    AND <![CDATA[ REG_DT >= #{sDate}  AND REG_DT <= #{eDate} ]]>
+						</if>
+				    </otherwise>
+				</choose>
+				
+			)A
+			LEFT JOIN 
+			(SELECT * FROM SYS_AUTH)B
+			ON(A.AUTH_CODE=B.AUTH_CODE)
+		)C
+		LEFT JOIN
+		(SELECT * FROM COMPANY_INFO)D
+		ON(C.COMPANY_ID=D.COMPANY_ID) 	
+		ORDER BY C.REG_DT DESC
+	</select>
+
+	<!-- 특정 사용자 조회 
+	(기간검색때문에 로그인이 안될수도 있음.. 그렇다고 로직마다 별도 파라미터 처리를 하는것은 고칠부분이 많아보임)
+	-->
+	<select id="selectUser" parameterType="userVO" resultType="userVO">
+	    SELECT C.*,D.COMPANY_NAME FROM
+	    (
+		    SELECT A.*,B.AUTH_NAME FROM
+		    (
+			SELECT 
+				 USER_ID	
+				,USER_PW	
+				,USER_NAME	
+				,USER_PHONE	
+				,USER_EMAIL	
+				,USER_DEPT	
+				,USER_RANK	
+				,USE_YN	
+				,date_format(REG_DT, '%Y-%m-%d') as REG_DT	
+				,AUTH_CODE	
+				,INTRO_YN	
+				,AUTH_PHONE	
+				,COMPANY_ID	
+			FROM
+				USER_INFO 
+				WHERE 1=1
+				<if test="USER_ID !=null and USER_ID neq ''"> 
+					AND USER_ID=#{USER_ID}
+				</if>
+				<if test="searchValue !=null and searchValue neq ''"> 
+					<choose>
+					    <when test="searchType eq 'userId'">
+							AND A.USER_ID LIKE '%'||#{searchValue}||'%'	        
+					    </when>
+					    <otherwise>
+					        AND A.USER_NAME LIKE '%'||#{searchValue}||'%'	
+					    </otherwise>
+					</choose>
+				</if>	
+			)A
+			LEFT JOIN 
+			(SELECT * FROM SYS_AUTH)B
+			ON(A.AUTH_CODE=B.AUTH_CODE)
+		)C
+		LEFT JOIN
+		(SELECT * FROM COMPANY_INFO)D
+		ON(C.COMPANY_ID=D.COMPANY_ID) 	
+		ORDER BY C.REG_DT DESC
+	</select>
+	
+	<select id="selectAdmin" resultType="userVO">
+	    select * from user_info where length(AUTH_CODE)=3
+	</select>
+	
+	<select id="selectClient" resultType="userVO">
+	    select A.*,B.COMPANY_NAME 
+	    from user_info A
+	    LEFT JOIN COMPANY_INFO B
+	    ON(A.COMPANY_ID=B.COMPANY_ID)
+	    where length(AUTH_CODE)=2
+	</select>
+	
+	<!-- 사용자 등록 -->
+	<insert id="insertUser" parameterType="userVO">
+		INSERT INTO USER_INFO(
+			 USER_ID	
+			,USER_PW	
+			,USER_NAME	
+			,USER_PHONE	
+			,USER_EMAIL	
+			,USER_DEPT	
+			,USER_RANK	
+			,USE_YN		
+			,REG_DT		
+			,AUTH_CODE	
+			,INTRO_YN	
+			,AUTH_PHONE	
+			,COMPANY_ID	
+		)
+		VALUES (
+			 #{USER_ID}
+			,#{USER_PW}
+			,#{USER_NAME}
+			,#{USER_PHONE}
+			,#{USER_EMAIL}
+			,#{USER_DEPT}
+			,#{USER_RANK}
+			,'Y'
+			,NOW()
+			,#{AUTH_CODE}
+			<choose>
+			    <when test="AUTH_CODE == 99">
+					,'F'
+			    </when>
+			    <otherwise>
+			        ,'T'
+			    </otherwise>
+			</choose>
+			,'F'
+			,#{COMPANY_ID}
+		)
+	</insert>
+	
+	<!-- 사용자 정보 수정-->
+	<update id="updateUser" parameterType="userVO">
+		UPDATE USER_INFO
+		SET
+			 <if test="USER_NAME !=null and USER_NAME neq ''"> 
+				 USER_NAME    = #{USER_NAME}
+			</if>
+			<if test="USER_PW !=null and USER_PW neq ''">
+				 ,USER_PW	  =#{USER_PW},
+			</if>
+			 <if test="USER_RANK !=null and USER_RANK neq ''"> 
+				,USER_RANK   = #{USER_RANK}
+			</if>
+			 <if test="USER_DEPT !=null and USER_DEPT neq ''"> 
+				,USER_DEPT   = #{USER_DEPT}
+			</if>
+			 <if test="USER_PHONE !=null and USER_PHONE neq ''"> 
+				,USER_PHONE   = #{USER_PHONE}
+			</if>
+			 <if test="USER_EMAIL !=null and USER_EMAIL neq ''"> 
+				,USER_EMAIL   = #{USER_EMAIL}
+			</if>
+			 <if test="AUTH_CODE !=null and AUTH_CODE neq ''"> 
+				,AUTH_CODE    = #{AUTH_CODE}
+			</if>
+			 <if test="AUTH_CODE !=null and AUTH_CODE neq ''"> 
+				,AUTH_CODE    = #{AUTH_CODE}
+			</if>
+			 <if test="INTRO_YN !=null and INTRO_YN neq ''"> 
+				,INTRO_YN    = #{INTRO_YN}
+			</if>
+		WHERE USER_ID=#{USER_ID} 
+	</update>
+	
+	<!-- 사용자 삭제 -->
+	<delete id="deleteUser" parameterType="userVO">
+		DELETE FROM USER_INFO 
+		WHERE USER_ID IN
+		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+	</delete>
+	
+	<!-- client 회사 및 정보 등록 -->
+	<select id="selectActInfo" parameterType="userVO" resultType="userVO">
+		SELECT A.*, B.* 
+		FROM 
+		(
+			SELECT * FROM USER_INFO
+			WHERE 1=1
+			<if test="USER_ID !=null and USER_ID neq ''"> 
+				AND USER_ID=#{USER_ID}
+			</if>
+		)A
+		LEFT JOIN
+		COMPANY_INFO B
+		ON(A.COMPANY_ID=B.COMPANY_ID)
+		
+	</select>
+
+</mapper>

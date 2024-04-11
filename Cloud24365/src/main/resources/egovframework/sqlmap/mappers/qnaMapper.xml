@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.board.mapper.QnaMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+
+<select id="selectReqList" parameterType="qnaVo" resultType="qnaVo">
+	 SELECT J1.*,J2.* FROM
+	 (
+		 SELECT A.*,B.COMPANY_NAME FROM  
+				(SELECT 
+					 REQ_ID
+					,DATE_FORMAT(REQ_DT,'%Y-%m-%d %H:%i:%s') AS REQ_DT 
+					,COMPANY_ID
+					
+					,REQ_TYPE
+					,CASE 
+					WHEN REQ_TYPE=0 THEN '영업'
+					WHEN REQ_TYPE=1 THEN '기술'
+					WHEN REQ_TYPE=2 THEN '사용방법'
+					ELSE '장애' END AS REQ_TYPE_NM
+					
+					,INSERT_TYPE
+					,CASE 
+					WHEN INSERT_TYPE=0 THEN '문의하기'
+					ELSE '수동등록' END AS INSERT_TYPE_NM
+					
+					,REQ_QUESTION
+					
+					,REQ_IMPORTANT				
+					,CASE 
+					WHEN REQ_IMPORTANT=2 THEN '상'
+					WHEN REQ_IMPORTANT=1 THEN '중'
+					ELSE '하' END AS REQ_IMPORTANT_NM
+					
+					,REQ_DIV				
+					,CASE 
+					WHEN REQ_DIV=0 THEN '공지사항'
+					WHEN REQ_DIV=1 THEN '문의'
+					ELSE 'FAQ' END AS REQ_DIV_NM
+					
+					,REQ_STATUS
+					,CASE 
+					WHEN REQ_STATUS=0 THEN '미접수'
+					WHEN REQ_STATUS=1 THEN '확인중'
+					ELSE '답변완료' END AS REQ_STATUS_NM
+					
+					,ANS_USER
+					
+					,REQ_TITLE 
+					FROM req_info
+					WHERE 1=1
+					<!-- 문의 id 존재시 -->
+					<if test="REQ_ID !=null and REQ_ID neq ''">
+						AND REQ_ID=#{REQ_ID}
+					</if>
+					<!-- 내문의조회 -->
+					<if test="COMPANY_ID !=null and COMPANY_ID neq ''">
+						AND COMPANY_ID=#{COMPANY_ID}
+					</if>
+					<!-- 접수 상태 여부 -->
+					<if test="listArr != null and listArr.size != 0">
+					    AND REQ_STATUS IN
+						<foreach collection="listArr" item="item" index="index" separator="," open="(" close=")">
+				            ${item}
+				        </foreach>
+					</if>
+					<!-- 계약일(검색기간) -->	
+					<choose>
+					    <when test="searchRadio !=null and searchRadio neq ''">
+							AND <![CDATA[ REQ_DT >= CURDATE() - INTERVAL #{searchRadio} MONTH ]]>
+					    </when>
+					    <otherwise>
+					         <if test="sDate !=null and sDate neq '' and eDate !=null and eDate neq '' ">
+							    AND <![CDATA[ REQ_DT >= #{sDate}  AND REQ_DT <= #{eDate} ]]>
+							</if>
+					    </otherwise>
+					</choose>
+					
+					<!-- 검색어 -->
+					<if test="searchValue !=null and searchValue neq ''"> 
+						<choose>
+						    <when test="searchType eq 'reqId'">
+								AND REQ_ID LIKE CONCAT('%',#{searchValue},'%')	        
+						    </when>
+						    <when test="searchType eq 'reqType'">
+						        AND REQ_TYPE LIKE CONCAT('%',#{searchValue},'%')	
+						    </when>
+						    <when test="searchType eq 'reqTitle'">
+						        AND REQ_TITLE LIKE CONCAT('%',#{searchValue},'%')	
+						    </when>
+						    <otherwise>
+						        AND REQ_IMPORTANT LIKE CONCAT('%',#{searchValue},'%')	
+						    </otherwise>
+						</choose>
+					</if>
+					<!-- AND REQ_DIV=#{REQ_DIV} -->
+				) A
+				LEFT JOIN COMPANY_INFO B
+				ON(A.COMPANY_ID=B.COMPANY_ID)
+			)J1
+		LEFT JOIN 
+		(
+			SELECT 
+			USER_ID,USER_NAME AS ANS_USER_NM
+			FROM USER_INFO 
+		)J2
+		ON(J1.ANS_USER=J2.USER_ID)
+			
+			ORDER BY REQ_DT DESC
+	</select>
+	
+	<select id="selectReqOne" parameterType="qnaVo" resultType="qnaVo">
+		SELECT J1.*,J2.ANS_USER_NM FROM
+			(
+			SELECT A.*,B.COMPANY_NAME FROM
+		    (
+			    SELECT 				 
+			    	 REQ_ID
+					,REQ_DT
+					,COMPANY_ID
+					,REQ_TYPE
+					,CASE 
+					WHEN REQ_TYPE=0 THEN '영업'
+					WHEN REQ_TYPE=1 THEN '기술'
+					WHEN REQ_TYPE=2 THEN '사용방법'
+					ELSE '장애' END AS REQ_TYPE_NM
+					
+					,INSERT_TYPE
+					,CASE 
+					WHEN INSERT_TYPE=0 THEN '문의하기'
+					ELSE '수동등록' END AS INSERT_TYPE_NM
+					
+					,REQ_QUESTION
+					
+					,REQ_IMPORTANT				
+					,CASE 
+					WHEN REQ_IMPORTANT=2 THEN '상'
+					WHEN REQ_IMPORTANT=1 THEN '중'
+					ELSE '하' END AS REQ_IMPORTANT_NM
+					
+					,REQ_DIV				
+					,CASE 
+					WHEN REQ_DIV=0 THEN '공지사항'
+					WHEN REQ_DIV=1 THEN '문의'
+					ELSE 'FAQ' END AS REQ_DIV_NM
+					
+					,REQ_STATUS
+					,CASE 
+					WHEN REQ_STATUS=0 THEN '미접수'
+					WHEN REQ_STATUS=1 THEN '확인중'
+					ELSE '답변완료' END AS REQ_STATUS_NM
+					,ANS_USER
+					,REQ_TITLE 
+			    FROM REQ_INFO
+				 WHERE REQ_ID=#{REQ_ID}
+			)A
+			LEFT JOIN COMPANY_INFO B
+			ON(A.COMPANY_ID=B.COMPANY_ID)
+		)J1
+		LEFT JOIN (SELECT USER_ID,USER_NAME AS ANS_USER_NM FROM USER_INFO) J2
+		ON(J1.ANS_USER=J2.USER_ID)
+	</select>
+
+	<!-- req id 생성 -->
+	<select id="creReqId" parameterType="qnaVo" resultType="java.lang.String">
+		SELECT 
+		CONCAT(#{COMPANY_ID},'-',DATE_FORMAT(CURDATE(),'%y%m%d'),'-',LPAD(IFNULL(MAX(RIGHT(REQ_ID,2)),-1)+1,2,'0')) 
+		FROM req_info a
+		WHERE 1=1 
+		AND COMPANY_ID=#{COMPANY_ID}
+		AND <![CDATA[ REQ_DT >= CURDATE() AND REQ_DT < CURDATE() + INTERVAL 1 DAY ]]>
+	</select>
+	
+	<!-- ans id 생성 -->
+	<select id="creAnsId" parameterType="qnaVo" resultType="java.lang.String">
+		SELECT 
+		CONCAT('ANS','-',#{REQ_ID},'-',LPAD(IFNULL(MAX(RIGHT(ANS_ID,2)),-1)+1,2,'0')) 
+		FROM ANS_INFO A
+		WHERE 1=1 
+		AND REQ_ID=#{REQ_ID}
+	</select>
+
+	<!--  등록 -->
+	<insert id="insertReq" parameterType="qnaVo">
+		INSERT INTO REQ_INFO(
+			 REQ_ID
+			,REQ_DT
+			,COMPANY_ID
+			,REQ_TYPE
+			,INSERT_TYPE
+			,REQ_STATUS
+			,REQ_QUESTION
+			,REQ_DIV
+			,REQ_TITLE
+		)
+		VALUES (
+			#{REQ_ID}
+			,NOW()
+			,#{COMPANY_ID}
+			,#{REQ_TYPE}
+			,#{INSERT_TYPE}
+			,'0'
+			,#{REQ_QUESTION}
+			,#{REQ_DIV}
+			,#{REQ_TITLE}
+		)
+	</insert>
+	
+	<update id="reqAnsUser" parameterType="qnaVo">
+	    UPDATE REQ_INFO
+	    SET
+	      REQ_STATUS=1
+	     ,ANS_USER=#{ANS_USER}
+	    WHERE REQ_ID=#{REQ_ID}
+	</update>
+	    
+	<update id="reqUpdate" parameterType="qnaVo">
+	    UPDATE REQ_INFO
+	    SET
+	     REQ_STATUS=2
+	    ,REQ_IMPORTANT=#{REQ_IMPORTANT}
+	    WHERE REQ_ID=#{REQ_ID}
+	</update>
+	
+	<select id="selectAnsList" parameterType="qnaVo" resultType="qnaVo">
+		SELECT A.*,B.* 
+		FROM 
+		(SELECT * FROM ANS_INFO WHERE REQ_ID=#{REQ_ID}) A
+		LEFT JOIN USER_INFO B
+		ON(A.USER_ID=B.USER_ID)
+	</select>
+	
+	<update id="ansInsert" parameterType="qnaVo">
+	    INSERT INTO ANS_INFO(
+		     ANS_ID
+			,ANS_DT
+			,REQ_ID
+			,USER_ID
+			,ANS_TYPE
+			,REQ_ANSWER
+	    )
+	    VALUES(
+			 #{ANS_ID}
+			,NOW()
+			,#{REQ_ID}
+			,#{USER_ID}
+			,#{ANS_TYPE}
+			,#{REQ_ANSWER}
+	    )
+	</update>
+	
+	<select id="qnaHistory" parameterType="qnaVo" resultType="qnaVo">
+	SELECT J1.*,J2.* FROM
+	(
+		 SELECT A.*,B.COMPANY_NAME FROM
+	    (
+		    SELECT 				 
+		    	 REQ_ID
+				,REQ_DT
+				,COMPANY_ID
+				,CASE 
+				WHEN REQ_TYPE=0 THEN '영업'
+				WHEN REQ_TYPE=1 THEN '기술'
+				WHEN REQ_TYPE=2 THEN '사용방법'
+				ELSE '장애' END AS REQ_TYPE
+				,INSERT_TYPE
+				,REQ_QUESTION
+				,REQ_IMPORTANT
+				,REQ_DIV
+				,REQ_STATUS
+				,REQ_TITLE 
+		    FROM REQ_INFO
+			 WHERE REQ_ID=#{REQ_ID}
+		)A
+		LEFT JOIN COMPANY_INFO B
+		ON(A.COMPANY_ID=B.COMPANY_ID)
+	)J1
+	LEFT JOIN
+		(
+			SELECT 
+			 C.REQ_ID AS REQ_ORI_ID
+			,C.USER_ID
+			,C.REQ_ANSWER
+			,D.USER_NAME
+			,CASE 
+					WHEN ANS_TYPE=1 THEN '중간답변'
+					ELSE '일반답변' END AS ANS_TYPE
+			FROM ans_info C
+			LEFT JOIN user_info D
+			ON(C.USER_ID=D.USER_ID)
+		)J2
+		ON(J1.REQ_ID=J2.REQ_ORI_ID)	    
+	</select>
+	
+	<!-- 답변 파일 리스트 조회 -->
+	<select id="ansFileList" parameterType="qnaVo" resultType="qnaVo">
+	    
+	    SELECT * FROM file_info
+		WHERE FILE_ORIGIN IN
+		(
+			SELECT ANS_ID FROM ans_info
+			WHERE REQ_ID=#{REQ_ID}
+		)
+	    
+	</select>
+	
+	<!--  삭제 -->
+	<delete id="deleteReq" parameterType="qnaVo">
+		DELETE FROM REQ_INFO 
+		WHERE REQ_ID IN
+		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+	</delete>
+	
+	<!-- 답변 삭제 -->
+	<delete id="deleteAns" parameterType="qnaVo">
+		DELETE FROM ANS_INFO 
+		WHERE ANS_ID IN
+		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,200 @@
+@charset "utf-8";
+/*
+	/WEB-INF/jsp/ezgo/sys/auth/sysAuthMenuList.jsp 에서 사용
+	권한관리 > 권한관리 상세 >  지정메뉴(팝업)
+*/
+/* 미사용 */
+/* .list_table{
+	border-top: 1px solid #cdcdcd;
+	line-height: 2.5em;
+	border-spacing : 0;
+}
+.list_table TH {
+	background-color:#f0f0f0;
+	border-bottom: 1px solid #cdcdcd;
+	text-align: center;
+}
+.list_table TD {
+	border-bottom: 1px solid #cdcdcd;
+	text-align: center;
+} */
+
+/*
+	/WEB-INF/jsp/acsrs/csms/altm/srngrSchdlMonth.jsp 에서 사용
+	CSMS 현황 > 심사원배정 > 심사원 일정
+*/
+/*캘린더*/
+.schdlContent { width: 658px; position: relative; overflow: hidden; }
+.sort_area { position: relative; height: 40px; border: 0px solid #dedede; margin:0 0 10px 0;}
+.select_group { position: absolute; top: 0px; left: 0; }
+.select_group select {
+    display: inline-block;
+    min-width: 100px;
+    height: 36px;
+    padding: 5px 8px;
+    font-size: 15px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: #5b666b;
+    box-sizing: border-box;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #dcdee0;
+    border-radius: 2px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.select_group select:focus {
+    border: 1px solid #5c6066;
+}
+.date_view { position: absolute; top: 0px; left: 27%; margin: 0; }
+.date_view ul { display: inline-block;margin: 6px 5px;}
+.date_view ul li { float: left; }
+.date_view ul li.date {font-size: 16px;font-weight: 400;color: #222222;margin-right: 7px;margin-left: 7px;}
+.date_view ul li a { display: block; height: 24px; line-height: 23px; background-color: #fff; border: 1px solid #e6e6e6; }
+.date_view ul li a:hover { background-color: #e6e6e6; }
+.date_view ul li a.today { padding: 0 7px; color: #222222; font-size: 11px; margin-right: 5px; }
+.date_view ul li a.prev { width: 22px; background: url('../images/btn_prev.png') 9px 7px no-repeat; text-indent: -10000em;}
+.date_view ul li a.next { width: 22px; background: url('../images/btn_next.png') 9px 7px no-repeat; text-indent: -10000em;}
+
+.month { width: 100%;border-top: 1px solid #c8cacc;border-collapse: collapse;border-spacing: 0;}
+.month caption { display: none;}
+.month thead th { text-align: left; color: #222222;font-size: 13px;font-weight: 400;padding: 11px 0 12px 8px;background-color: #f4f4f4;}
+.month tbody td { padding: 2px 6px 2px 0px; border-left: 1px solid #e6e6e6; overflow: hidden; text-overflow: clip; white-space: nowrap;}
+.month tbody tr { height: 19px; border-bottom: 1px solid #fff; }
+.month tbody tr.num td { color: #222222; padding: 6px 7px; }
+.month tbody tr.num td.opa { opacity: 0.4 }
+.month thead th:first-child,
+.month tbody td:first-child,
+.month tbody td:first-child a font b,
+.month tbody td.holiday { color: #fa2929 !important; }
+.month thead th:last-child,
+.month tbody td:last-child,
+.month tbody td:last-child a font b{ color: #4896e4 !important; }
+.month tbody td:first-child { border-left: 0; }
+.month tbody tr.line td { border-bottom: 1px solid #e6e6e6; }
+.month tbody tr.last td { border-bottom: 0; }
+.month tbody td.period { color: #fff; padding: 2px 6px 2px 4px; }
+.schdlContent .linkWeek:link,
+.schdlContent .linkWeek:visited,
+.schdlContent .linkWeek:active,
+.schdlContent .linkWeek:hover{
+    color: #fff;
+    font-size: 12px;
+    line-height: 19px;
+    font-weight: normal;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.schdlContent A:link,
+.schdlContent A:visited,
+.schdlContent A:active,
+.schdlContent A:hover {
+    font-size: 13px;
+    color: #222;
+    text-decoration: none;
+    padding-left: 3px;
+}
+.schdlContent ul, .schdlContent ol { list-style :none;}
+
+/*심사원 선택 및 일정 */
+#srngrLayer .multiple_select {width: 700px; display: flex;}
+#srngrLayer .box {width: 330px; border-top: 1px solid #c8cacc; height: fit-content;}
+#srngrLayer .option_container {width: 100%;}
+#srngrLayer .option_container select {width: 100%; height: 150px;}
+#srngrLayer .box_buttons {display: flex; flex-direction: column;gap:5px; padding: 50px 10px 10px 10px;margin-top: 0 !important;}
+#srngrLayer .srngr_select_title {padding: 13px 10px; background: #f0f0f0;border: 0 !important;font-size: 15px;font-weight: 500;color: #222222;}
+#srngrLayer .text-between-pickers{border-top: white; border-bottom: white;}
+
+.box_buttons input[type="submit"] {
+    font-weight: 400;
+    font-size: 13px;
+    background: #ffffff;
+    color: #59636b;
+    border: 1px solid #cacbcc;
+    border-radius: 3px;
+    box-shadow: inset 0px -1px 0 0px rgba(0, 0, 0, 0.06);
+    min-height: 30px;
+    min-width: 30px;
+    padding: 0;
+    margin: 0;
+}
+.box_buttons input[type="submit"]:hover, 
+.box_buttons input[type="submit"]:focus, 
+.box_buttons input[type="submit"]:active {
+    background: #ffffff;
+    color: #59636b;
+    border: 1px solid #5c6066;
+    box-shadow: none;
+}
+
+
+/*
+/WEB-INF/jsp/acsrs/test_evl/mas/testEvlMngWrite.jsp 에서 사용
+시험평가
+.evl_table {
+	width:100%;
+	border-spacing: 0;
+}
+.evl_table th{
+	height: 51px;
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 0;
+	background: #f0f0f0;
+	border-right: 1px solid #dcdee0;
+	border-top: 1px solid #dcdee0;
+	border-bottom: 1px solid #dcdee0;
+}
+.evl_table .top_no_border{
+	height: 51px;
+	font-size: 15px;
+	font-weight: 500;
+	letter-spacing: 0;
+	background: #f0f0f0;
+	border-right: 1px solid #dcdee0;
+	border-top: 0px solid #dcdee0;
+	border-bottom: 1px solid #dcdee0;
+}
+.evl_table td{
+	font-size: 15px;
+	font-weight: 400;
+	text-align: center;
+	color: #5b666b;
+	letter-spacing: 0;
+	border-bottom: 1px solid #dcdee0;
+}
+.evl_table div{
+	text-align: center;
+}
+.option_container select {
+	width:100%;
+	height: 450px;
+}
+.remove-icon{
+	color: #ccc;
+	float: right;
+	margin-top: 8px;
+}
+.remove-icon:hover{
+	color: #888;
+}
+.webix_selected .remove-icon:hover{
+	color: #fff;
+}
+*/
+
+/*
+/WEB-INF/jsp/ezgo/main/main.jsp 에서 사용
+알림 (layout.css:428,기본회색으로 지정,알림있을경우 원래의 파랑색으로 지정)
+.header_util .useralert span{
+    background: #59636b;
+    padding: 1px 10px;
+    border-radius: 15px;
+    color:#ffffff;
+    min-width: 45px;
+    box-sizing: border-box;
+}
+.alram.on{background: #0082c7 !important;}
+*/
+

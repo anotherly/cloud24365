@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.hivesys.admin.edit.mapper.EditMapper">
+<!-- 
+수정일           수정자         수정내용 
+========= ======= ================================================= 
+2020.07.23 정다빈     최초 생성 
+-->
+	<!-- 관리자 페이지에서 보여지는  -->
+	<select id="selectTouList" parameterType="editVo" resultType="editVo">
+	    SELECT * FROM CONTENT_INFO 
+	    WHERE 1=1
+		<if test="DOCUMENT_ID !=null and DOCUMENT_ID neq ''">
+			and DOCUMENT_ID=#{DOCUMENT_ID}
+		</if>
+		AND DOCUMENT_DIV=#{DOCUMENT_DIV}
+	</select>
+	<!-- 일반사용자 페이지에서 -->
+	<select id="selectTou" parameterType="editVo" resultType="editVo">
+		SELECT * FROM content_info 
+		WHERE DOCUMENT_DIV=#{DOCUMENT_DIV}
+		ORDER BY document_id desc
+		LIMIT 1
+	</select>
+	<!-- 사용자 등록 -->
+	<insert id="insertTou" parameterType="editVo">
+		INSERT INTO CONTENT_INFO(
+			 DOCUMENT_ID
+	    	,TEXT_VAL
+	    	,REG_DT
+	    	,DOCUMENT_DIV
+		)
+		VALUES (
+			(
+				SELECT a.* from
+				(
+					SELECT IFNULL(MAX(DOCUMENT_ID),1)+0.1 FROM CONTENT_INFO
+					WHERE DOCUMENT_DIV=#{DOCUMENT_DIV}
+				)a
+			)
+			,#{TEXT_VAL}
+			,CURDATE()
+			,#{DOCUMENT_DIV}
+		)
+	</insert>
+		<!-- 사용자 삭제 -->
+	<delete id="deleteTou" parameterType="editVo">
+		DELETE FROM CONTENT_INFO 
+		WHERE DOCUMENT_ID=#{DOCUMENT_ID}
+		AND DOCUMENT_DIV=#{DOCUMENT_DIV}
+	</delete>
+	
+</mapper>
