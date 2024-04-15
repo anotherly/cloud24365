@@ -25,6 +25,7 @@ $(document).ready(function() {
 					+"<img src='/usr/local/tomcat/share_data/resources"+ajaxData[i].file_DIR+ajaxData[i].file_NAME+"' alt='' title=''>"
 				+"</figure>"
 			+"</a></li>"
+			
 		if(i==ajaxData.length-1){
 			divContents+="</ul>"
 		}
@@ -64,15 +65,15 @@ $(document).ready(function() {
 					<!-- <img src="/images/company.png" > -->
 					<!-- 사진영역 넣을것 -->
 					<div id="partnerList" class="bo_list event_list">
-						<ul>
+						<!-- <ul>
 							<li class=''><a><figure><img src='/resources/partner/PTN0020240213/111.jpg' alt='' title=''></figure></a></li>
-						</ul>
+						</ul> -->
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<%@include file="/footer.jsp" %>
+		<%@include file="/share/test.jsp" %>
 		
 	</div>
 	
