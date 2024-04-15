@@ -39,6 +39,11 @@ public class FileUploadSave implements ApplicationContextAware {
 	@Resource(name = "fileService")
 	private FileService fileService;
 
+	//윈도우용
+	//private String firstPath="C:\\";
+	//리눅스용
+	private String firstPath="/usr/local/tomcat/share_data";
+	
 	/**
 	 * 업로드할 파일의 상세 정보 얻어옴
 	 * 
@@ -67,7 +72,7 @@ public class FileUploadSave implements ApplicationContextAware {
 		int i = 0;
 		try {
 			// 1. 파일 저장 경로 설정 : 실제 서비스되는 위치(프로젝트 외부에 저장)
-			String inputPath = context.getServletContext().getRealPath("/") + fvo.getFILE_DIR();
+			String inputPath = firstPath + fvo.getFILE_DIR();
 			// 1.1 기존 파일 존재여부 판단
 			exList = fileService.selectFileList(fvo);
 			// 여러 개의 원본 파일을 저장할 리스트 생성
@@ -116,7 +121,7 @@ public class FileUploadSave implements ApplicationContextAware {
 	public void fileDelete(FileVo fvo) {
 		try {
 			/* 경로에서 파일 삭제 */
-			File dir = new File(context.getServletContext().getRealPath("/") + fvo.getFILE_DIR());// 경로만
+			File dir = new File(firstPath + fvo.getFILE_DIR());// 경로만
 			if (dir.isDirectory()) { // 파일이 디렉토리인지 확인
 				File[] exfiles = dir.listFiles();// 경로내 존재하는 파일 배열
 				for (int i = 0; i < exfiles.length; i++) {
@@ -141,7 +146,7 @@ public class FileUploadSave implements ApplicationContextAware {
 		try {
 			for (FileVo fileVo : fList) {
 				// 폴더와 파일들 삭제
-				File folder = new File(context.getServletContext().getRealPath("/") + fileVo.getFILE_DIR());// 경로만
+				File folder = new File(firstPath + fileVo.getFILE_DIR());// 경로만
 				if (folder.exists()) {
 					FileUtils.cleanDirectory(folder);// 하위 폴더와 파일 모두 삭제
 					if (folder.isDirectory()) {

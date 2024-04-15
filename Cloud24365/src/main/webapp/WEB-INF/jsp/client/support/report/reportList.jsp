@@ -16,9 +16,9 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/calender/datetimepickerstyle.css" />
 
 <script>
-	var updUrl="/client/report/reportUpdate.do";
-	var delUrl="/client/report/reportDelete.do";
-	var delbak="/client/report/reportList.do";
+	var updUrl="/client/support/report/reportUpdate.do";
+	var delUrl="/client/support/report/reportDelete.do";
+	var delbak="/client/support/report/reportList.do";
 	
 	$(document).ready( function() {
 		//테이블 기본설정 세팅
@@ -31,7 +31,7 @@
 		
 		var tb2=$("#tableList").DataTable({
 			ajax : {
-                "url":"/client/report/reportList.ajax",
+                "url":"/client/support/report/reportList.ajax",
                 "type":"POST",
                 "dataType": "json",
             },  
@@ -94,7 +94,7 @@
 			var tagId = $(this).parent().children().first().children().first().val();
 			$(this).attr('id');
 			if(tagId!="chkTd"){
-				location.href="/client/report/reportDetail.do?REPORT_ID="+tagId; 
+				location.href="/client/support/report/reportDetail.do?REPORT_ID="+tagId; 
 			}
 		});
 
@@ -128,7 +128,7 @@
 			 alert('상태는 최소 1개 이상 선택하셔야 합니다');
 		 }else{
 			 frm+="&listArr="+listArr;
-			 var tagUrl="/client/report/reportList.ajax";
+			 var tagUrl="/client/support/report/reportList.ajax";
 			 tbSearch("tableList",tagUrl,frm); 
 		 }
 	}
@@ -250,7 +250,7 @@
 			<!-- 엑셀저장 -->
 			<div class="btn_box">
 				<div class="right">
-					<button class="btn btn_primary" id="btnDownload" onclick="location.href='/client/report/excelDownload.ajax'">
+					<button class="btn btn_primary" id="btnDownload" onclick="location.href='/client/support/report/excelDownload.ajax'">
 						<span class="langSpan">다운로드</span>
 					</button>
 				</div>
@@ -281,7 +281,7 @@
 		            <!-- btn_box Start -->
 		            <div class="btn_box">
 		                <div class="right">
-		                    <button class="btn btn_primary" style="" id="btnInsert" onclick="location.href='/client/report/reportInsert.do'"><span class="langSpan">등록</span></button>
+		                    <button class="btn btn_primary" style="" id="btnInsert" onclick="location.href='/client/support/report/reportInsert.do'"><span class="langSpan">등록</span></button>
 		                    <button class="btn" style="" id="btnUpdate" data-term="L.등록" title="등록" onclick='tbUpdate(this,updUrl,"REPORT_ID")'><span class="langSpan">수정</span></button>
 				            <button class="btn" style="" id="btnDelete" data-term="L.등록" title="등록" onclick='tbDelete(this,delUrl,delbak)'><span class="langSpan">삭제</span></button>
 		                </div>

@@ -17,11 +17,11 @@
 		var sibal = '${login.AUTH_CODE}';
 		//목록 버튼 클릭 시
 		$("#btnList").click(function(){
-			location.href="/client/report/reportList.do"; 
+			location.href="/client/support/report/reportList.do"; 
 		});
 		//수정 버튼 클릭 시
 		$("#btnUpdate").click(function(){
-			 location.href="/client/report/reportUpdate.do?REPORT_ID="+tagId; 
+			 location.href="/client/support/report/reportUpdate.do?REPORT_ID="+tagId; 
 		});
 		//삭제 버튼 클릭 시
 		$("#btnDelete").click(function(){
@@ -29,9 +29,9 @@
 				var idArr=[]; // 회원 id값 배열
 				idArr.push(tagId);//배열에 아이디 값 삽입
 				//console.log("보낼 값 : "+ idArr);
-				var url="/client/report/reportDelete.do";
+				var url="/client/support/report/reportDelete.do";
 				var data = {"idArr":idArr};
-				var callback= "/client/report/reportList.do";
+				var callback= "/client/support/report/reportList.do";
 				ajaxMethod(url, data, callback);
     		}
 		});//btnDelte

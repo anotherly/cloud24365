@@ -71,7 +71,7 @@ public class ReportController{
 	List<ReportVo> sList=  new ArrayList<>();
 	
 	//주소에 맞게 매핑
-	@RequestMapping(value="/admin/report/**/*.do")
+	@RequestMapping(value="/client/support/report/**/*.do")
 	public String urlMapping(HttpSession httpSession, HttpServletRequest request,Model model
 			) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.고객지원 관리 페이지 최초 진입 및 분기 컨트롤러");
@@ -82,8 +82,7 @@ public class ReportController{
 	
 	//문의하기 목록 조회
 	@RequestMapping(value= {
-			"/admin/report/reportList.ajax"
-			,"/client/support/reportList.ajax"})
+			"/client/support/report/reportList.ajax"})
 	public @ResponseBody ModelAndView reqList( 
 			HttpServletRequest request
 			//,@RequestParam(required=false, value="idArr[]")List<String> listArr
@@ -102,8 +101,7 @@ public class ReportController{
 	
 	//등록 저장
 	@RequestMapping(value= {
-			"/admin/report/insertReport.ajax"
-			,"/client/support/insertReport.ajax"})
+			"/client/support/report/insertReport.ajax"})
 	public ModelAndView insertReq(HttpSession httpSession, 
 			HttpServletRequest request,Model model
 			,@ModelAttribute("ReportVo") ReportVo inputVo
@@ -145,13 +143,9 @@ public class ReportController{
 	}
 	// 상세,수정 페이지 진입
 	@RequestMapping(value={
-			"/admin/report/reportInsert.do"
-			,"/admin/report/reportDetail.do"
-			,"/admin/report/reportUpdate.do"
-
-			,"/client/support/reportInsert.do"
-			,"/client/support/reportDetail.do"
-			,"/client/support/reportUpdate.do"
+			"/client/support/report/reportInsert.do"
+			,"/client/support/report/reportDetail.do"
+			,"/client/support/report/reportUpdate.do"
 	})
 	public @ResponseBody ModelAndView detail( @ModelAttribute("ReportVo") ReportVo thvo,HttpServletRequest request) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.회원정보 조회 목록!!!!!!!!!!!!!!!!");
@@ -188,8 +182,7 @@ public class ReportController{
 	
 	// 수정 반영
 	@RequestMapping(value= {
-			"/admin/report/reportUpdate.ajax"
-			,"/client/support/reportUpdate.ajax"
+			"/client/support/report/reportUpdate.ajax"
 	})
 	public @ResponseBody ModelAndView update( 
 			@ModelAttribute("ReportVo") ReportVo inputVo
@@ -228,8 +221,7 @@ public class ReportController{
 	
 	// 삭제
 	@RequestMapping(value= {
-			"/admin/report/reportDelete.do"
-			,"/client/support/reportDelete.do"
+			"/client/support/report/reportDelete.do"
 	})
 	public @ResponseBody ModelAndView userDelete( @RequestParam(value="idArr[]")List<String> listArr,HttpServletRequest request) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.회원정보 삭제!!!!!!!!!!!!!!!!");
@@ -258,7 +250,7 @@ public class ReportController{
 	
 	// 엑셀 다운로드를 위한 th td 매핑
 	@RequestMapping(
-		value={"/admin/report/excelDownload.ajax"}
+		value={"/client/support/report/excelDownload.ajax"}
 	)
 	public void excelDownload(
 		HttpServletRequest req, HttpServletResponse res

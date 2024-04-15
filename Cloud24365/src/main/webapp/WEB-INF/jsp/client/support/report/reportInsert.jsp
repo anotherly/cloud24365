@@ -22,14 +22,14 @@
 				console.log("문의하기 등록");
 				let frm = $("#acDetailFrm").serialize();
 				var options = {
-		            url:'/client/report/insertReport.ajax',
+		            url:'/client/support/report/insertReport.ajax',
 		            type:"post",
 		            dataType: "json",
 		            data : frm,
 		            success: function(res){
 		                if(res.cnt > 0){
 		                    alert("저장되었습니다.");
-		                    location.href="/client/report/reportList.do"
+		                    location.href="/client/support/report/reportList.do"
 		                } else {
 		                	if(res.badFileType != null){
 		                		alert("사진파일 첨부는 이미지 파일만 가능합니다.");
@@ -80,7 +80,7 @@
 		<div id="contents" class="contents-wrap">
 			<!-- work Start -->
 			<div id="work" class="work-wrap">
-				<form name="insertForm" id="acDetailFrm" method="post"  enctype="multipart/form-data" action="/client/report/insertReport.ajax">
+				<form name="insertForm" id="acDetailFrm" method="post"  enctype="multipart/form-data" action="/client/support/report/insertReport.ajax">
                 <!-- contents_box Start -->
                 <div id="contents_box" class="contents_box">
 				    <!-- 컨텐츠 테이블 영역 Start -->
@@ -141,7 +141,7 @@
 			                    <button type="submit" class="btn btn_primary" style="" id="btnSave" data-term="L.등록" title="등록">
 			                    	<span class="langSpan">등록</span>
 			                    </button>
-					            <button type="button"  class="btn" id="btnList" data-term="L.목록" title="목록" onclick="location.href='/client/report/reportList.do'">
+					            <button type="button"  class="btn" id="btnList" data-term="L.목록" title="목록" onclick="location.href='/client/support/report/reportList.do'">
 									<span class="langSpan">취소</span>
 								</button>
 			                </div>

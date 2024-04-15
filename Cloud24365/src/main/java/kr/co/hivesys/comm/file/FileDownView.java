@@ -17,6 +17,10 @@ import kr.co.hivesys.comm.file.vo.FileVo;
 @Component("fileDownView")
 public class FileDownView extends AbstractView{
 
+	//윈도우용
+	//private String firstPath="C:\\resources";
+	//리눅스용
+	private String firstPath="/usr/local/tomcat/share_data/resources";
 
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model, HttpServletRequest request,
@@ -25,7 +29,7 @@ public class FileDownView extends AbstractView{
 	        *   ModelAndView 객체에  addObject( ) 해서 담은 내용은
 	        *   Map 객체에서 얻어낼수 있다. 
 	        */
-	       FileVo fvo=(FileVo)model.get("fvo");
+	      FileVo fvo=(FileVo)model.get("fvo");
 
 	      //파일을 다운로드 하는 작업을 해준다.
 	      String orgFileName=fvo.getFILE_NAME();
@@ -33,8 +37,11 @@ public class FileDownView extends AbstractView{
 	      
 	      //다운로드 시켜줄 파일의 실제 경로 구성하기 
 	      // File.separator 는 window 에서는 \ , linux 에서는 /  를 얻어오게 된다. 
-	      String path=request.getServletContext().getRealPath("/resources")+
-	                  File.separator+filepath;
+	      
+	      String path=firstPath+
+                  File.separator+filepath;
+/*	      String path=request.getServletContext().getRealPath("/resources")+
+	                  File.separator+filepath;*/
 	      //다운로드할 파일에서 읽어들일 스트림 객체 생성하기
 	      FileInputStream fis=new FileInputStream(path);
 	      //다운로드 시켜주는 작업을 한다. (실제 파일 데이터와 원본파일명을 보내줘야한다.)
