@@ -32,6 +32,7 @@
 			FROM
 				USER_INFO 
 				WHERE 1=1
+				AND AUTH_CODE <![CDATA[ < ]]> 100
 				<if test="USER_ID !=null and USER_ID neq ''"> 
 					AND USER_ID=#{USER_ID}
 				</if>
@@ -93,6 +94,7 @@
 			FROM
 				USER_INFO 
 				WHERE 1=1
+				AND AUTH_CODE <![CDATA[ < ]]> 100
 				<if test="USER_ID !=null and USER_ID neq ''"> 
 					AND USER_ID=#{USER_ID}
 				</if>
@@ -220,6 +222,7 @@
 		(
 			SELECT * FROM USER_INFO
 			WHERE 1=1
+			AND AUTH_CODE <![CDATA[ < ]]> 100
 			<if test="USER_ID !=null and USER_ID neq ''"> 
 				AND USER_ID=#{USER_ID}
 			</if>
