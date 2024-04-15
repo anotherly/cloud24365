@@ -39,15 +39,20 @@
   ======================================================== -->
   
 <style>
-.carousel-item{
-	background-size:cover;
-	height:100%;
-}
-
-.carousel-content{
-    padding: 100px;
-    color: #fff;
-    font-weight: bold;
+	.carousel-item{
+		background-size:cover;
+		height:100%;
+	}
+	
+	.carousel-content{
+	    padding: 100px;
+	    color: #fff;
+	    font-weight: bold;
+	}
+	.benefit-span{
+		color: #37517e;
+	    transition: ease-in-out 0.3s;	
+	}
 }
 </style>
 <script>
@@ -113,7 +118,7 @@
   <main id="main">
   
   <!-- ======= Clients Section ======= -->
-    <section id="cliens" class="cliens section-bg">
+    <section id="cliens" class="cliens1 section-bg">
       <div class="container">
         <!-- <div class="section-title" style="padding: 0px;" >
           <h2>Partnership</h2>
@@ -248,7 +253,7 @@
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">
               <div class="icon"><i class="bx bxl-dribbble"></i></div>
-              <h4><a href="">비용 절감</a></h4>
+              <h4><span class="benefit-span">비용 절감</span></h4>
               <p>인프라 구축 시 기간 단축 및 비용을 획기적으로 절감</p>
             </div>
           </div>
@@ -256,7 +261,7 @@
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-file"></i></div>
-              <h4><a href="">안정성</a></h4>
+              <h4><span class="benefit-span">안정성</span></h4>
               <p>신속하고 탄력적인 인프라를 기반으로 뛰어난 안정성 제공</p>
             </div>
           </div>
@@ -264,7 +269,7 @@
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch mt-4 mt-xl-0" data-aos="zoom-in" data-aos-delay="300">
             <div class="icon-box">
               <div class="icon"><i class="bx bx-tachometer"></i></div>
-              <h4><a href="">마이그레이션</a></h4>
+              <h4><span class="benefit-span">마이그레이션</span></a></h4>
               <p>시나리오 기반으로 한 시스템 이관</p>
               <p>사전모의 테스트 / 성능평가 진행</p>
             </div>

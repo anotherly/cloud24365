@@ -953,12 +953,14 @@ select.form-control {
 }
 /* 하단고정 버튼영역 */
 .footer-inner .btn_box {
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 0;
 }
 .btn_box .right {
-    display: flex;
-    gap:10px;
+	display: flex;
+    gap: 30px;
+    align-items: center;
+    font-weight: bold;
 }
 .btn_box .left {
     display: flex;

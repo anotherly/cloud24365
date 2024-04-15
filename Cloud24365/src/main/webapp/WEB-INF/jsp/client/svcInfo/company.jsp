@@ -19,7 +19,12 @@ $(document).ready(function() {
 		if(i==0){
 			divContents+="<ul style='padding: 0 70px 0 0;'>"
 		}
-		divContents+="<li id='"+ajaxData[i].file_ID+"' class=''><a><figure><img src='/resources"+ajaxData[i].file_DIR+ajaxData[i].file_NAME+"' alt='' title=''></figure></a></li>"
+		divContents+=
+			"<li id='"+ajaxData[i].file_ID+"' class=''><a>"
+				+"<figure>"
+					+"<img src='/usr/local/tomcat/share_data/resources"+ajaxData[i].file_DIR+ajaxData[i].file_NAME+"' alt='' title=''>"
+				+"</figure>"
+			+"</a></li>"
 		if(i==ajaxData.length-1){
 			divContents+="</ul>"
 		}

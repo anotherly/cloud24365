@@ -7,6 +7,16 @@
 </div> -->
 
 
+<style>
+	.right a {
+	    color: #37517e;
+	    transition: ease-in-out 0.3s;
+	    text-decoration:none;
+	}
+	.right a:hover{
+	    color: #47b2e4;
+	}
+</style>
 
 <div id="footer" class="footer-wrap">
     <div id="footer-inner" class="footer-inner">

@@ -53,7 +53,7 @@ public class PartnerController{
 	List<PartnerVo> sList=  new ArrayList<>();
 	
 	//문의하기 목록 조회
-	@RequestMapping(value="/admin/edit/partnerList.ajax")
+	@RequestMapping(value="/client/edit/partnerList.ajax")
 	public @ResponseBody ModelAndView reqList( 
 			HttpServletRequest request
 			//,@RequestParam(required=false, value="idArr[]")List<String> listArr
@@ -69,7 +69,7 @@ public class PartnerController{
 		return mav;
 	}
 	//등록 저장
-	@RequestMapping(value= "/admin/edit/insertPartner.ajax")
+	@RequestMapping(value= "/client/edit/insertPartner.ajax")
 	public ModelAndView insertReq(HttpSession httpSession, 
 			HttpServletRequest request,Model model
 			,@ModelAttribute("PartnerVo") PartnerVo inputVo
@@ -104,7 +104,7 @@ public class PartnerController{
 		return mav;
 	}
 	// 상세,수정 페이지 진입
-	@RequestMapping(value={"/admin/edit/partnerDetail.do","/admin/edit/partnerUpdate.do"})
+	@RequestMapping(value={"/client/edit/partnerDetail.do","/client/edit/partnerUpdate.do"})
 	public @ResponseBody ModelAndView detail( @ModelAttribute("PartnerVo") PartnerVo thvo,HttpServletRequest request) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.회원정보 조회 목록!!!!!!!!!!!!!!!!");
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
@@ -123,7 +123,7 @@ public class PartnerController{
 	}
 	
 	// 수정 반영
-	@RequestMapping(value="/admin/edit/partnerUpdate.ajax")
+	@RequestMapping(value="/client/edit/partnerUpdate.ajax")
 	public @ResponseBody ModelAndView update( 
 			@ModelAttribute("PartnerVo") PartnerVo inputVo
 			,@RequestParam("multiFile") List<MultipartFile> multiFileList
@@ -156,7 +156,7 @@ public class PartnerController{
 	}
 	
 	// 삭제
-	@RequestMapping(value="/admin/edit/partnerDelete.do")
+	@RequestMapping(value="/client/edit/partnerDelete.do")
 	public @ResponseBody ModelAndView delete( @ModelAttribute("PartnerVo") PartnerVo inputVo, HttpServletRequest request) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.회원정보 삭제!!!!!!!!!!!!!!!!");
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];

@@ -12,7 +12,7 @@
     </bean>   -->   
     <!-- 기존 sql 로그를 bean id 변경 -->
     <!-- 실 서버 -->
-	<bean id="dataSource_main" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+<!-- 	<bean id="dataSource_main" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
 		<property name="url" value="jdbc:mariadb://10.10.224.6:3306/cloud_24_365?allowMultiQueries=true" />
 		<property name="username" value="root" />
@@ -22,10 +22,10 @@
 		<property name="defaultReadOnly" value="false" />
 		<property name="maxActive" value="20" />
 		<property name="maxIdle" value="20" />
-	</bean>   
+	</bean>    -->
 	
     <!-- 개발환경 -->
-<!-- 	<bean id="dataSource_main" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+ 	<bean id="dataSource_main" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="org.mariadb.jdbc.Driver" />
 		<property name="url" value="jdbc:mariadb://223.130.139.138:3306/cloud_24_365?allowMultiQueries=true" />
 		<property name="username" value="root" />
@@ -35,7 +35,7 @@
 		<property name="defaultReadOnly" value="false" />
 		<property name="maxActive" value="20" />
 		<property name="maxIdle" value="20" />
-	</bean> -->
+	</bean> 
 	
 	<!-- <property name="url" value="jdbc:mariadb://hive.grkeeper.kr:11003/cloud_24_365?allowMultiQueries=true" /> -->
 	
