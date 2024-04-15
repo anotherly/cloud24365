@@ -25,19 +25,23 @@
 	<!-- DB에 존재하는 모든 URL 호출 (중복 X) -->
 	<select id="authUrlList" resultMap="authVoMapping">
 			SELECT distinct url FROM auth_info
+			WHERE 1=1
+			AND AUTH_CODE <![CDATA[ < ]]> 100
 	</select>
 	
 	<!--  권한만 전체 조회 -->
 	<select id="selectAuthType" resultMap="authVoMapping" parameterType="authVo">
 		select * from SYS_AUTH 
-		WHERE AUTH_CODE not in('999')
+		WHERE 1=1
+			AND AUTH_CODE <![CDATA[ < ]]> 100
 		order by auth_code
 	</select>
 
 	<!-- 선택한 사용자에 따른 일괄 권한 조회방식(권한관리 화면) -->
 	<select id="selectAuthList" parameterType="authVo" resultMap="authVoMapping">
 		select * from auth_info
-		where AUTH_CODE = #{authCode}
+		WHERE 1=1
+			AND AUTH_CODE <![CDATA[ < ]]> 100
 		order by idx ,auth_url_name1 ,auth_url_name2
 	</select>
 	

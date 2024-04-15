@@ -17,10 +17,10 @@
 
 
 <script>
-/* 	var updUrl="/client/support/request/reqUpdate.do";
-	var delUrl="/client/support/request/reqDelete.ajax";
+	var updUrl="/client/support/request/reqUpdate.do";
+	var delUrl="/client/support/request/reqDelete.do";
 	var delbak="/client/support/request/reqList.do";
- */	
+	
 	$(document).ready( function() {
 		//테이블 기본설정 세팅
 		dtTbSetting();
@@ -28,7 +28,6 @@
 		console.log("사용자 목록 화면 진입");
 		var colCnt=0;
 		var idxTb =0;
-		var tagId ={"COMPANY_ID":'${login.COMPANY_ID}'};
 		$('#chkAll').trigger('click');
 		$('input:checkbox[name="chk"]').trigger('click');
 		
@@ -36,15 +35,17 @@
 			ajax : {
                 "url":"/client/support/request/reqList.ajax",
                 "type":"POST",
-                "data":tagId,
                 "dataType": "json",
             },  
             columns: [
                 {data:"REQ_ID"},
                 {data:"REQ_STATUS_NM"},
                 {data:"REQ_TYPE_NM"},
+                {data:"REQ_IMPORTANT_NM"},
+                {data:"ANS_USER_NM"},
                 {data:"REQ_TITLE"},
                 {data:"REQ_DT"},
+                {data:"INSERT_TYPE_NM"}
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
 			"pageLength": 20,
@@ -57,7 +58,7 @@
                 style:    'multi',
                 selector: 'td:first-child'
             },
-            order: [[ 4, 'desc' ]]
+            order: [[ 7, 'desc' ]]
             ,responsive: true
            ,language : lang_kor // //or lang_eng
 		});
@@ -81,17 +82,22 @@
 	    		$("#searchChkAll").prop("checked", false);
 	    	}
 		});
-		
-		//상세 화면 조회
-		$("#tableList").on("click", "tbody td", function(){
-			console.log("목록에서 상세요소 클릭");
-			var tagId =  $(this).parent().children().first().text();
-			$(this).attr('id');
-			if(tagId!="chkTd"){
-				$("#work").load("/client/support/request/reqDetail.do",{"REQ_ID":tagId}); 
-			}
+
+		//등록 화면 조회
+		$("#btnInsert").click(function() {
+			location.href="/client/support/request/reqManual.do";
 		});
 		
+		//상세 화면 조회
+		$("#tableList").on("click", "tbody td:not(':first-child')", function(){
+			console.log("목록에서 상세요소 클릭");
+			var tagId = $(this).parent().children().first().text();
+			$(this).attr('id');
+			if(tagId!="chkTd"){
+				location.href="/client/support/request/reqDetail.do?REQ_ID="+tagId; 
+			}
+		});
+
 		//데이트타임피커
 		 var toDate = new Date();
 		 $('#datetimepicker1').datetimepicker({
@@ -102,7 +108,6 @@
 			 format:"YYYY-MM-DD",
 			 maxDate : moment()
 		});
-		 
 	});
 	
 	/* 검색 */
@@ -125,7 +130,8 @@
 			 var tagUrl="/client/support/request/reqList.ajax";
 			 tbSearch("tableList",tagUrl,frm); 
 		 }
-	 } 
+	 }
+	
 </script>
 </head>
 <body class="open">
@@ -163,7 +169,7 @@
 			<!-- search_box Start -->
                <div class="search_box">
 				   <form action="#" method="post" id="searchFrm" onsubmit="return false;" class="search_form">
-						<input type="hidden" name="COMPANY_ID" id="COMPANY_ID" value="${login.COMPANY_ID}">
+				   
 						<div class="form-group col_15">
 							<label class="form-control-label"><span class="langSpan">상태</span></label>
 							<div class="fm_checkbox_box">
@@ -242,7 +248,7 @@
 			<!-- 엑셀저장 -->
 			<div class="btn_box">
 				<div class="right">
-					<button class="btn btn_primary" id="btnDownload" onclick="location.href='/admin/support/req/excelDownload.ajax'">
+					<button class="btn btn_primary" id="btnDownload" onclick="location.href='/client/support/req/excelDownload.ajax'">
 						<span class="langSpan">다운로드</span>
 					</button>
 				</div>
@@ -254,18 +260,30 @@
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th>접수번호</th>
+									<th>문의번호</th>
 									<th>상태</th>
 									<th>문의유형</th>
+									<th>중요도</th>
+									<th>배정 담당자</th>
 									<th>제목</th>
 									<th>작성일자</th>
+									<th>등록유형</th>
 								</tr>
 							</thead>
 						</table>
 					</div>
 				</div>
 				
-				<%@include file="/footer.jsp" %>
+				<div id="footer" class="footer-wrap">
+			        <div id="footer-inner" class="footer-inner">
+			            <!-- btn_box Start -->
+			            <div class="btn_box">
+			                <div class="right">
+			                    <button class="btn btn_primary" style="" id="btnInsert" data-term="L.등록" title="등록"><span class="langSpan">수동등록</span></button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
 				
 			</div>
 		</div>

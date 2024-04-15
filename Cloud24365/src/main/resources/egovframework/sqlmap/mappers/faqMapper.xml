@@ -13,7 +13,7 @@
 		 SELECT A.*,B.USER_NAME FROM  
 				(SELECT 
 					 FAQ_ID
-					,DATE_FORMAT(FAQ_DT,'%Y-%m-%d %H:%i:%s') AS FAQ_DT 
+					,DATE_FORMAT(FAQ_DT,'%Y-%m-%d') AS FAQ_DT 
 					,USER_ID
 					,FAQ_TYPE
 					,CASE 
@@ -67,7 +67,7 @@
 	    (
 		    SELECT 				 
 				FAQ_ID
-				,DATE_FORMAT(FAQ_DT,'%Y-%m-%d %H:%i:%s') AS FAQ_DT 
+				,DATE_FORMAT(FAQ_DT,'%Y-%m-%d') AS FAQ_DT 
 				,USER_ID
 				,FAQ_TYPE
 				,CASE 

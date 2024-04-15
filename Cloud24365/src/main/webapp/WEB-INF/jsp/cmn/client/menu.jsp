@@ -45,7 +45,7 @@
 		<a id="/client/bill/list.do" class="menu-link"><i class="menu-icon n05"></i><div>과금 현황</div></a>
 	</li>
 	<li class="menu-item">
-		<a id="/client/support/noticeList.do" class="menu-link menu-toggle"><i class="menu-icon n02"></i><div>고객지원</div></a>
+		<a id="/client/support/notice/noticeList.do" class="menu-link menu-toggle"><i class="menu-icon n02"></i><div>고객지원</div></a>
 		<ul class="menu-sub">
 			<li class="menu-item"><a id="/client/support/notice/noticeList.do" class="menu-link"><div>공지사항</div></a></li>
 			<li class="menu-item"><a id="/client/support/request/reqList.do" class="menu-link"><div>내 문의</div></a></li>
@@ -54,7 +54,7 @@
 		</ul>
 	</li>
 	<li class="menu-item">
-		<a id="/client/setting/account/actInfo.do" class="menu-link menu-toggle"><i class="menu-icon n07"></i><div>내정보조회</div></a>
+		<a id="/client/setting/account/actInfo.do" class="menu-link menu-toggle"><i class="menu-icon n07"></i><div>설정</div></a>
 		<ul class="menu-sub">
 			<li class="menu-item"><a id="/client/setting/account/actInfo.do" class="menu-link"><div>내정보조회</div></a></li>
 			<li class="menu-item"><a id="/client/setting/user/userList.do" class="menu-link"><div>멤버관리</div></a></li>

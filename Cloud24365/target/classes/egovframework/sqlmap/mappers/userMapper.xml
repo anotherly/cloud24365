@@ -38,10 +38,10 @@
 				<if test="searchValue !=null and searchValue neq ''"> 
 					<choose>
 					    <when test="searchType eq 'userId'">
-							AND A.USER_ID LIKE '%'||#{searchValue}||'%'	        
+							AND USER_ID LIKE CONCAT('%',#{searchValue},'%')	        
 					    </when>
 					    <otherwise>
-					        AND A.USER_NAME LIKE '%'||#{searchValue}||'%'	
+					        AND USER_NAME LIKE CONCAT('%',#{searchValue},'%')	
 					    </otherwise>
 					</choose>
 				</if>	
@@ -99,10 +99,10 @@
 				<if test="searchValue !=null and searchValue neq ''"> 
 					<choose>
 					    <when test="searchType eq 'userId'">
-							AND A.USER_ID LIKE '%'||#{searchValue}||'%'	        
+							AND USER_ID LIKE CONCAT('%',#{searchValue},'%')	               
 					    </when>
 					    <otherwise>
-					        AND A.USER_NAME LIKE '%'||#{searchValue}||'%'	
+					        AND USER_NAME LIKE CONCAT('%',#{searchValue},'%')	        
 					    </otherwise>
 					</choose>
 				</if>	
@@ -178,7 +178,7 @@
 				 USER_NAME    = #{USER_NAME}
 			</if>
 			<if test="USER_PW !=null and USER_PW neq ''">
-				 ,USER_PW	  =#{USER_PW},
+				 ,USER_PW	  =#{USER_PW}
 			</if>
 			 <if test="USER_RANK !=null and USER_RANK neq ''"> 
 				,USER_RANK   = #{USER_RANK}

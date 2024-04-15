@@ -51,6 +51,13 @@ $(document).ready(function() {
 	document.querySelector(".lnb-control").addEventListener("click",function(){
         document.body.classList.toggle('open')
     });
+	
+	var nowUrl = location.href;
+	nowUrl=nowUrl.split("/")[4];
+	console.log(nowUrl);
+	//타이틀 부분
+	$(".title-inner").load("/client/"+nowUrl+"/subTitle.do");
+	
 	$('#navbar').load("/cmn/client/menu.do");
 	$('#header').load("/cmn/client/header.do");
 });

@@ -1,6 +1,11 @@
 package kr.co.hivesys.admin.auth.vo;
 
+import java.util.List;
+
 public class AuthVo {
+	
+	//화면의 배열을 받아오기위한 재귀변수
+	private List<AuthVo> atList;
 	
 	//순번
 	private String idx;
@@ -21,7 +26,14 @@ public class AuthVo {
 	//허용여부
 	private String useYn;
 	//대중소구분 
-	public String cdFlag;
+	private String cdFlag;
+	
+	public List<AuthVo> getAtList() {
+		return atList;
+	}
+	public void setAtList(List<AuthVo> atList) {
+		this.atList = atList;
+	}
 	public String getIdx() {
 		return idx;
 	}

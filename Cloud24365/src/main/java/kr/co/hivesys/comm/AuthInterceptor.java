@@ -78,7 +78,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				if (alist.size() == 0) {
 					// 현재 선택한 메뉴의 권한여부가 n일 경우
 					logger.debug("♨♨♨♨♨♨♨♨♨♨♨♨♨♨♨♨♨권한이 없음");
-					response.sendRedirect(request.getContextPath()+"/admin/auth/authChk.do");
+					response.sendRedirect(request.getContextPath()+"/cmn/client/authChk.do");
 					rtn =false;
 					return false;
 				} else {
@@ -90,7 +90,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
 				if (alist.size() == 0) {
 					// 현재 선택한 메뉴의 권한여부가 n일 경우
 					logger.debug("♨♨♨♨♨♨♨♨♨♨♨♨♨♨♨♨♨권한이 없음");
-					response.sendRedirect(request.getContextPath()+"/admin/auth/authChk.do");
+					response.sendRedirect(request.getContextPath()+"/cmn/client/authChk.do");
 					rtn =false;
 					return false;
 				} else {

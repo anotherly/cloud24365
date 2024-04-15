@@ -12,13 +12,7 @@
 	<typeAliases>
 		<!-- 사용자 -->		
 		<typeAlias alias="authVo" type="kr.co.hivesys.admin.auth.vo.AuthVo" />
-		<typeAlias alias="adClientVo" type="kr.co.hivesys.admin.client.vo.AdClientVo" />
 		<typeAlias alias="editVo" type="kr.co.hivesys.admin.edit.vo.EditVo" />
-		<typeAlias alias="oprVo" type="kr.co.hivesys.admin.opr.vo.OprVo" />
-
-		<typeAlias alias="acUserVo" type="kr.co.hivesys.client.setting.vo.AcUserVo" />
-		<typeAlias alias="supportVo" type="kr.co.hivesys.client.support.vo.SupportVo" />
-		<typeAlias alias="svcVo" type="kr.co.hivesys.client.svrInfo.vo.SvcVo" />
 		
 		<typeAlias alias="editVo" type="kr.co.hivesys.admin.edit.vo.EditVo" />
 		
@@ -29,10 +23,10 @@
 		<typeAlias alias="qnaVo" type="kr.co.hivesys.board.vo.QnaVo" />
 		<typeAlias alias="noticeVo" type="kr.co.hivesys.board.vo.NoticeVo" />
 		<typeAlias alias="faqVo" type="kr.co.hivesys.board.vo.FaqVo" />
+		<typeAlias alias="reportVo" type="kr.co.hivesys.board.vo.ReportVo" />
 				
 		<typeAlias alias="billVo" type="kr.co.hivesys.bill.vo.BillVo" />
 		<typeAlias alias="chargeVo" type="kr.co.hivesys.charge.vo.ChargeVo" />
-		<typeAlias alias="reportVo" type="kr.co.hivesys.report.vo.ReportVo" />
 		<typeAlias alias="partnerVo" type="kr.co.hivesys.partner.vo.PartnerVo" />
 		
 		<typeAlias alias="fileVo" type="kr.co.hivesys.comm.file.vo.FileVo" />

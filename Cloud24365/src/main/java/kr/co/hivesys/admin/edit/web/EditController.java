@@ -42,8 +42,15 @@ public class EditController {
 	private EditService editService;
 	public String url="";
 	
-	/*//주소에 맞게 매핑
-	@RequestMapping(value= "/admin/edit/**.do")
+	//권한조회 후 최초 주소
+	@RequestMapping(value= "/admin/edit/content.do")
+	public String firstAuth(HttpSession httpSession, HttpServletRequest request,Model model
+			) throws Exception{
+		return "redirect:/admin/edit/content/content.do";
+	}
+		
+	//주소에 맞게 매핑
+	@RequestMapping(value= "/admin/edit/**/*.do")
 	public String urlMapping(HttpSession httpSession, HttpServletRequest request,Model model
 			) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶. 최초 컨트롤러 진입 httpSession : "+httpSession);
@@ -53,7 +60,7 @@ public class EditController {
 	}
 	
 	//사용자 목록 조회
-	@RequestMapping(value={"/admin/edit/touList.ajax","/admin/edit/privacySvcList.ajax"})
+	@RequestMapping(value={"/admin/edit/content/touList.ajax","/admin/edit/content/privacySvcList.ajax"})
 	public @ResponseBody ModelAndView touList( @ModelAttribute("editVo") EditVo thvo, HttpServletRequest request) throws Exception{
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
 		//url로 h,g 판별하여 해당하는 값만 조회
@@ -75,7 +82,7 @@ public class EditController {
 		return mav;
 	}
 	
-	@RequestMapping(value={"/admin/edit/touInsert.ajax","/admin/edit/privacySvcInsert.ajax"})
+	@RequestMapping(value={"/admin/edit/content/touInsert.ajax","/admin/edit/content/privacySvcInsert.ajax"})
     public ModelAndView touInsert( @ModelAttribute("editVo") EditVo thvo, HttpServletRequest request) throws Exception{
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
 		ModelAndView mav = new ModelAndView("jsonView");
@@ -95,7 +102,7 @@ public class EditController {
         return mav;
     }
 	
-	@RequestMapping(value={"/admin/edit/touDetail.do","/admin/edit/privacySvcDetail.do"})
+	@RequestMapping(value={"/admin/edit/content/touDetail.do","/admin/edit/content/privacySvcDetail.do"})
 	public ModelAndView touDetail( @ModelAttribute("editVo") EditVo thvo, HttpServletRequest request) throws Exception{
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
 		//url로 h,g 판별하여 해당하는 값만 조회
@@ -118,7 +125,7 @@ public class EditController {
 		return mav;
 	}
 	
-	@RequestMapping(value={"/admin/edit/touDelete.do","/admin/edit/privacySvcDelete.do"})
+	@RequestMapping(value={"/admin/edit/content/touDelete.do","/admin/edit/content/privacySvcDelete.do"})
 	public ModelAndView touDelete( @ModelAttribute("editVo") EditVo thvo, HttpServletRequest request) throws Exception{
 		//url로 h,g 판별하여 해당하는 값만 조회
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
@@ -139,7 +146,7 @@ public class EditController {
 		return mav;
 	}
 	
-	@RequestMapping(value= {"/admin/edit/touDownload.ajax","/admin/edit/privacySvcDownload.ajax"})
+	@RequestMapping(value= {"/admin/edit/content/touDownload.ajax","/admin/edit/content/privacySvcDownload.ajax"})
 	public void touDownload( @ModelAttribute("editVo") EditVo thvo,
 			Map model, HttpServletRequest request, HttpServletResponse response
 			) throws Exception{
@@ -180,6 +187,6 @@ public class EditController {
 		} catch (Exception e) {
 			logger.debug("에러메시지 : "+e.toString());
 		}
-	}*/
+	}
 	
 }

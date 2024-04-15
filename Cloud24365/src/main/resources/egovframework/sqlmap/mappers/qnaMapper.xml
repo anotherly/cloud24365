@@ -15,7 +15,7 @@
 		 SELECT A.*,B.COMPANY_NAME FROM  
 				(SELECT 
 					 REQ_ID
-					,DATE_FORMAT(REQ_DT,'%Y-%m-%d %H:%i:%s') AS REQ_DT 
+					,DATE_FORMAT(REQ_DT,'%Y-%m-%d') AS REQ_DT 
 					,COMPANY_ID
 					
 					,REQ_TYPE

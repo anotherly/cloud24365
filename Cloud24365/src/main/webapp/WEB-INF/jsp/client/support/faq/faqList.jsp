@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>CLOUD 24 365 관리자 페이지</title>
+	<title>CLOUD 24 365</title>
 	<jsp:include page="/cmn/client/top.do" flush="false" />
 
 	<!-- DateTimePicker -->
@@ -16,6 +16,9 @@
 	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/calender/datetimepickerstyle.css" />
 
 <script>
+	var updUrl="/client/support/faq/faqUpdate.do";
+	var delUrl="/client/support/faq/faqDelete.do";
+	var delbak="/client/support/faq/faqList.do";
 	
 	$(document).ready( function() {
 		//테이블 기본설정 세팅
@@ -34,9 +37,18 @@
             },  
             columns: [
             	
+            	{
+            		data:   "faq_ID",
+	            	"render": function (data, type, row, meta) {
+	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
+                        return '<input type="checkbox" id="chk" name="chk" value="'+data+'">';
+	                },
+                },
+            	
                 {data:"faq_ID"},
                 {data:"faq_TYPE_NM"},
                 {data:"faq_TITLE"},
+                {data:"user_NAME"},
                 {data:"faq_DT"},
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
@@ -50,7 +62,7 @@
                 style:    'multi',
                 selector: 'td:first-child'
             },
-            order: [[ 3, 'desc' ]]
+            order: [[ 5, 'desc' ]]
             ,responsive: true
            ,language : lang_kor // //or lang_eng
 		});
@@ -58,13 +70,30 @@
 		//테이블 액션에 대한 설정
 		tbAction("tableList");
 		
+		//전체체크박스 선택시
+		$("#searchChkAll").on("click",function(){
+			if ($("#searchChkAll").is(":checked")){
+				$('input:checkbox[name="searchChk"]').prop("checked", true);
+			}else{//선택->취소 : 전체 체크 해지시
+				$('input:checkbox[name="searchChk"]').prop("checked", false);
+			}
+		});
+		//타 체크박스 관련
+		$('input:checkbox[name="searchChk"]').on('click',function(){
+			if($('input:checkbox[name="searchChk"]:checked').length==2){
+	    		$("#searchChkAll").prop("checked", true);
+	    	}else{
+	    		$("#searchChkAll").prop("checked", false);
+	    	}
+		});
+		
 		//상세 화면 조회
-		$("#tableList").on("click", "tbody td", function(){
+		$("#tableList").on("click", "tbody td:not(':first-child')", function(){
 			console.log("목록에서 상세요소 클릭");
-			var tagId =  $(this).parent().children().first().text();
+			var tagId = $(this).parent().children().first().children().first().val();
 			$(this).attr('id');
 			if(tagId!="chkTd"){
-				$("#work").load("/client/support/faq/faqDetail.do",{"FAQ_ID":tagId}); 
+				location.href="/client/support/faq/faqDetail.do?FAQ_ID="+tagId; 
 			}
 		});
 
@@ -126,7 +155,7 @@
 			<div class="title-inner">
 				<!-- 타이틀 텝 구성 -->
 				<div class="title_segments" role="tablist">
-					<button class="nav-link active" role="tab" aria-selected="false">보고서</button>
+					<button class="nav-link active" role="tab" aria-selected="false">공지사항</button>
 				</div>
 			</div>
 		</div>
@@ -168,6 +197,7 @@
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
 								<option value="faqTitle">제목</option>
+								<option value="userName">작성자</option>
 		                    </select>
 							<input class="form-control" type="text" id="searchValue" name="searchValue"  onkeyup="if(event.keyCode == 13)search();"/>
 						</div>
@@ -207,6 +237,14 @@
 				</div>
 	            <!-- search_box End -->
 	            
+			<!-- 엑셀저장 -->
+			<div class="btn_box">
+				<div class="right">
+					<button class="btn btn_primary" id="btnDownload" onclick="location.href='/client/support/faq/excelDownload.ajax'">
+						<span class="langSpan">다운로드</span>
+					</button>
+				</div>
+			</div>
 			
 			<div class="datatable-list-01">
 				<div class="page-description">
@@ -214,9 +252,11 @@
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
+									<th><input type="checkbox" id="chkAll" class="chk"></th>
 									<th>번호</th>
 									<th>분류</th>
 									<th>제목</th>
+									<th>작성자</th>
 									<th>작성일자</th>
 								</tr>
 							</thead>
@@ -225,7 +265,18 @@
 				</div>
 			</div>
 			
-			<%@include file="/footer.jsp" %>
+			<div id="footer" class="footer-wrap">
+		        <div id="footer-inner" class="footer-inner">
+		            <!-- btn_box Start -->
+		            <div class="btn_box">
+		                <div class="right">
+		                    <button class="btn btn_primary" style="" id="btnInsert" onclick="location.href='/client/support/faq/faqInsert.do'"><span class="langSpan">등록</span></button>
+		                    <button class="btn" style="" id="btnUpdate" data-term="L.등록" title="등록" onclick='tbUpdate(this,updUrl,"faq_ID")'><span class="langSpan">수정</span></button>
+				            <button class="btn" style="" id="btnDelete" data-term="L.등록" title="등록" onclick='tbDelete(this,delUrl,delbak)'><span class="langSpan">삭제</span></button>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
 		</div>
 	</div>
 </div>	

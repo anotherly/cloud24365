@@ -32,36 +32,29 @@ function valiChkAll(that,num,en,kr,ex,sp){
 	}
 }
 
-//내가 폼기능을 제대로 못 썻기 때문에 뻘짓을 하고있었던 거임 ㅡㅡ
-/*이 함수는 등록,수정 폼 구조가 바뀌면 핸들링이 필요해보인다..*/
-//특정 부분 div가 필수값으로 체크되어있는지 판별하여
-//저장 시 필수값을 체크함
-//form : 받아온 폼값 , reqName : 필수값 체크할 id
-/*function requireChk(form,reqName){
-	var rst = true;
-	
-	for (var i = 0; i < form.length; i++) {
-		//hidden 항목은 유효성 검사 처리를 하지 않음
-		if(form[i].type!='hidden'){
-			var that = form[i];
-			console.log("i : "+i+"	/	form[i] : "+form[i]);
-			//체크할 div 요소에 reqName값이 포함되있는지 체크
-			var chkDiv=$(that).parent().parent().children().first();
-			
-			if(typeof $(chkDiv).attr('class') !=="undefined" 
-				&& $(chkDiv).attr('class').indexOf(reqName)!=-1 
-				&& form[i].value==''
-			){
-				console.log("필수값입니다");
-				alert($(chkDiv).text()+"은(는) 필수값입니다");
-				form[i].focus();
-				return false;
-			}
-		}
+
+/************************************************************************
+함수명 : pwReg
+설 명 : 비밀번호 정규식(유효성 검사)
+인 자 : pwVal(받아온 비밀번호 값)
+사용법 : 비밀번호 형식 체크할 때
+(형식 달라질 때마다 정규식 핸들링 필요)
+작성일 : 2024-04-08
+작성자 : 기술연구소 정다빈
+수정일        수정자       수정내용
+----------- ------ -------------------
+2024-04-08   정다빈       최초작성
+************************************************************************/
+function pwReg(inputVal){
+	var rst=true;
+	let reg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
+	if( !reg.test(inputVal) ) {
+		alert("비밀번호 형식에 위배됩니다.(영문+특수+숫자 8~15자)");
+		rst= false;
+		return rst;
 	}
 	return rst;
-}*/
-
+}
 
 /*############################# old #############################*/
 
@@ -76,36 +69,29 @@ function valiChkAll(that,num,en,kr,ex,sp){
 ----------- ------ -------------------
 2020.07.30   정다빈       최초작성
 ************************************************************************/
-function boardWriteCheck(form) {
+function idPwChk(form) {
+	var rst=true;
+	
 	//특수문자 정규식
 	var regExp = /[\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
 	
-	$(form).find('span').text("");	
-	
 	for (var i = 0; i < form.length; i++) {
-		//id의 경우 6자 이상인지
-		if(form[i].name =='USER_ID'){
-			if(form[i].value.length<5){
-				alert("id 형식이 올바르지 않습니다.");
-				form[i].focus();
-				return false;
-			}
-		}
 		//pw : (영문 특수문자 포함 8자이상 10자 이하)
-		if(form[i].name =='USER_PW' && form[i].value.length >0){
-			if(form[i].value.length<8 /*|| !(regExp.test(form[i].value)) */){
-				alert("비밀번호 형식이 올바르지 않습니다.");
+		if(form[i].name =='USER_PW' && form[i].value != ''){
+			if(!pwReg(form[i].value)){
 				form[i].focus();
-				return false;
+				rst= false;
+				return rst;
 			}
 		}
 	}
 	//확인 비밀번호와 비밀번호가 다를 때
-	if($("#USER_PW").val()!=$("#USER_PW2").val()){
+	if($("#userPw1").val()!=$("#userPw2").val()){
 		alert("비밀번호가 서로 일치하지 않습니다.");
-		return false;
+		rst= false;
+		return rst;
 	}
-	return true;
+	return rst;
 }
 
 /************************************************************************
@@ -161,6 +147,7 @@ function removeChar(event) {
 2020.08.25   정다빈       최초작성
 ************************************************************************/
 function telChk() {
+	var rst=true;
 	//부분 전화번호에 하나라도 값 기입시
 	if($("#userPhone2").val().length>0 || $("#userPhone3").val().length>0){
 		//1,2,3번째가 지정 자리수 이상일때만 값 주입
@@ -169,12 +156,13 @@ function telChk() {
 			$("#userPhone").val(phone);
 		}else{
 			alert("전화번호 형식이 올바르지 않습니다.");
-			return false;
+			rst=false;
+			return rst;
 		}
 	}else{
 		$("#userPhone").val("");
 	}
-	return true;
+	return rst;
 }
 
 /************************************************************************
@@ -222,42 +210,49 @@ function spaceChk(obj){//공백입력방지
 /************************************************************************
 함수명 : schChkKey
 설 명 : 검색 값 유효성 검사
-인 자 : 
+인 자 : 사용자 id를 입력받는 텍스트박스의 name값, 1 : alert창 띄울지말지 여부
 사용법 : 
 작성일 : 2020-08-30
 작성자 : 솔루션사업팀 정다빈
 수정일        수정자       수정내용
 ----------- ------ -------------------
 2020.08.30   정다빈       최초작성
+2024.04.08   정다빈       기능에 맞게 재작성
 *************************************************************************/
-function schChkKey(that,schFlag){
-	console.log("id조회");
-	var sndUrl='';
-	var dat;
-	//키워드가 무엇인지 판별
-	var schId= $(that).attr("name").split("_")[1];
-	//텍스트에 값을 입력 안했다면
-	if(schId!="empCode" && $(that).parent().children().first().val()==""){
-		$(that).parent().parent().children().last().css("color","red");
-		$(that).parent().parent().children().last().text("값을 입력해주세요");
+function schChkKey(tagName,alt){
+	var rst=true;
+	
+	var inputVal = $("input[name="+tagName+"]").val();
+	
+	if(inputVal==''){
+		alert("항목을 입력해 주세요");
 	}else{
-		//검색버튼이 2개이상일때는 어디로 보낼지 값이 무엇인지 분기처리
-		if(schId=="userId"){
-			sndUrl="/user/findUserId.ajax";
-			dat={"USER_ID":$(that).parent().children().first().val()};
+		if(inputVal.length<6){//길이체크
+			alert("id는 6자 이상으로 작성바랍니다");
+		}else{
+			var sndUrl="/user/findUserId.do";
+			//json 키값에 파라미터 동적 할당
+			const jsonKey = tagName;
+			const jsonData = { [jsonKey]: inputVal}; //ex-> {'USER_ID' : '밸류값'}
 			
-			var schData=ajaxMethod(sndUrl, dat);
+			var schData=ajaxMethod(sndUrl, jsonData);
+			
 			//id일 경우는 값이 없을때 사용가능하고 시험코드는 값이 있을때 사용가능함
 			if(schData == "" || typeof schData.data === "undefined"){//db에 값 미존재
-				$(that).parent().parent().children().last().css("color","blue");
-				$(that).parent().parent().children().last().text("사용 가능한 id입니다.");
-				schFlag=true;
-			}else{//db에 값 존재0
-				$(that).parent().parent().children().last().css("color","red");
-				$(that).parent().parent().children().last().text("이미 사용중인 id입니다.");
-				schFlag=false;
+				if(typeof alt !=="undefined" && alt !=''){
+					alert("사용 가능한 id입니다.");
+				}
+				rst=true;
+				return rst;
+			}else{//db에 값 존재
+				alert("이미 사용중인 id입니다.");
+				rst=false;
+				return rst;
 			}
 		}
+
 	}
-	return schFlag;
+	
+
+	return rst;
 }

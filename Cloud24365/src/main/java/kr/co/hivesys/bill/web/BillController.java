@@ -39,7 +39,7 @@ import kr.co.hivesys.comm.file.FileUploadSave;
 import kr.co.hivesys.comm.file.service.FileService;
 import kr.co.hivesys.comm.file.vo.FileVo;
 import kr.co.hivesys.company.service.CompanyService;
-import kr.co.hivesys.report.service.ReportService;
+import kr.co.hivesys.board.service.ReportService;
 import kr.co.hivesys.user.service.UserService;
 import kr.co.hivesys.user.vo.UserVO;
 

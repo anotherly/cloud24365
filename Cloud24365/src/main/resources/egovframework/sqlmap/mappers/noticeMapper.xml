@@ -13,7 +13,7 @@
 		 SELECT A.*,B.USER_NAME FROM  
 				(SELECT 
 					 NOTICE_ID
-					,DATE_FORMAT(NOTICE_DT,'%Y-%m-%d %H:%i:%s') AS NOTICE_DT 
+					,DATE_FORMAT(NOTICE_DT,'%Y-%m-%d') AS NOTICE_DT 
 					,USER_ID
 					,NOTICE_TYPE
 					,CASE 
@@ -73,7 +73,7 @@
 	    (
 		    SELECT 				 
 				NOTICE_ID
-				,DATE_FORMAT(NOTICE_DT,'%Y-%m-%d %H:%i:%s') AS NOTICE_DT 
+				,DATE_FORMAT(NOTICE_DT,'%Y-%m-%d') AS NOTICE_DT 
 				,USER_ID
 				,NOTICE_TYPE
 				,CASE 

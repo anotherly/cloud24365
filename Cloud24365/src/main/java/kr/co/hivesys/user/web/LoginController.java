@@ -150,12 +150,5 @@ public class LoginController {
 		logger.debug("▶▶▶▶▶▶▶.logout 메소드 진입");
 		return "redirect:/";
 	}
-	
-	//로그아웃 처리
-	@RequestMapping(value="/login/logoutAdmin.do")
-	public String logoutAdmin(UserVO loginVo, HttpSession httpSession, Model model, HttpServletRequest request) throws Exception{
-		logger.debug("▶▶▶▶▶▶▶.logout 메소드 진입");
-		return "redirect:/admin.jsp";
-	}
 
 }

@@ -5,17 +5,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<script type="text/javascript">
-	//이메일 체크
+	<title>CLOUD 24 365</title>
+	<jsp:include page="/cmn/client/top.do" flush="false" />
+<script>
+	var updUrl="/client/setting/user/userUpdate.do";
+	var delUrl="/client/setting/user/userDelete.do";
+	var delbak="/client/setting/user/userList.do";
 	$(document).ready( function() {
+		var schChkId=false;
 		console.log("사용자 수정 페이지");
 		
 		var tagPhone='${data.USER_PHONE}';
 		var tagEmail='${data.USER_EMAIL}';
 		
-		//console.log(tagPhone.length);
-		
-		if(tagPhone.length>0 && tagPhone !='미기재'){
+		if(tagPhone.length>0){
 			$("#userPhone1").val(tagPhone.split('-')[0]);
 			$("#userPhone2").val(tagPhone.split('-')[1]);
 			$("#userPhone3").val(tagPhone.split('-')[2]);
@@ -25,10 +28,11 @@
 			$("#userEmail2").val(tagEmail.split('@')[1]);
 		}
 		
-		var form = document.userUpdateForm;
+		var form = document.userInsertForm;
 		
 		//전화번호 선택
-		$('#selectPhone').change(function(){ 
+		$('#selectPhone').on('change',function(){
+			console.log("전화번호 선택");
 			$("#selectPhone option:selected").each(function () { 
 				if($(this).val()== '1'){ //직접입력일 경우
 					$("#userPhone1").val(''); //값 초기화 
@@ -40,7 +44,8 @@
 			}); 
 		});
 		//이메일 선택
-		$('#selectEmail').change(function(){ 
+		$('#selectEmail').on('change',function(){ 
+			console.log("이메일 선택");
 			$("#selectEmail option:selected").each(function () { 
 				if($(this).val()== '1'){ //직접입력일 경우
 					$("#userEmail2").val(''); //값 초기화 
@@ -51,10 +56,12 @@
 				} 
 			}); 
 		});
-
-
-		$("#userUpdateForm").submit( function(event){
-			event.preventDefault();
+		
+		//회원가입 또는 사용자 등록하다 하나라도 위배되서 서브밋되서 리셋되면 빡치니 
+		//서브밋을 안하거나 리턴 false로...
+		$("#userInsertForm").submit( function(event){
+			console.log("회원가입 등록 버튼 클릭");
+			//event.preventDefault();
 			//분리된 email,전화번호 통합
 			if($("#userEmail1").val().length>0){
 				var email = $("#userEmail1").val()+"@"+$("#userEmail2").val();
@@ -64,9 +71,10 @@
 			}
 			
 			//유효성 체크
-			if(boardWriteCheck(form)&&telChk()){
+			if(idPwChk(form) && telChk()){
+				console.log("사용자등록 유효성 chk 성공");
 				// serialize는 form의 <input> 요소들의 name이 배열형태로 그 값이 인코딩되어 URL query string으로 하는 메서드
-				let queryString = $(this).serialize();				
+				let queryString = $(this).serialize();
 				$.ajax({
 					url: "/user/userUpdate.ajax",
 					type: "POST",
@@ -76,7 +84,7 @@
 					success: function(json){
 						//console.log("성공 msg : "+json.msg);
 						if(json.msg=="" || typeof json.msg ==="undefined"){
-							alert("수정되었습니다");
+							alert("정상 수정 되었습니다");
 							location.href="/client/setting/user/userList.do";
 						}else{
 							alert(json.msg);
@@ -92,134 +100,196 @@
 				});
 			}
 		});
+		
+		//키워드 조회시(id체크)
+		$("#schChkKey").on("click",function(){
+			schChkId=schChkKey('USER_ID',1);
+		});
+		
 		//취소
 		$("#btnCancel").on("click",function(){
-			location.href="/client/setting/user/userList.do";
+			$("#content").empty();
+			location.href="/client/setting/user/userList.do"; 
 		});
+		
 	});//ready
 
 </script>
-</head>
-<body>
-<div>
-	<div class="title">
-		<h3>사용자 수정</h3>
-	</div>
-	<form id="userUpdateForm" name="userUpdateForm" method="post" enctype="multipart/form-data">
-		<div class="tbMng-nonbt">
-			<table class='tbList-nonbt'>
-				<tr>
-					<td><label style="color:gray;">ID</label></td>
-					<td>
-						<div class ="searchBtnDiv">
-							<input type="text" id="USER_ID" name="USER_ID" class="form-control" value=${data.USER_ID} maxlength="10" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);" readonly>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td><label><span class="required"></span>비밀번호(변경시에만 입력)</label><p class="rem">영문 또는 숫자 8~10자</p></td>
-					<td>
-						<input type="password" id="USER_PW" name="USER_PW" class="form-control"  maxlength="10" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);">
-						<span class="valChk" id="span1"></span>
-					</td>
-				</tr>
-				<tr>
-					<td><label><span class="required"></span>비밀번호 확인(변경시에만 입력)</label><p class="rem">영문 또는 숫자 8~10자</p></td>
-					<td>
-						<input type="password" id="USER_PW2" name="USER_PW2" class="form-control"  maxlength="10" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);" >
-						<span class="valChk" id="span2"></span>
-					</td>
-				</tr>
-				<tr>
-					<td><label><span class="required"></span>이름</label></td>
-					<td>
-						<input type="text" name="USER_NAME" class="form-control" value=${data.USER_NAME} maxlength="20" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);" required>
-						<span class="valChk" id="span3"></span>
-					</td>
-				</tr>
-				<tr>
-					<td><label><span class="required">*</span>권한 등급</label></td>
-					<td>
-						<select class="table_sel"  style="width:120px;" id="areaCodeSel" name="AUTH_CODE">
-						    <c:forEach var="authVo" items="${authList}">
-						  	  <option value="${authVo.authCode}" <c:if test="${data.AUTH_CODE eq authVo.authCode}">selected</c:if>>${authVo.authName}</option>
-						    </c:forEach>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td><label><span class="required">*</span>고객사</label></td>
-					<td>
-						<select class="table_sel"  style="width:120px;" id="comCodeSel" name="COMPANY_ID">
-						    <c:forEach var="cmsVo" items="${companyList}">
-						    <option value="${cmsVo.COMPANY_ID}" <c:if test="${data.COMPANY_ID eq cmsVo.COMPANY_ID}">selected</c:if>>${cmsVo.COMPANY_NAME}</option>
-						    </c:forEach>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td><label>직급</label></td>
-					<td>
-						<input type="text" name="USER_RANK"  value=${data.USER_RANK}  maxlength="10" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);" class="form-control">					
-					</td>
-				</tr>
-				<tr>
-					<td><label>부서</label></td>
-					<td>
-						<input type="text" name="USER_DEPT" value=${data.USER_DEPT}  maxlength="20" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);" class="form-control">					
-					</td>
-				</tr>
-				<tr>
-					<td><label>전화번호</label></td>
-					<td>
-						<input type="hidden" id ="userPhone" name="USER_PHONE" class="form-control">
-							<div class= inputPhone>
-								<select style="width:100px;margin-right:10px" name="selectPhone" id="selectPhone">
-									<option value="02">02</option><!-- 서울 -->
-									<option value="010" selected>010</option>
-					                <option value="011">011</option><!-- 경기-->
-					                <option value="019">019</option><!-- 부산-->
-					                <option value="1">직접입력</option>
-								</select>
-								<input type="text" id="userPhone1" class="form-control"  maxlength="4" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)'  disabled value="010">
-								<p> - </p>
-								<input type="text" id="userPhone2" class="form-control"  maxlength="4" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)' >
-								<p> - </p>
-								<input type="text" id="userPhone3" class="form-control"  maxlength="4" onkeydown='return onlyNumber(event)' onkeyup='removeChar(event)' >
+</head>	
+<body class="open">
+    <!-- lnb Start ------------------>
+    <aside id="lnb" class="lnb">
+        <a class="lnb-control" title="메뉴 펼침/닫침"><span class="menu-toggle">메뉴 펼침/닫침</span></a>
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-default">
+            <ul class="menu-inner"></ul>
+        </nav>
+    </aside>
+    <!-- lnb End ------------------>
+
+    <!-- container Start ------------------>
+    <div id="container" class="container-wrap">
+		<!-- header Start ------------------>
+		<div id="header" class="header-wrap"></div>
+		
+		<div id="title" class="title-wrap">
+			<div class="title-inner">
+			</div>
+		</div>
+		<!-- title end -->
+		<!-- contents Start ------------------>
+		<div id="contents" class="contents-wrap">
+			<!-- work Start -->
+			<div id="work" class="work-wrap">
+			<!--onsubmit에 return false면 action이 실행되지 않는다. (그냥 가만히 있음)
+				또는 온서브밋을 함수로 리턴함 onsubmit="return chkSum();" -->
+				<form name="userInsertForm" id="userInsertForm" method="post" enctype="multipart/form-data" onsubmit="return false">
+                <!-- contents_box Start -->
+                <div id="contents_box" class="contents_box">
+                    <!-- 컨텐츠 테이블 헤더 Start -->
+                    <div class="ctn_tbl_header">
+                        <div class="ttl_ctn">사용자 정보 수정</div><!-- 컨텐츠 타이틀 -->
+                        <div class="txt_info"><em class="txt_info_rep">*</em> 표시는 필수 입력 항목입니다.</div><!-- 설명글 -->
+                    </div>
+                    <!-- 컨텐츠 테이블 헤더 End -->
+                    <!-- 컨텐츠 테이블 영역 Start -->
+                    
+                    <div class="ctn_tbl_area">
+                        <div class="ctn_tbl_row">
+							<div class="ctn_tbl_row">
+								<div class="ctn_tbl_th fm_rep">ID</div>
+								<div class="ctn_tbl_td mw_50">
+									<input type="hidden" class="form-control" id="USER_ID" name="USER_ID" value="${data.USER_ID}"/>
+									<span>${data.USER_ID}</span>
+								</div>
 							</div>
-							<span class="valChk" id="span6"></span>
-							<span class="valChk" id="span7"></span>
-							<span class="valChk" id="span8"></span>					
-					</td>
-				</tr>
-				<tr>
-					<td><label>Email</label></td>
-					<td>
-						<input type="hidden" id ="userEmail" name="USER_EMAIL" class="form-control">
-						<div class= inputPhone>
-							<input type="text" class="form-control" id="userEmail1" style="width:70px;" maxlength="20" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);">
-							<p> @ </p>
-							<input type="text" class="form-control" id="userEmail2" style="width:100px;" disabled value="khnp.co.kr">
-							<select style="width:100px;margin-right:10px" id="selectEmail">
-								<option value="khnp.co.kr" selected>khnp.co.kr</option>
-								<option value="gmail.com">gmail.com</option> 
-								<option value="naver.com">naver.com</option> 
-								<option value="daum.net">daum.net</option> 
-								<option value="nate.com">nate.com</option> 
-								<option value="1">직접입력</option> 
-							</select>
 						</div>
-						<span class="valChk" id="span9"></span>
-						<span class="valChk" id="span10"></span>				
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="btnDiv" style="float:none;position: relative;top: 0px;left: 350px;margin-top: 50px;">
-			<button id="btnSub" class="btn-small">변경</button>
-			<button class="btn-small" id="btnCancel">취소</button>
-		</div>
-	</form>
-</div>
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th" style="display: flex;flex-direction: column;align-items: flex-start;">
+								비밀번호<br>(변경시에만 입력)
+								<div class="txt_info">영문+특수+숫자 8~15자</div>
+							</div>
+							<div class="ctn_tbl_td">
+								<input type="password" id="userPw1" name="USER_PW" class="form-control"  maxlength="15" onkeyup="valiChkAll(this,1,1,1,1);" onkeydown="valiChkAll(this,1,1,1,1);">
+							</div>
+						</div>
+					
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th">비밀번호 확인(변경시에만 입력)</div>
+							<div class="ctn_tbl_td">
+								<input type="password" id="userPw2" name="USER_PW2" class="form-control"    maxlength="15"  onkeyup="valiChkAll(this,1,1,1,1);" onkeydown="valiChkAll(this,1,1,1,1);">
+							</div>
+						</div>
+						
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th fm_rep">이름</div>
+							<div class="ctn_tbl_td">
+								<input type="text" name="USER_NAME" class="form-control" value="${data.USER_NAME}"  maxlength="20" onkeyup="valiChkAll(this,1,1);" onkeydown="valiChkAll(this,1,1);" required>
+							</div>
+						</div>
+						
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th fm_rep">권한 등급</div>
+							<div class="ctn_tbl_td">
+								<select class="form-control mw_30"  style="width:120px;" id="areaCodeSel" name="AUTH_CODE">
+									<c:forEach var="authVo" items="${authList}">
+										<option value="${authVo.authCode}" <c:if test="${authVo.authCode == data.AUTH_CODE}">selected</c:if>>${authVo.authName}</option>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th fm_rep">소속 회사</div>
+							<div class="ctn_tbl_td">
+								<select class="form-control mw_30"  style="width:120px;" id="companyCodeSel" name="COMPANY_ID">
+									<c:forEach var="companyVo" items="${companyList}">
+										<option value="${companyVo.COMPANY_ID}" 
+											<c:if test="${companyVo.COMPANY_ID == data.COMPANY_ID}">selected</c:if>
+										>${companyVo.COMPANY_NAME}</option>											
+									</c:forEach>
+								</select>					
+							</div>
+						</div>
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th">직급</div>
+							<div class="ctn_tbl_td">
+								<input type="text" name="USER_RANK" value="${data.USER_RANK}"   maxlength="10" class="form-control">					
+							</div>
+						</div>
+
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th">부서</div>
+							<div class="ctn_tbl_td">
+								<input type="text" name="USER_DEPT" value="${data.USER_DEPT}"   maxlength="20" class="form-control">					
+							</div>
+						</div>
+						
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th">전화번호</div>
+							<div class="ctn_tbl_td">
+								<input type="hidden" id ="userPhone" name="USER_PHONE" class="form-control">
+								<div class= inputPhone>
+									<select class="form-control mw_50" style="width:50px;margin-right:10px" name="selectPhone" id="selectPhone">
+										<option value="02">02</option><!-- 서울 -->
+										<option value="010" selected>010</option>
+										<option value="1">직접입력</option>
+									</select>
+									<input type="text" id="userPhone1" class="form-control" maxlength="4" onkeydown='valiChkAll(this,1)' onkeyup='valiChkAll(this,1)' disabled value="010">
+									<p> - </p>
+									<input type="text" id="userPhone2" maxlength="4" onkeydown='valiChkAll(this,1)' onkeyup='valiChkAll(this,1)' class="form-control">
+									<p> - </p>
+									<input type="text" id="userPhone3" maxlength="4" onkeydown='valiChkAll(this,1)' onkeyup='valiChkAll(this,1)' class="form-control">
+								</div>		
+							</div>
+						</div>
+                        
+						<div class="ctn_tbl_row">
+							<div class="ctn_tbl_th">이메일주소</div>
+							<div class="ctn_tbl_td">
+								<input type="hidden" id ="userEmail" name="USER_EMAIL" class="form-control">
+								<div class= inputPhone style="width: 500px;">
+									<input type="text" class="form-control" id="userEmail1" style="width:70px;"  maxlength="20" onkeyup="valiChkAll(this,1,1);" onkeydown="valiChkAll(this,1,1);">
+									<p> @ </p>
+									<input type="text" class="form-control" id="userEmail2" style="width:100px;" maxlength="20" onkeyup="valiChkAll(this,1,1);" onkeydown="valiChkAll(this,1,1);" disabled value="gmail.com">
+									<select class="form-control mw_50"  id="selectEmail">
+										<option value="gmail.com" selected>gmail.com</option> 
+										<option value="naver.com">naver.com</option> 
+										<option value="daum.net">daum.net</option> 
+										<option value="nate.com">nate.com</option> 
+										<option value="1">직접입력</option> 
+									</select>
+								</div>		
+							</div>
+						</div>
+                    </div>
+                    
+                </div>
+                <!-- contents_box End -->
+                
+                <!-- footer Start ------------------>
+                <div id="footer" class="footer-wrap">
+                    <div id="footer-inner" class="footer-inner">
+                        
+                        <!-- btn_box Start -->
+                        <div class="btn_box">
+                            <div class="right">
+			                    <button type="submit" class="btn btn_primary" style="" id="btnSave" data-term="L.등록" title="등록">
+			                    	<span class="langSpan">수정</span>
+			                    </button>
+					            <button type="button" class="btn" id="btnCancel" data-term="L.목록" title="목록" onclick="location.href='/client/setting/user/userList.do'">
+									<span class="langSpan">취소</span>
+								</button>
+			                </div>
+                        </div>
+                        <!-- btn_box End -->
+                    </div>
+                </div>
+                <!-- footer End ------------------>
+                </form>
+            </div>
+			<!-- work End -->
+        </div>
+		<!-- contents End ------------------>
+    </div>
+    <!-- container End ------------------>
 </body>
 </html>

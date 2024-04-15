@@ -13,9 +13,11 @@ function stMainIdx(sessionVo,url){
 		console.log("로그인 페이지로 이동");
 		location.href="/login/login.do";
 	}else{
+		//메인화면으로 이동
 		location.href="/main/main.do";
 	}
 }
+
 /*
  * 로그인 처리 및 불완전 접속 종료 시 
  * 기존 세션을 끊고 신규 세션 생성

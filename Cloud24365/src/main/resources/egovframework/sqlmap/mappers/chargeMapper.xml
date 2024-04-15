@@ -21,7 +21,7 @@
 						WHEN REPORT_TYPE=1 THEN '월간보고'
 						ELSE 'ETC' END AS REPORT_TYPE_NM
 					,PROJECT_NAME
-					,DATE_FORMAT(REG_DT,'%Y-%m-%d %H:%i:%s') AS REG_DT 
+					,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT 
 				FROM REPORT_INFO
 				WHERE 1=1
 				<!-- vo 필드값을 배열로 해서 조회하는 부분 -->
@@ -82,7 +82,7 @@
 					WHEN REPORT_TYPE=1 THEN '월간보고'
 					ELSE 'ETC' END AS REPORT_TYPE_NM
 				,PROJECT_NAME
-				,DATE_FORMAT(REG_DT,'%Y-%m-%d %H:%i:%s') AS REG_DT
+				,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT
 		    FROM REPORT_INFO
 			 WHERE REPORT_ID=#{REPORT_ID}
 		)A

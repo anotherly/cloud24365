@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-	<title>CLOUD 24 365 관리자 페이지</title>
+	<title>CLOUD 24 365</title>
 	<jsp:include page="/cmn/client/top.do" flush="false" />
 	<link type="text/css" rel="stylesheet" href="/css/imgTable.css">
 <script>
@@ -13,7 +13,7 @@
 $(document).ready(function() {
 	console.log("협력사사진 관리자 페이지");
 	$("#partnerList").empty();
-	var ajaxData = ajaxMethod("/admin/edit/partnerList.ajax").data;
+	var ajaxData = ajaxMethod("/client/edit/partnerList.ajax").data;
 	var divContents="";
 	for (var i = 0; i < ajaxData.length; i++) {
 		if(i==0){
@@ -44,7 +44,7 @@ $(document).ready(function() {
 			<div class="title-inner">
 				<!-- 타이틀 텝 구성 -->
 				<div class="title_segments" role="tablist">
-					<button id="companyInfo" class="nav-link active" role="tab" aria-selected="false" onclick="location.href='/admin/edit/client.do'">고객사</button>
+					<button id="companyInfo" class="nav-link active" role="tab" aria-selected="false" onclick="location.href='/client/edit/client.do'">고객사</button>
 				</div>
 			</div>
 		</div>

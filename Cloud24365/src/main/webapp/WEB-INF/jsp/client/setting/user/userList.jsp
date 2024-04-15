@@ -6,14 +6,11 @@
 <head>
 <meta charset="UTF-8">
 	<title>CLOUD 24 365</title>
-	<jsp:include page="/cmn/top.do" flush="false" />
- 	
-
+	<jsp:include page="/cmn/client/top.do" flush="false" />
 <script>
 	var updUrl="/client/setting/user/userUpdate.do";
-	var delUrl="/client/setting/user/userDelete.ajax";
+	var delUrl="/client/setting/user/userDelete.do";
 	var delbak="/client/setting/user/userList.do";
-	
 	//데이터 테이블 관련
 	var iidx;//날짜컬럼 인덱스
 	var selectlang;
@@ -22,11 +19,10 @@
 	
 	$(document).ready( function() {
 		
-		//$("#sideDiv").load("/sidebar/user.do");
-		$("#tableList_filter input").css("background","black");
+		dtTbSetting();
 		iidx = 3;
 		console.log("사용자 목록 화면 진입");
-		  
+		var colCnt=0;
 		var idxTb =0;
 		
 		var tb2=$("#tableList").DataTable({
@@ -37,12 +33,8 @@
                 "dataType": "json",
             },  
             columns: [
-            	//도대체 무슨 네이밍룰로 시발 정하는지 모르겠으나
-            	//서버단에서 설정한 변수가 아니라 지좆대로 설정되니
-            	//반드시 아래의 랜더함수처럼 row 파라미터 확인해볼것!!!!
             	{
             		data:   "user_ID",
-            	
 	            	"render": function (data, type, row, meta) {
 	            		//console.log(data);
                         return '<input type="checkbox" id="chk" name="chk" value="'+data+'">';
@@ -58,7 +50,7 @@
                 {data:"reg_DT"}
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
-          //"pageLength": 5,
+          	"pageLength": 10,
             pagingType : "full_numbers",
             columnDefs: [ 
             	{ orderable: false, targets: [0] }//특정 열(인덱스번호)에 대한 정렬 비활성화
@@ -70,70 +62,31 @@
             },
             order: [[ 6, 'desc' ]]
             ,responsive: true
-           ,language : 'lang_kor' // //or lang_eng
+           ,language : lang_kor // //or lang_eng
+       	   ,"drawCallback": function() {
+       		   	console.log("공백처리함수");
+	       		//입력정보 없을시
+	       		blankInput($("td"),"입력정보 없음");
+       		}
 		});
+		//테이블 액션에 대한 설정
+		tbAction("tableList");
 		
-		//날짜 검색 기능 추가
-		/* $('#tableList_filter').prepend('<label style="margin-right: 50px;"><div class="input-group date" id="datetimepicker2" style="width: 256px;"><input type="text" id="toDate" ><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span></div></label>');
- 	    $('#tableList_filter').prepend('<label><div class="input-group date" id="datetimepicker1" style="width: 256px;"><input type="text" id="fromDate" placeholder="날짜를 선택해주세요 ->"><span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span><p style="margin-left:15px; margin-bottom:0px">~</p></div></label>');
-		 */
-		//체크박스 클릭 시 이벤트
-		$("#tableList").on("click", 'input:checkbox', function() {
-			chkBoxFunc(this);
-		});
-		//마우스 올릴시 
-		$("#tableList").on("mouseenter", "tbody tr", function(){
-			$(this).addClass('active');
-		});
-		//마우스 내릴시
-		$("#tableList").on("mouseleave", "tbody tr", function(){
-			$(this).removeClass('active');
-		});
-		
-		//체크박스영역 제외 마우스 올릴시 포인터로
-		$("#tableList").on("mouseleave", "tbody td:not(':first-child')", function(){
-			$(this).css('cursor','pointer');
-		});
-		
-		
-		//페이지 이동이나 열 개수 변경시 전체체크박스 관련 이벤트
-		$('#tableList').on('draw.dt', function(){
-			//console.log("데이터테이블 값 변경");
-			//인덱스 번호 재설정
-			$('#tableList input:checkbox[name="chk"]').each(function(i,list) {
-				$(this).attr("id","chk"+i)
-			});
-			
-			//행개수에 따라 수정삭제버튼 생성여부
-			//행 개수 0개일때
-			if($('input:checkbox[name="chk"]').length !=0 && typeof $('input:checkbox[name="chk"]').length !== "undefined"){
-				if(typeof $("#btnUpdate").val()==="undefined"){
-					$("#btnIns").append("<input type='button' id='btnUpdate' value='수정' onclick='tbUpdate(this,updUrl)'>");
-				}
-				if(typeof $("#btnDelete").val()==="undefined"){
-					$("#btnIns").append("<input type='button' id='btnDelete' value='삭제' onclick='tbDelete(this,delUrl,delbak)'>");
-				}
-			}else{
-				//$("#btnIns").empty();	
-				if(typeof $("#btnUpdate").val()==="undefined"){
-					$("#btnUpdate").remove();
-				}
-				if(typeof $("#btnDelete").val()==="undefined"){
-					$("#btnDelete").remove();
-				}
+		//전체체크박스 선택시
+		$("#searchChkAll").on("click",function(){
+			if ($("#searchChkAll").is(":checked")){
+				$('input:checkbox[name="searchChk"]').prop("checked", true);
+			}else{//선택->취소 : 전체 체크 해지시
+				$('input:checkbox[name="searchChk"]').prop("checked", false);
 			}
-			
-			if($('input:checkbox[name="chk"]:checked').length==$("tbody tr").length){
-	    		$("#chkAll").prop("checked", true);
-	    	}else{
-	    		$("#chkAll").prop("checked", false);
-	    	}
 		});
-
-
-		//등록 화면 조회
-		$("#btnInsert").click(function() {
-			location.href="/client/setting/user/userInsert.do";
+		//타 체크박스 관련
+		$('input:checkbox[name="searchChk"]').on('click',function(){
+			if ($('input:checkbox[name="searchChk"]:checked').length==3){
+	    		$("#searchChkAll").prop("checked", true);
+	    	} else {
+	    		$("#searchChkAll").prop("checked", false);
+	    	}
 		});
 		
 		//상세 화면 조회
@@ -142,38 +95,108 @@
 			var tagId = $(this).parent().children().first().children().first().val();
 			$(this).attr('id');
 			if(tagId!="chkTd"){
-				$("#work").load("/client/setting/user/userDetail.do",{"USER_ID":tagId}); 
+				location.href="/client/setting/user/userDetail.do?USER_ID="+tagId;
 			}
 		});
 
 		//데이트타임피커
-		/* var toDate = new Date();
-		 $('#datetimepicker1').datetimepicker({
+		var toDate = new Date();
+		$('#datetimepicker1').datetimepicker({
 			 format:"YYYY-MM-DD" ,
-			 //defaultDate:moment().subtract(6, 'months'),
+			 //defaultDate:moment().subtract(1, 'months'),
 			 maxDate : moment()
-		}).on('dp.change', function (e) {
-			calculDate();
-			tb.draw();
 		});
-		 $('#datetimepicker2').datetimepicker({
+		$('#datetimepicker2').datetimepicker({
 			 format:"YYYY-MM-DD",
-			 defaultDate:moment()
-			 ,maxDate : moment()
-		}).on('dp.change', function (e) {
-			calculDate();
-			tb.draw();
-		}); */
+			 //defaultDate:moment(),
+			 maxDate : moment()
+		});
+		
 	});
+	
+	/* 검색 */
+	 function search(){
+		 console.log("검색");
+		 let frm = $("#searchFrm").serialize();
+		 var tagUrl="/client/setting/user/userList.ajax";
+		 tbSearch("tableList",tagUrl,frm);
+	 }
+	
 </script>
 </head>
-<body>
-	<div id="content" class="main-div">
-		<div id="subCir" class="sub-div">
-			<div class="datatable-list-01">
-				<div class="title">
-					<h3>사용자 목록</h3>
+<body class="open">
+    <!-- lnb Start ------------------>
+    <aside id="lnb" class="lnb">
+        <a class="lnb-control" title="메뉴 펼침/닫침"><span class="menu-toggle">메뉴 펼침/닫침</span></a>
+        <nav id="navbar" class="navbar navbar-expand-sm navbar-default"></nav>
+    </aside>
+    <!-- lnb End ------------------>
+
+    <!-- container Start ------------------>
+    <div id="container" class="container-wrap">
+		<!-- header Start ------------------>
+		<div id="header" class="header-wrap">
+		</div>
+		<!-- header End ------------------>
+		<!-- title start -->
+		<div id="title" class="title-wrap">
+			<div class="title-inner">
+			</div>
+		</div>
+		<!-- title end -->
+		
+		<!-- contents Start ------------------>
+		<div id="contents" class="contents-wrap list_ani">
+			<!-- work Start -->
+			<div id="work" class="work-wrap list_page">
+				
+                <!-- search_box Start -->
+               <div class="search_box">
+				   <form action="#" method="post" id="searchFrm" onsubmit="return false;" class="search_form">
+				   
+						<div class="form-group col_3">
+							<label>
+								<span class="langSpan">등록일</span>
+							</label>
+							<!-- 기간 -->
+							<div class='input-group date' id='datetimepicker1'>
+								<input type='text' class="form-control" name=sDate id="sDate" required/>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							 ~ 
+							<div class='input-group date' id='datetimepicker2'>
+								<input type="text" class="form-control" id="eDate" name="eDate" required/>
+								<span class="input-group-addon">
+									<span class="glyphicon glyphicon-calendar"></span>
+								</span>
+							</div>
+							<div class="fm_checkbox_box">
+								<label for="mon_r" class="fm_radio" ><input type="radio" class="checkMonth" name="searchRadio" id="mon_r" value=""><span class="checkmark"></span><span class="langSpan">범위내 검색</span></label>
+								<label for="mon_1" class="fm_radio" ><input type="radio" class="checkMonth" name="searchRadio" id="mon_1" value="1"><span class="checkmark"></span><span class="langSpan">최근1개월</span></label>
+								<label for="mon_3" class="fm_radio" ><input type="radio" class="checkMonth" name="searchRadio" id="mon_3" value="3"><span class="checkmark"></span><span class="langSpan">최근3개월</span></label>
+								<label for="mon_6" class="fm_radio" ><input type="radio" class="checkMonth" name="searchRadio" id="mon_6" value="6"><span class="checkmark"></span><span class="langSpan">최근6개월</span></label>
+							</div>
+						</div>
+							
+						<div class="form-group col_14">
+							<label class="form-control-label"><span class="langSpan">검색어</span></label>
+							<select class="form-control" id="searchType" name="searchType">
+		                        <option value="companyName">이름</option>
+		                        <option value="companyId">ID</option>
+		                    </select>
+							<input class="form-control" type="text" id="searchValue" name="searchValue"  onkeyup="if(event.keyCode == 13)search();"/>
+						</div>
+				   </form>
+				   <div class="search_btn">
+					   <button class="btn btn_sch btn_primary" id='btnSearch' onclick="search();" ><i class="ico_sch"></i><span class="langSpan">조회</span></button>
+					   <!-- <button class="btn btn_reset"><i class="ico_reset"></i><span class="langSpan">초기화</span></button> -->
+				   </div>
 				</div>
+                <!-- search_box End -->
+                
+                <!-- grid_box Start -->
 				<div class="page-description">
 					<div class="rows">
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
@@ -191,15 +214,28 @@
 						</table>
 					</div>
 				</div>
-				
-				<div id ="btnDiv" class="btnDiv" style="display: flex;flex-direction: row-reverse;">
-					<div id="btnIns" style="display: flex;justify-content: space-around;width: 230px;">
-						<input type='button' id='btnInsert' value='등록'>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<%@include file="/footer.jsp" %>
+				<!-- grid_box End -->
+					
+				<div id="footer" class="footer-wrap">
+			        <div id="footer-inner" class="footer-inner">
+			            <!-- btn_box Start -->
+			            <div class="btn_box">
+			                <div class="right">
+			                <button class="btn btn_primary" style="" id="btnInsert" onclick="location.href='/client/setting/user/userInsert.do'"><span class="langSpan">등록</span></button>
+		                    <button class="btn" style="" id="btnUpdate" data-term="L.등록" title="등록" onclick='tbUpdate(this,updUrl,"USER_ID")'><span class="langSpan">수정</span></button>
+				            <button class="btn" style="" id="btnDelete" data-term="L.등록" title="등록" onclick='tbDelete(this,delUrl,delbak)'><span class="langSpan">삭제</span></button>
+			                </div>
+			            </div>
+			        </div>
+			    </div>
+	            <!-- btn_box End -->
+            </div>
+			<!-- work End -->
+        </div>
+		<!-- contents End ------------------>
+    </div>
+    <!-- container End ------------------>
 </body>
+
+</html>
 </html>

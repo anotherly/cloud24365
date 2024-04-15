@@ -33,7 +33,7 @@ function tbSearch(tbId,tagUrl,frm){
 				alert("검색 시 오류가 발생했습니다 : "+e);
 			},
 			complete : function() {
-
+					
 			}
 	 });
 }
@@ -64,28 +64,7 @@ function tbUpdate(that,paramUrl,key){
 				tagId = $("#chk"+i).val();
 			}
 		}
-		//사용하는 vo에 따른 분기처리
-		//향후 개선이 필요함...함수자체적으로
-		//걍 여기서 리턴값을 tagId로 넘겨서 화면에서 처리할것인지
-		//이거근데 암만생각해도 미개한 방법인데 ㅡㅡ
-		if(paramUrl.indexOf("user")!=-1){
-			$("#work").load(paramUrl,{"USER_ID":tagId});
-		}
-		if(paramUrl.indexOf("company")!=-1){
-			$("#work").load(paramUrl,{"COMPANY_ID":tagId});
-		}
-		if(paramUrl.indexOf("notice")!=-1){
-			$("#work").load(paramUrl,{"NOTICE_ID":tagId});
-		}
-		if(paramUrl.indexOf("request")!=-1){
-			$("#work").load(paramUrl,{"REQ_ID":tagId});
-		}
-		if(paramUrl.indexOf("faq")!=-1){
-			$("#work").load(paramUrl,{"FAQ_ID":tagId});
-		}
-		if(paramUrl.indexOf("report")!=-1){
-			$("#work").load(paramUrl,{"REPORT_ID":tagId});
-		}
+		location.href=paramUrl+"?"+key+"="+tagId
 	}
 }
 
@@ -115,7 +94,7 @@ function tbDelete(that,paramUrl,callback,tb){
 		if(confirm("선택하신 항목을 삭제하시겠습니까?")==true){
 			var url=paramUrl;
 			var data = {"idArr":idArr};
-			ajaxMethod(url, data, callback);
+			authAjax(url, data, callback);
 			chkArr=[];
 		}
 	}
@@ -124,7 +103,7 @@ function tbDelete(that,paramUrl,callback,tb){
 
 /************************************************************************
 함수명 : calculDate
-설 명 : 삭제 기능 함수(동적 버튼)
+설 명 : 데이터테이블 날짜 관련
 인 자 : idx(날짜가 존재하는 칼럼)
 사용법 : 
 작성일 : 2020-08-24
@@ -330,8 +309,7 @@ function addTrDelete(that){
 //저장전에 행추가 테이블 인덱스 맞추는 역할
 function mspListVo(table){
 	$("table tbody tr:not(':last-child')").each(function(i,list){//tr 조회
-		console.log("i : "+i);
-		console.log("list : "+list);
+		console.log("MSP 요금제 구매수량 CHECK");
 		
 		//구매 개수가 0또는 빈칸이거나
 		//서비스를 선택하지 않은 경우는 컨트롤러로 보내주지 않음
