@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo Running build'
-		dir('CloudAdmin') {
+		dir('Cloud24365') {
 			sh 'mvn clean package'
 		}
             }
@@ -21,7 +21,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo Running tests'
-		dir('CloudAdmin') {
+		dir('Cloud24365') {
 			sh 'mvn test'
 		}
             }
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 // 여기에 WAR 파일을 특정 위치로 이동하는 명령어 추가
                 sh 'echo Deploying the build'
-		dir('CloudAdmin') {
+		dir('Cloud24365') {
 			sh 'cp target/firstSamplePro-1.0.0.war /kwsong/'
 			sh 'cd /kwsong && mv firstSamplePro-1.0.0.war Cloud24365.war'
 		}
