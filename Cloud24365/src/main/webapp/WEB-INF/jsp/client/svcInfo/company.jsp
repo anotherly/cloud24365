@@ -22,9 +22,9 @@ $(document).ready(function() {
 		divContents+=
 			"<li id='"+ajaxData[i].file_ID+"' class=''><a>"
 				+"<figure>"
-					+"<img src='/usr/local/tomcat/share_data/resources"+ajaxData[i].file_DIR+ajaxData[i].file_NAME+"' alt='' title=''>"
+					+"<img src='/share/resources"+ajaxData[i].file_DIR+ajaxData[i].file_NAME+"' alt='' title=''>"
 				+"</figure>"
-			+"</a></li>"
+			+"</a></li>";
 			
 		if(i==ajaxData.length-1){
 			divContents+="</ul>"
@@ -73,7 +73,7 @@ $(document).ready(function() {
 			</div>
 		</div>
 		
-		<%@include file="/share/test.jsp" %>
+		<%@include file="/footer.jsp" %>
 		
 	</div>
 	
