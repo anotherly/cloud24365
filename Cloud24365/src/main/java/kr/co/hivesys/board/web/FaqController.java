@@ -61,7 +61,7 @@ public class FaqController {
 	public String url="";
 	
 	//문의하기 목록 조회
-	@RequestMapping(value="/admin/support/faq/faqList.ajax")
+	@RequestMapping(value="/client/support/faq/faqList.ajax")
 	public @ResponseBody ModelAndView reqList( 
 			HttpServletRequest request
 			//,@RequestParam(required=false, value="idArr[]")List<String> listArr
@@ -76,35 +76,8 @@ public class FaqController {
 		}
 		return mav;
 	}
-	//등록 저장
-	@RequestMapping(value= "/admin/support/faq/insertfaq.ajax")
-	public ModelAndView insertReq(HttpSession httpSession, 
-			HttpServletRequest request,Model model
-			,@ModelAttribute("FaqVo") FaqVo inputVo
-			,@RequestParam("multiFile") List<MultipartFile> multiFileList
-			) throws Exception{
-		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
-		ModelAndView mav = new ModelAndView("jsonView");
-		try {
-			//엔터처리
-			inputVo.setCONTENT(inputVo.getCONTENT().replace("\r\n","<br>"));
-			//작성자는 로그인 사용자로
-			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
-			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
-			inputVo.setUSER_ID(nlVo.getUSER_ID());
-			//id 생성
-			inputVo.setFAQ_ID(faqService.creFaqId(inputVo));
-			int cnt=faqService.insert(inputVo);
-			mav.addObject("cnt", cnt);
-		} catch (Exception e) {
-			e.printStackTrace();
-			logger.debug("에러메시지 : "+e.toString());
-			mav.addObject("msg","저장에 실패하였습니다");
-		}
-		return mav;
-	}
 	// 상세,수정 페이지 진입
-	@RequestMapping(value={"/admin/support/faq/faqDetail.do","/admin/support/faq/faqUpdate.do"})
+	@RequestMapping(value={"/client/support/faq/faqDetail.do"})
 	public @ResponseBody ModelAndView detail( @ModelAttribute("FaqVo") FaqVo thvo,HttpServletRequest request) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.회원정보 조회 목록!!!!!!!!!!!!!!!!");
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
@@ -123,46 +96,9 @@ public class FaqController {
 		return mav;
 	}
 	
-	// 수정 반영
-	@RequestMapping(value="/admin/support/faq/faqUpdate.ajax")
-	public @ResponseBody ModelAndView update( 
-			@ModelAttribute("FaqVo") FaqVo inputVo
-			,@RequestParam("multiFile") List<MultipartFile> multiFileList
-			,HttpServletRequest request) throws Exception{
-		
-		logger.debug("▶▶▶▶▶▶▶.회원정보 수정!!!!!!!!!!!!!!!!");
-		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
-		ModelAndView mav = new ModelAndView("jsonView");
-		try {
-			//엔터처리
-			inputVo.setCONTENT(inputVo.getCONTENT().replace("\r\n","<br>"));
-			int cnt=faqService.update(inputVo);
-			mav.addObject("cnt", cnt);
-		} catch (Exception e) {
-			logger.debug("에러메시지 : "+e.toString());
-			mav.addObject("msg","에러가 발생하였습니다");
-		}
-		return mav;
-	}
-	
-	// 삭제
-	@RequestMapping(value="/admin/support/faq/faqDelete.do")
-	public @ResponseBody ModelAndView userDelete( @RequestParam(value="idArr[]")List<String> listArr,HttpServletRequest request) throws Exception{
-		logger.debug("▶▶▶▶▶▶▶.회원정보 삭제!!!!!!!!!!!!!!!!");
-		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
-		ModelAndView mav = new ModelAndView("jsonView");
-		try {
-			faqService.delete(listArr);
-			
-		} catch (Exception e) {
-			mav.addObject("msg","에러가 발생하였습니다");
-		}
-		return mav;
-	}
-	
 	// 엑셀 다운로드를 위한 th td 매핑
 	@RequestMapping(
-		value={"/admin/support/faq/excelDownload.ajax"}
+		value={"/client/support/faq/excelDownload.ajax"}
 	)
 	public void excelDownload(
 		HttpServletRequest req, HttpServletResponse res

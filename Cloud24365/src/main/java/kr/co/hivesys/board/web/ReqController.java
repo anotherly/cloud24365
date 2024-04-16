@@ -67,7 +67,7 @@ public class ReqController{
 	private FileUploadSave fus;
 	
 	//문의하기 목록 조회
-	@RequestMapping(value="/admin/support/request/reqList.ajax")
+	@RequestMapping(value="/client/support/request/reqList.ajax")
 	public @ResponseBody ModelAndView reqList( 
 			HttpServletRequest request
 			//@RequestParam(required=false, value="idArr[]")List<String> listArr
@@ -76,7 +76,7 @@ public class ReqController{
 		try {
 			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
 			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
-			inputVo.setCOMPANY_ID(nlVo.getUSER_ID());	
+			inputVo.setCOMPANY_ID(nlVo.getCOMPANY_ID());	
 			sList = qnaService.selectReqList(inputVo);
 			mav.addObject("data", sList);
 		} catch (Exception e) {
@@ -86,7 +86,7 @@ public class ReqController{
 		return mav;
 	}
 	//수동등록 화면
-	@RequestMapping(value="/admin/support/request/reqInsert.do")
+	@RequestMapping(value="/client/support/request/reqInsert.do")
 	public @ResponseBody ModelAndView reqInsert (HttpServletRequest request) throws Exception{
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
 		ModelAndView mav = new ModelAndView(url);
@@ -100,7 +100,7 @@ public class ReqController{
 		return mav;
 	}
 	//수동등록 저장
-	@RequestMapping(value= "/admin/support/request/insertReq.ajax")
+	@RequestMapping(value= "/client/support/request/insertReq.ajax")
 	public ModelAndView insertReq( 
 			HttpSession httpSession, Model model
 			,@RequestParam("multiFile") List<MultipartFile> multiFileList
@@ -144,7 +144,7 @@ public class ReqController{
 	}
 		
 	//사용자 목록에 답변하기(상셰)
-	@RequestMapping(value="/admin/support/request/reqDetail.do")
+	@RequestMapping(value="/client/support/request/reqDetail.do")
 	public @ResponseBody ModelAndView reqDetail( 
 	HttpServletRequest request, HttpServletResponse response
 	,@ModelAttribute("qnaVo") QnaVo inputVo
@@ -176,27 +176,8 @@ public class ReqController{
 		return mav;
 	}
 	
-		//담당자배정
-		@RequestMapping(value="/admin/support/request/reqAnsUser.ajax")
-		public @ResponseBody ModelAndView reqAnsUser( 
-		HttpServletRequest request, HttpServletResponse response
-		,@ModelAttribute("qnaVo") QnaVo inputVo
-		) throws Exception{
-			url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
-			ModelAndView mav = new ModelAndView("jsonView");
-			try {
-				int cnt =qnaService.reqAnsUser(inputVo);
-				mav.addObject("cnt", cnt);
-			} catch (Exception e) {
-				e.printStackTrace();
-				logger.debug(""+e);
-				mav.addObject("msg","에러가 발생했습니다.");
-			}
-			return mav;	
-		}
-	
 	//사용자 목록에 답변 후 저장
-	@RequestMapping(value="/admin/support/request/reqUpdate.ajax")
+	@RequestMapping(value="/client/support/request/reqUpdate.ajax")
 	public @ResponseBody ModelAndView reqUpdate(
 			@RequestParam("multiFile") List<MultipartFile> multiFileList
 			, HttpServletRequest request, HttpServletResponse response
@@ -239,7 +220,7 @@ public class ReqController{
 		return mav;
 	}
 	//답변+파일리스트 가져오기
-	@RequestMapping(value="/admin/support/request/ansHistoryList.ajax")
+	@RequestMapping(value="/client/support/request/ansHistoryList.ajax")
 	public @ResponseBody ModelAndView ansHistoryList( 
 			HttpServletRequest request
 			,@ModelAttribute("qnaVo") QnaVo inputVo) throws Exception{
@@ -268,7 +249,7 @@ public class ReqController{
 	
 	// 엑셀 다운로드를 위한 th td 매핑
 	@RequestMapping(
-		value={"/admin/support/req/excelDownload.ajax"}
+		value={"/client/support/req/excelDownload.ajax"}
 	)
 	public void excelDownload(
 		HttpServletRequest req, HttpServletResponse res

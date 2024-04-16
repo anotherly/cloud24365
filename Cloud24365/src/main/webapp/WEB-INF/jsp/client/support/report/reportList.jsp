@@ -53,7 +53,7 @@
                 {data:"reg_DT"},
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
-            "pageLength": 20,
+            "pageLength": 10,
             pagingType : "full_numbers",
             columnDefs: [ 
             	{ orderable: false, targets: [0] }//특정 열(인덱스번호)에 대한 정렬 비활성화

@@ -111,8 +111,8 @@
 			FROM USER_INFO 
 		)J2
 		ON(J1.ANS_USER=J2.USER_ID)
-			
-			ORDER BY REQ_DT DESC
+		
+		ORDER BY REQ_DT DESC
 	</select>
 	
 	<select id="selectReqOne" parameterType="qnaVo" resultType="qnaVo">
@@ -170,7 +170,13 @@
 	<!-- req id 생성 -->
 	<select id="creReqId" parameterType="qnaVo" resultType="java.lang.String">
 		SELECT 
-		CONCAT(#{COMPANY_ID},'-',DATE_FORMAT(CURDATE(),'%y%m%d'),'-',LPAD(IFNULL(MAX(RIGHT(REQ_ID,2)),-1)+1,2,'0')) 
+		CONCAT(
+		#{COMPANY_ID},'-',DATE_FORMAT(CURDATE(),'%y%m%d')
+			,'-'
+			,LPAD(IFNULL(
+				MAX(CAST(RIGHT(REQ_ID,2) AS UNSIGNED))
+			,-1)+1,2,'0')
+		) 
 		FROM req_info a
 		WHERE 1=1 
 		AND COMPANY_ID=#{COMPANY_ID}

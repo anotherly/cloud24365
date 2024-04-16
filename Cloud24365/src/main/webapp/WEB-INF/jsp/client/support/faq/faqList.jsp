@@ -45,14 +45,14 @@
 	                },
                 },
             	
-                {data:"faq_ID"},
+                /* {data:"faq_ID"}, */
                 {data:"faq_TYPE_NM"},
                 {data:"faq_TITLE"},
                 {data:"user_NAME"},
                 {data:"faq_DT"},
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
-            "pageLength": 20,
+            "pageLength": 10,
             pagingType : "full_numbers",
             columnDefs: [ 
             	{ orderable: false, targets: [0] }//특정 열(인덱스번호)에 대한 정렬 비활성화
@@ -61,9 +61,9 @@
             select: {
                 style:    'multi',
                 selector: 'td:first-child'
-            },
-            order: [[ 5, 'desc' ]]
-            ,responsive: true
+            }
+            //, order: [[ 5, 'desc' ]]
+            , responsive: true
            ,language : lang_kor // //or lang_eng
 		});
 		
@@ -253,7 +253,7 @@
 							<thead>
 								<tr>
 									<th><input type="checkbox" id="chkAll" class="chk"></th>
-									<th>번호</th>
+									<!-- <th>번호</th> -->
 									<th>분류</th>
 									<th>제목</th>
 									<th>작성자</th>

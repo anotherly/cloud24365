@@ -20,7 +20,16 @@
 		$(document).ready(function() {
 			console.log("CLOUD 서비스소개");
 			
+			$(".derbogi").on("click",function(){
+				console.log("더보기 클릭 1");
+			});
+			
 		});
+		
+		$(document).on(".derbogi","click",function(){
+				console.log("더보기 클릭 2");
+		});
+		
 	</script>
 	
 </head>

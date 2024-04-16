@@ -47,9 +47,10 @@
 				<!-- AND REPORT_DIV=#{REPORT_DIV} -->
 			) A
 			LEFT JOIN
-			(SELECT * FROM COMPANY_INFO WHERE COMPANY_ID =#{COMPANY_ID})B
+			COMPANY_INFO B
 			ON(A.COMPANY_ID=B.COMPANY_ID)
 			WHERE 1=1
+			AND B.COMPANY_ID =#{COMPANY_ID}
 			<!-- 검색어 -->
 			<if test="searchValue !=null and searchValue neq ''"> 
 				<choose>

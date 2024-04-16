@@ -86,6 +86,11 @@
 				+'</div>'
 		}
 		$("#partnerList").append(divContents);
+		//부모창 주소까지 변경
+		$(".derbogi").on("click",function(){
+			console.log("더보기 클릭 1");
+			window.parent.location.href = $(this).attr('id');
+		});
 	});
 </script>
 </head>
@@ -254,10 +259,10 @@
     </section><!-- End About Us Section -->
 
   <!-- ======= Clients Section ======= -->
-	<section id="cliens" class="cliens1 section-bg">
-		<div class="container">
-			<div class="section-title" style="padding: 0px;" >
-				<h2>주요 고객사</h2>
+	<section id="cliens" class="cliens1">
+		<div class="container" style="max-width: 1800px;">
+			<div class="section-title" style="padding: 0px;margin-bottom:30px;" >
+				<h2>주요 고객사</h2><a id="/client/svcInfo/company.do" class="derbogi">더보기 > </a>
 			</div>
 			<div id="partnerList" class="row" data-aos="zoom-in" style="display: flex;align-items: center;justify-content: space-around;">
 			</div>
