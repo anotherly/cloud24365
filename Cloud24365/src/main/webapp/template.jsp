@@ -114,8 +114,6 @@
         </div>
   </div>
   <!-- End Hero -->
-
-  <main id="main">
   
   <!-- ======= Clients Section ======= -->
     <section id="cliens" class="cliens1 section-bg">
