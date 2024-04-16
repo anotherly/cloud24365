@@ -11,7 +11,6 @@
 	<!-- JS -->
 	<script src="<%=request.getContextPath()%>/js/jquery.js"></script>
 	<script src="<%=request.getContextPath()%>/js/jquery.migrate.js"></script>
-	<script src="<%=request.getContextPath()%>/js/demo.js"></script>
 
 	<!-- 로그인 시큐어코딩 관련 -->
 	<script src="<%=request.getContextPath()%>/js/loginSC/login.js"></script>

@@ -274,16 +274,7 @@
 			</div>
 			
 			<div id="footer" class="footer-wrap">
-		        <div id="footer-inner" class="footer-inner">
-		            <!-- btn_box Start -->
-		            <div class="btn_box">
-		                <div class="right">
-		                    <button class="btn btn_primary" style="" id="btnInsert" onclick="location.href='/client/support/notice/noticeInsert.do'"><span class="langSpan">등록</span></button>
-		                    <button class="btn" style="" id="btnUpdate" data-term="L.등록" title="등록" onclick='tbUpdate(this,updUrl,"NOTICE_ID")'><span class="langSpan">수정</span></button>
-				            <button class="btn" style="" id="btnDelete" data-term="L.등록" title="등록" onclick='tbDelete(this,delUrl,delbak)'><span class="langSpan">삭제</span></button>
-		                </div>
-		            </div>
-		        </div>
+		        <%@include file="/footer.jsp" %>
 		    </div>
 		</div>
 	</div>

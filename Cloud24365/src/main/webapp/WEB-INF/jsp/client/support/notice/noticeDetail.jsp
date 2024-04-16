@@ -129,25 +129,7 @@
                 
                 <!-- footer Start ------------------>
                 <div id="footer" class="footer-wrap">
-                    <div id="footer-inner" class="footer-inner">
-                        <c:if test="${fn:length(login.AUTH_CODE)>2}">
-	                        <!-- btn_box Start -->
-	                        <div class="btn_box">
-				               	 <div class="right">
-									<button  id="btnList"  class="btn">
-										<span class="langSpan">목록</span>
-									</button>
-									<button  id="btnUpdate"  class="btn">
-										<span class="langSpan">수정</span>
-									</button>
-									<button  id="btnDelete"  class="btn">
-										<span class="langSpan">삭제</span>
-									</button>
-								</div>
-	                        </div>
-	                        <!-- btn_box End -->
-                        </c:if>
-                    </div>
+					<%@include file="/footer.jsp" %>
                 </div>
                 <!-- footer End ------------------>
 			            </div>

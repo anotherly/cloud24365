@@ -38,7 +38,7 @@
 		<a id="/client/svcInfo/main.do" class="menu-link menu-toggle"><i class="menu-icon n09"></i><div>서비스소개</div></a>
 		<ul class="menu-sub">
 			<li class="menu-item"><a id="/client/svcInfo/main.do" class="menu-link"><div>하이브시스템 MSP 서비스소개</div></a></li>
-			<li class="menu-item"><a id="/client/svcInfo/company.do" class="menu-link"><div>고객사</div></a></li>
+			<li class="menu-item"><a id="/client/svcInfo/company.do" class="menu-link"><div>주요 고객사</div></a></li>
 		</ul>
 	</li>
 	<li class="menu-item">

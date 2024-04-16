@@ -74,6 +74,9 @@ public class ReqController{
 			,@ModelAttribute("qnaVo") QnaVo inputVo) throws Exception{
 		ModelAndView mav = new ModelAndView("jsonView");
 		try {
+			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
+			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
+			inputVo.setCOMPANY_ID(nlVo.getUSER_ID());	
 			sList = qnaService.selectReqList(inputVo);
 			mav.addObject("data", sList);
 		} catch (Exception e) {

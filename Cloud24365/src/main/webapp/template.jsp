@@ -29,7 +29,8 @@
   <!-- Template Main CSS File -->
   <link href="assets/css/style.css" rel="stylesheet">
 
-<script src="<%=request.getContextPath()%>/js/jquery3.5.1.js"></script>
+	<script src="<%=request.getContextPath()%>/js/jquery3.5.1.js"></script>
+	<script src="<%=request.getContextPath()%>/js/common/common.js"></script>
   <!-- =======================================================
   * Template Name: BizLand
   * Updated: Jan 29 2024 with Bootstrap v5.3.2
@@ -71,6 +72,20 @@
 			        div1.style.display = 'none';
 			    }
 		},5000);
+		
+		console.log("협력사사진 관리자 페이지");
+		$("#partnerList").empty();
+		var ajaxData = ajaxMethod("/client/edit/partnerList.ajax").data;
+		var divContents="";
+		for (var i = 0; i < 5; i++) {
+			var fileDir = "/share/resources"+ajaxData[i].file_DIR+ajaxData[i].file_NAME;
+			//var fileDir = "assets/img/clients/nhn_logo.png";
+			divContents+=
+				'<div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">'
+					+'<img src="'+fileDir+'" class="img-fluid" alt="">'
+				+'</div>'
+		}
+		$("#partnerList").append(divContents);
 	});
 </script>
 </head>
@@ -118,9 +133,9 @@
   <!-- ======= Clients Section ======= -->
     <section id="cliens" class="cliens1 section-bg">
       <div class="container">
-        <!-- <div class="section-title" style="padding: 0px;" >
+       <!-- <div class="section-title" style="padding: 0px;" >
           <h2>Partnership</h2>
-        </div>  -->
+        </div> -->
         <div class="row" data-aos="zoom-in" style="display: flex;align-items: center;justify-content: space-around;">
           <div class="col-lg-2 col-md-4 col-6 d-flex align-items-center justify-content-center">
             <img src="assets/img/clients/amazon_logo.png" class="img-fluid" alt="">
@@ -139,7 +154,8 @@
           </div>
         </div>
       </div>
-    </section><!-- End Cliens Section -->
+    </section>
+    <!-- End Cliens Section -->
   
     <!-- ======= About Us Section ======= -->
     <section id="about" class="about section-bg" style="padding: 20px;">
@@ -237,16 +253,25 @@
       </div>
     </section><!-- End About Us Section -->
 
+  <!-- ======= Clients Section ======= -->
+	<section id="cliens" class="cliens1 section-bg">
+		<div class="container">
+			<div class="section-title" style="padding: 0px;" >
+				<h2>주요 고객사</h2>
+			</div>
+			<div id="partnerList" class="row" data-aos="zoom-in" style="display: flex;align-items: center;justify-content: space-around;">
+			</div>
+		</div>
+	</section>
+    <!-- End Cliens Section -->
 
     <!-- ======= Services Section ======= -->
     <section id="services" class="services section-bg">
       <div class="container" data-aos="fade-up">
-
         <div class="section-title">
           <h2>Benifits</h2>
           <p>다음과 같은 서비스 이점을 제공합니다</p>
         </div>
-
         <div class="row" style="display: flex;justify-content: space-around;">
           <div class="col-xl-3 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="icon-box">

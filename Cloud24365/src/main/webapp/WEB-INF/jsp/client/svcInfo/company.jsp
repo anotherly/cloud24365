@@ -47,7 +47,7 @@ $(document).ready(function() {
 		<!-- header End ------------------>
 		<!-- title start -->
 		<div id="title" class="title-wrap">
-			<div class="title-inner">
+			<div class="title-inner" style="margin: 0px;margin-left: 150px;">
 				<!-- 타이틀 텝 구성 -->
 				<div class="title_segments" role="tablist">
 					<button id="companyInfo" class="nav-link active" role="tab" aria-selected="false" onclick="location.href='/client/edit/client.do'">고객사</button>

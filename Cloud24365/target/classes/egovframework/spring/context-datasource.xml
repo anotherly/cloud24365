@@ -22,7 +22,7 @@
 		<property name="defaultReadOnly" value="false" />
 		<property name="maxActive" value="20" />
 		<property name="maxIdle" value="20" />
-	</bean>
+	</bean>-->
 	
     <!-- 개발환경 -->
 	<!-- <bean id="dataSource_main" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
@@ -35,7 +35,7 @@
 		<property name="defaultReadOnly" value="false" />
 		<property name="maxActive" value="20" />
 		<property name="maxIdle" value="20" />
-	</bean>  -->
+	</bean> -->
 	
 	<!-- <property name="url" value="jdbc:mariadb://hive.grkeeper.kr:11003/cloud_24_365?allowMultiQueries=true" /> -->
 	
