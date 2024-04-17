@@ -17,6 +17,10 @@
 		<if test=" FILE_ORIGIN !=null and FILE_ORIGIN neq '' ">
 		    AND FILE_ORIGIN=#{FILE_ORIGIN}
 		</if>    
+		<!-- 고객관리 증빙서 계약서 -->
+		<if test=" FILE_DIR !=null and FILE_DIR neq '' ">
+		    AND FILE_DIR LIKE CONCAT('%',#{FILE_DIR},'%')
+		</if>    
 	</select>
 
 	<insert id="insertFile"  parameterType="fileVo">

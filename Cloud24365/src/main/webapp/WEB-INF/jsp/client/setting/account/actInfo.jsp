@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +12,6 @@
 
 	<title>CLOUD 24 365</title>
 	<jsp:include page="/cmn/client/top.do" flush="false" />
-
 <script>
 	
 	//데이터 테이블 관련
@@ -25,16 +28,43 @@
 			location.href='/client/setting/account/chgPw.do';
 		});
 		
-		$("#acDetailFrm").submit(function(){
-			
-			console.log("정보 저장");
+		$("#acDetailFrm").submit(function(e){
 			event.preventDefault();
 			console.log("정보 저장");
 			//저장 전 인덱스 맞춤
 			mspListVo($('#mspList'));
 			let queryString = $("#acDetailFrm").serialize();
-			ajaxMethod('/client/setting/account/saveActInfo.do',queryString,'','저장되었습니다');
+			//ajaxMethod('/admin/client/company/companyUpdate.ajax',queryString,"/admin/client/company/companyList.do",'저장되었습니다');
 			
+			console.log("문의하기 등록");
+			let frm = $("#acDetailFrm").serialize();
+			//let param = encodeURI(frm);
+		    var options = {
+	            url:'/client/setting/account/saveActInfo.do',
+	            type:"post",
+	            dataType: "json",
+	            //contentType: "application/x-www-form-urlencoded; charset=euc-kr",
+	            data : frm,
+	            success: function(res){
+	                if(res.cnt > 0){
+	                    alert("저장되었습니다.");
+	                } else {
+	                	if(res.badFileType != null){
+	                		alert("올바른 확장자명인지 확인해주세요");
+	                	} else if(typeof res.createFileError !== "undefined" && res.createFileError) {
+	                	    alert("파일 저장에 실패했습니다.");
+	                	} else if(typeof res.msg !== "undefined" && res.msg != null) {
+	                		alert(res.msg);
+	                	} else {
+	                		alert("저장에 실패했습니다.");
+	                	}
+	                }
+	            } ,
+	            error: function(res,error){
+	                alert("에러가 발생했습니다."+error);
+	            }
+		    };
+		    $('#acDetailFrm').ajaxSubmit(options);
 		}); 
 		
 		//y면 체크 아니면 비체크인데 비체크값을 n으로 변경
@@ -268,7 +298,19 @@
 									<span class="langSpan">계약서</span>
 								</div>
 								<div class="ctn_tbl_td">
-									<input type="text" name="CONTRACT" class="form-control" value="${data.CONTRACT}"   readonly/>
+									<c:choose>
+										<c:when test="${contractList.size()==0}">
+											첨부파일 없음
+										</c:when>
+										<c:otherwise>
+											<select class="form-control mw_50"  style="width:120px;" id="fCONTRACT_S"  onchange="if(this.value) window.open(this.value);">
+												<option value="">첨부파일 ${contractList.size()}개</option>
+												<c:forEach var="fvo" items="${contractList}">
+													<option value="/download.ajax?FILE_ID=${fvo.FILE_ID}">${fvo.FILE_NAME}</option>
+												</c:forEach>
+											</select>						
+										</c:otherwise>
+									</c:choose>
 								</div>
 								
 							</div>
@@ -303,7 +345,19 @@
 									<span class="langSpan">증빙 자료</span>
 								</div>
 								<div class="ctn_tbl_td">
-									<input type="text" name="EVIDENCE" class="form-control" value="${data.EVIDENCE}"   readonly/>
+									<c:choose>
+										<c:when test="${evidenceList.size()==0}">
+											첨부파일 없음
+										</c:when>
+										<c:otherwise>
+											<select class="form-control mw_50"  style="width:120px;" id="fEVIDENCE_S"  onchange="if(this.value) window.open(this.value);">
+												<option value="">첨부파일 ${evidenceList.size()}개</option>
+												<c:forEach var="fvo" items="${evidenceList}">
+													<option value="/download.ajax?FILE_ID=${fvo.FILE_ID}">${fvo.FILE_NAME}</option>
+												</c:forEach>
+											</select>						
+										</c:otherwise>
+									</c:choose>
 								</div>
 								
 							</div>
@@ -314,9 +368,9 @@
 								</div>
 								<div class="ctn_tbl_td">
 									<div>
-										<input type="radio" class="fm_radio" name="COM_DIV" id="COM_DIV_1"value="0" <c:if test="${data.COM_DIV eq '0'}">checked</c:if> readonly/>
+										<input type="radio" class="fm_radio" name="COM_DIV" id="COM_DIV_1"value="0" <c:if test="${data.COM_DIV eq '0'}">checked</c:if> disabled/>
 										<label for="COM_DIV_1">민간</label>
-										<input type="radio" class="fm_radio" name="COM_DIV" id="COM_DIV_2" value="1" <c:if test="${data.COM_DIV eq '1'}">checked</c:if> readonly/>
+										<input type="radio" class="fm_radio" name="COM_DIV" id="COM_DIV_2" value="1" <c:if test="${data.COM_DIV eq '1'}">checked</c:if> disabled/>
 										<label for="COM_DIV_2">공공</label>
 									</div>
 								</div>

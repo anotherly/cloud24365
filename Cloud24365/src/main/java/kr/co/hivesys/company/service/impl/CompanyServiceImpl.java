@@ -37,14 +37,14 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 	
 	@Override
-	public void insertCompany(CompanyVo cmsVo) {
-		companyMapper.insertCompany(cmsVo);
+	public int insertCompany(CompanyVo cmsVo) {
+		return companyMapper.insertCompany(cmsVo);
 		
 	}
 	
 	@Override
-	public void updateCompany(CompanyVo cmsVo) {
-		companyMapper.updateCompany(cmsVo);
+	public int updateCompany(CompanyVo cmsVo) {
+		return companyMapper.updateCompany(cmsVo);
 		
 	}
 	//사용자 삭제

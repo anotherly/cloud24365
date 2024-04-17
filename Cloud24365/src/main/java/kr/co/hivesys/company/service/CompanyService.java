@@ -15,9 +15,9 @@ public interface CompanyService {
 	
 	String creComId();
 
-	void insertCompany(CompanyVo cmsVo);
+	int insertCompany(CompanyVo cmsVo);
 	
-	void updateCompany(CompanyVo cmsVo);
+	int updateCompany(CompanyVo cmsVo);
 	
 	public void deleteCompany(List<String> listArr);
 

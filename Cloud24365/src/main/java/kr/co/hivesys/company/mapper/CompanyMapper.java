@@ -18,9 +18,9 @@ public interface CompanyMapper {
 	
 	String creComId();
 	
-	void insertCompany(CompanyVo cmsVo);
+	int insertCompany(CompanyVo cmsVo);
 
-	void updateCompany(CompanyVo cmsVo);
+	int updateCompany(CompanyVo cmsVo);
 
 	void deleteCompany(HashMap<String, Object> map);
 
