@@ -198,6 +198,12 @@
 									<span class="checkmark"></span>
 								</label>
 
+								<label class="fm_checkbox">
+									<span class="langSpan">답변종료</span>
+									<input type="checkbox" name="searchChk" id="chk_status2" value="3" checked>
+									<span class="checkmark"></span>
+								</label>
+
 							</div>
 						</div>
 						
@@ -274,15 +280,15 @@
 					</div>
 				</div>
 				
-				<div id="footer" class="footer-wrap">
-			        <div id="footer-inner" class="footer-inner">
-			            <!-- btn_box Start -->
-			            <div class="btn_box">
+				 <!-- btn_box Start -->
+			            <div class="btn_box" style="margin-top:30px;">
 			                <div class="right">
-			                    <button class="btn btn_primary" style="" id="btnInsert" data-term="L.등록" title="등록"><span class="langSpan">수동등록</span></button>
+			                    <button class="btn btn_primary" style="" id="btnInsert" data-term="L.등록" title="등록"><span class="langSpan">문의글 등록</span></button>
 			                </div>
 			            </div>
-			        </div>
+				
+				<div id="footer" class="footer-wrap">
+			        <%@include file="/footer.jsp" %>
 			    </div>
 				
 			</div>

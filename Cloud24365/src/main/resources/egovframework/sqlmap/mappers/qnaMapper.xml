@@ -51,7 +51,8 @@
 					,CASE 
 					WHEN REQ_STATUS=0 THEN '미접수'
 					WHEN REQ_STATUS=1 THEN '확인중'
-					ELSE '답변완료' END AS REQ_STATUS_NM
+					WHEN REQ_STATUS=2 THEN '답변완료'
+					ELSE '답변종료' END AS REQ_STATUS_NM
 					
 					,ANS_USER
 					
@@ -158,7 +159,8 @@
 					,CASE 
 					WHEN REQ_STATUS=0 THEN '미접수'
 					WHEN REQ_STATUS=1 THEN '확인중'
-					ELSE '답변완료' END AS REQ_STATUS_NM
+					WHEN REQ_STATUS=2 THEN '답변완료'
+					ELSE '답변종료' END AS REQ_STATUS_NM
 					,ANS_USER
 					,REQ_TITLE 
 			    FROM REQ_INFO
@@ -222,13 +224,13 @@
 		)
 	</insert>
 	
-	<update id="reqAnsUser" parameterType="qnaVo">
+<!-- 	<update id="reqAnsUser" parameterType="qnaVo">
 	    UPDATE REQ_INFO
 	    SET
 	      REQ_STATUS=1
 	     ,ANS_USER=#{ANS_USER}
 	    WHERE REQ_ID=#{REQ_ID}
-	</update>
+	</update> -->
 	    
 	<update id="reqUpdate" parameterType="qnaVo">
 	    UPDATE REQ_INFO
@@ -321,21 +323,21 @@
 	</select>
 	
 	<!--  삭제 -->
-	<delete id="deleteReq" parameterType="qnaVo">
+	<!-- <delete id="deleteReq" parameterType="qnaVo">
 		DELETE FROM REQ_INFO 
 		WHERE REQ_ID IN
 		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
             #{item}
         </foreach>
-	</delete>
+	</delete> -->
 	
 	<!-- 답변 삭제 -->
-	<delete id="deleteAns" parameterType="qnaVo">
+	<!-- <delete id="deleteAns" parameterType="qnaVo">
 		DELETE FROM ANS_INFO 
 		WHERE ANS_ID IN
 		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
             #{item}
         </foreach>
-	</delete>
+	</delete> -->
 	
 </mapper>

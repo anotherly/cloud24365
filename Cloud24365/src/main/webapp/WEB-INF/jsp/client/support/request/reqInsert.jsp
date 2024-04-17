@@ -22,9 +22,11 @@
 		            dataType: "json",
 		            //contentType: "application/x-www-form-urlencoded; charset=euc-kr",
 		            data : frm,
+		            async : false,
 		            success: function(res){
 		                if(res.cnt > 0){
 		                    alert("저장되었습니다.");
+		                    window.location.href='/client/support/request/reqList.do';
 		                } else {
 		                	if(res.badFileType != null){
 		                		alert("사진파일 첨부는 이미지 파일만 가능합니다.")
@@ -78,7 +80,7 @@
 		<div id="contents" class="contents-wrap">
 			<!-- work Start -->
 			<div id="work" class="work-wrap">
-			<form name="insertForm" id="acDetailFrm" method="post"  action="/client/support/request/reqList.do"  enctype="multipart/form-data">
+			<form name="insertForm" id="acDetailFrm" method="post"  action='/client/support/request/reqList.do'  enctype="multipart/form-data">
                 <!-- contents_box Start -->
                 <div id="contents_box" class="contents_box">
                     <!-- 컨텐츠 테이블 헤더 Start -->
@@ -129,26 +131,26 @@
                     </div>
                 </div>
                 <!-- contents_box End -->
-                
+                        <!-- btn_box Start -->
+                       <div class="btn_box" style="margin-top:30px;">
+                           <div class="right">
+		                    <button type="submit"  class="btn btn_primary" style="" id="btnSave" data-term="L.등록" title="등록">
+								<span class="langSpan">등록</span>
+							</button>
+				             <button type="button"  class="btn" id="btnList" data-term="L.목록" title="목록"
+							onclick="location.href='/client/support/request/reqList.do'">
+							<span class="langSpan">취소</span></button>
+		                </div>
+                       </div>
+                       <!-- btn_box End -->
+                </form>
+                                
                 <!-- footer Start ------------------>
                 <div id="footer" class="footer-wrap">
-                    <div id="footer-inner" class="footer-inner">
-                        <!-- btn_box Start -->
-                        <div class="btn_box">
-                            <div class="right">
-			                    <button type="submit"  class="btn btn_primary" style="" id="btnSave" data-term="L.등록" title="등록">
-									<span class="langSpan">등록</span>
-								</button>
-					             <button type="button"  class="btn" id="btnList" data-term="L.목록" title="목록"
-								onclick="location.href='/client/support/request/reqList.do'">
-								<span class="langSpan">취소</span></button>
-			                </div>
-                        </div>
-                        <!-- btn_box End -->
-                    </div>
+                    <%@include file="/footer.jsp" %>
                 </div>
                 <!-- footer End ------------------>
-                </form>
+                
             </div>
 			<!-- work End -->
         </div>

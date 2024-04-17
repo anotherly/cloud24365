@@ -116,9 +116,7 @@ public class CompanyController {
 			,@RequestPart(value = "fEVIDENCE", required = false) List<MultipartFile> fEVIDENCE
 			) throws Exception{
 		logger.debug("▶▶▶▶▶▶▶.회원정보 수정!!!!!!!!!!!!!!!!");
-		
 		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
-		
 		ModelAndView mav = new ModelAndView("jsonView");
 		try {
 			

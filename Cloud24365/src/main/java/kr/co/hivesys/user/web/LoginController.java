@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.hivesys.comm.SessionListener;
+import kr.co.hivesys.company.service.CompanyService;
+import kr.co.hivesys.company.vo.CompanyVo;
 import kr.co.hivesys.user.web.LoginController;
 import kr.co.hivesys.user.service.UserService;
 import kr.co.hivesys.user.vo.UserVO;
@@ -28,6 +30,9 @@ public class LoginController {
 	
 	@Resource(name="userService")
 	private UserService userService;
+	
+	@Resource(name="companyService")
+	private CompanyService companyService;
 	
 	public String url = "";
 	public boolean isClose = false;
@@ -123,12 +128,24 @@ public class LoginController {
 	                //세션 + 시간 해쉬맵에 로그인 세션과 현 시간을 저장
 	                SessionListener.getInstance().setSession(loginSession, userVo.getUSER_ID());
                 }
-               
+                CompanyVo cvo = new CompanyVo();
+                cvo.setCOMPANY_ID(userVo.getCOMPANY_ID());
+                cvo = companyService.selectCompany(cvo);
                 //개인정보 기입여부에 따라 리턴 페이지를 달리함
-                if (userVo.getINTRO_YN().equals("F")&&userVo.getAUTH_CODE().equals("99")) {
-					url="/client/setting/account/actInfo.do";
+                if (
+                			 cvo.getMANAGER_EMAIL()!=null
+                		&&	!cvo.getMANAGER_EMAIL().equals("")
+                		&&	 cvo.getMANAGER_PHONE()!=null
+                		&&	!cvo.getMANAGER_PHONE().equals("")
+                		&&	 cvo.getMANAGER_ID()!=null
+                		&&	!cvo.getMANAGER_ID().equals("")
+                		&&	 cvo.getMANAGER_NAME()!=null
+                		&&	!cvo.getMANAGER_NAME().equals("")
+                		
+                	) {
+                	url="/client/svcInfo/main.do";
 				} else {
-					url="/client/svcInfo/main.do";
+					url="/client/setting/account/actInfo.do";
 				}
                 
 			}

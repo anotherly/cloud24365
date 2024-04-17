@@ -62,7 +62,7 @@ function ansHistoryList(tagId){
 				+'<div class="ctn_tbl_row">'
 					+'<div class="ctn_tbl_th">답변내용</div>'
 				    +'<div class="ctn_tbl_td">'
-				      	+'<textarea id="REQ_ANSWER" name="REQ_ANSWER" class="long-cont" style="height:200px;" readonly>'
+				      	+'<textarea id="REQ_ANSWER" class="long-cont" style="height:200px;" readonly>'
 				      		+ansList[i].REQ_ANSWER
 				      	+'</textarea>'
 				    +'</div>'

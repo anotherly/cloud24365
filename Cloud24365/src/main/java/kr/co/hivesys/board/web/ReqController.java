@@ -209,7 +209,7 @@ public class ReqController{
 				fus.fileUploadMultiple(multiFileList,fvo);
 			}
 			
-			qnaService.reqUpdate(inputVo);
+			//qnaService.reqUpdate(inputVo);
 			int cnt =qnaService.ansInsert(inputVo);
 			mav.addObject("cnt", cnt);
 		} catch (Exception e) {
