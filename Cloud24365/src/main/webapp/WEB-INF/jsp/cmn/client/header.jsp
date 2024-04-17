@@ -17,7 +17,7 @@
 						<i class="ion-person"></i>
 						<div style="margin-left: 10px;">${login.USER_NAME}님 환영합니다.</div>
 						<a href="/login/logout.do" style="margin-left: 10px;">logout</a>
-						<a href="/client/support/reqInsert.do" style="margin-left: 10px;">문의하기</a>
+						<a href="/client/support/request/reqInsert.do" style="margin-left: 10px;">문의하기</a>
 					</li>
 				</c:when>
 				<c:otherwise>

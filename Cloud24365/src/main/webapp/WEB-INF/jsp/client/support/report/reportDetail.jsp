@@ -91,13 +91,21 @@
 				         ${data.REPORT_TYPE_NM}
 				    </div>
 				</div>
+				
 				<div class="ctn_tbl_row">
 				     <div class="ctn_tbl_th fm_rep">고객사</div>
 				     <div class="ctn_tbl_td">
 				         ${data.COMPANY_NAME}
 				    </div>
 				</div>
-		                  
+				
+				<div class="ctn_tbl_row">
+				     <div class="ctn_tbl_th fm_rep">작성자</div>
+				     <div class="ctn_tbl_td">
+				         ${data.USER_NAME}
+				    </div>
+				</div> 
+				
 				<div class="ctn_tbl_row">
 					<div class="ctn_tbl_th">보고서별첨</div>
 					<div class="ctn_tbl_td">

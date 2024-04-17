@@ -14,6 +14,8 @@ public class ReportVo extends FileVo{
 	private String COMPANY_NAME;
 	private String PROJECT_NAME;
 	private String REG_DT;
+	private String USER_ID;
+	private String USER_NAME;
 	
 	//범위값
 	private List<String> listArr;
@@ -30,6 +32,18 @@ public class ReportVo extends FileVo{
 	//라디오버튼 
 	private String searchRadio;
 	
+	public String getUSER_NAME() {
+		return USER_NAME;
+	}
+	public void setUSER_NAME(String uSER_NAME) {
+		USER_NAME = uSER_NAME;
+	}
+	public String getUSER_ID() {
+		return USER_ID;
+	}
+	public void setUSER_ID(String uSER_ID) {
+		USER_ID = uSER_ID;
+	}
 	public String getCOMPANY_NAME() {
 		return COMPANY_NAME;
 	}

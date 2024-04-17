@@ -42,7 +42,7 @@
                 	<input type="text" id="USER_ID" name="USER_ID" class="form-control"  maxlength="10" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);"  required/>
                 </div><!-- 아이디 -->
                 <div class="login_fm_pass"><!-- 비밀번호 -->
-                	<input type="password" id="USER_PW" name="USER_PW" class="form-control" maxlength="10" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);"  required/>
+                	<input type="password" id="USER_PW" name="USER_PW" class="form-control" maxlength="15" onkeyup="spaceChk(this);" onkeydown="spaceChk(this);"  required/>
                 </div>
                 <div class="login_fm_btn">
                     <button class="btn btn_primary" type="submit" role="button">로그인</button>

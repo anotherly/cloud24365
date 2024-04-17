@@ -85,7 +85,7 @@
 
 		//등록 화면 조회
 		$("#btnInsert").click(function() {
-			location.href="/client/support/request/reqManual.do";
+			location.href="/client/support/request/reqInsert.do";
 		});
 		
 		//상세 화면 조회

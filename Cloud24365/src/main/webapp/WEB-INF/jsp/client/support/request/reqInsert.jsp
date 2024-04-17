@@ -83,7 +83,7 @@
                 <div id="contents_box" class="contents_box">
                     <!-- 컨텐츠 테이블 헤더 Start -->
                     <div class="ctn_tbl_header">
-                        <div class="ttl_ctn">수동등록</div><!-- 컨텐츠 타이틀 -->
+                        <div class="ttl_ctn">문의하기</div><!-- 컨텐츠 타이틀 -->
                         <div class="txt_info"><em class="txt_info_rep">*</em> 표시는 필수 입력 항목입니다.</div><!-- 설명글 -->
                     </div>
                     <!-- 컨텐츠 테이블 헤더 End -->

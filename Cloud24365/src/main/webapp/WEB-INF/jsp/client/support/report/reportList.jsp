@@ -48,8 +48,8 @@
                 {data:"report_ID"},
                 {data:"report_TYPE_NM"},
                 {data:"company_NAME"},
-                {data:"project_NAME"},
                 {data:"report_NAME"},
+                {data:"project_NAME"},
                 {data:"reg_DT"},
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
@@ -266,8 +266,8 @@
 									<th>보고서번호</th>
 									<th>보고서유형</th>
 									<th>기관명</th>
-									<th>프로젝트명</th>
 									<th>보고서명</th>
+									<th>프로젝트명</th>
 									<th>일자</th>
 								</tr>
 							</thead>

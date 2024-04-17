@@ -25,22 +25,16 @@
 			location.href='/client/setting/account/chgPw.do';
 		});
 		
-		$("#btnSave").on('click',function(){
+		$("#acDetailFrm").submit(function(){
+			
 			console.log("정보 저장");
-			var validChk = true;
-			$(".input_base_require").each(function(i,list){
-				console.log("필수값체크");
-				if($(this).val()==null||$(this).val()==''){
-					alert("필수 항목을 기재해 주세요");
-					$(this).focus();
-					validChk=false;
-					return false;
-				}
-			});
-			if(validChk){
-				let queryString = $("#acDetailFrm").serialize();
-				ajaxMethod('/client/setting/account/saveActInfo.do',queryString,'','저장되었습니다');
-			}
+			event.preventDefault();
+			console.log("정보 저장");
+			//저장 전 인덱스 맞춤
+			mspListVo($('#mspList'));
+			let queryString = $("#acDetailFrm").serialize();
+			ajaxMethod('/client/setting/account/saveActInfo.do',queryString,'','저장되었습니다');
+			
 		}); 
 		
 		//y면 체크 아니면 비체크인데 비체크값을 n으로 변경

@@ -80,7 +80,7 @@
                             </div>
                             <div class="ctn_tbl_th">작성자</div>
                             <div class="ctn_tbl_td">
-                                ${data.FAQ_TITLE}
+                                ${data.USER_NAME}
                             </div>
                         </div>
 					
@@ -92,6 +92,13 @@
                             <div class="ctn_tbl_th">분류</div>
                             <div class="ctn_tbl_td">
                                 ${data.FAQ_TYPE_NM}
+                            </div>
+                        </div>
+                        
+						<div class="ctn_tbl_row">
+                            <div class="ctn_tbl_th">제목</div>
+                            <div class="ctn_tbl_td">
+                                ${data.FAQ_TITLE}
                             </div>
                         </div>
                         

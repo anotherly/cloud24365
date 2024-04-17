@@ -10,6 +10,8 @@
 -->
 
 <select id="selectList" parameterType="reportVo" resultType="reportVo">
+    SELECT J1.*,J2.USER_NAME FROM
+		(
 		 SELECT A.*,B.COMPANY_NAME FROM  
 				(SELECT 
 					 REPORT_ID
@@ -22,6 +24,7 @@
 						ELSE 'ETC' END AS REPORT_TYPE_NM
 					,PROJECT_NAME
 					,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT 
+					,USER_ID
 				FROM REPORT_INFO
 				WHERE 1=1
 				<!-- vo 필드값을 배열로 해서 조회하는 부분 -->
@@ -46,11 +49,9 @@
 				</choose>
 				<!-- AND REPORT_DIV=#{REPORT_DIV} -->
 			) A
-			LEFT JOIN
-			COMPANY_INFO B
+			LEFT JOIN COMPANY_INFO B
 			ON(A.COMPANY_ID=B.COMPANY_ID)
 			WHERE 1=1
-			AND B.COMPANY_ID =#{COMPANY_ID}
 			<!-- 검색어 -->
 			<if test="searchValue !=null and searchValue neq ''"> 
 				<choose>
@@ -68,28 +69,39 @@
 				    </otherwise>
 				</choose>
 			</if>
-		ORDER BY A.REG_DT DESC
+		)J1
+		LEFT JOIN	
+		USER_INFO J2
+		ON(J1.USER_ID=J2.USER_ID)
+		ORDER BY J1.REPORT_ID DESC
 	</select>
 	
 	<select id="selectOne" parameterType="reportVo" resultType="reportVo">
-	   	SELECT A.*,B.COMPANY_NAME FROM
-	    (
-		    SELECT 				 
-				 REPORT_ID
-				,REPORT_NAME
-				,COMPANY_ID
-				,REPORT_TYPE
-				,CASE
-					WHEN REPORT_TYPE=0 THEN '주간보고'
-					WHEN REPORT_TYPE=1 THEN '월간보고'
-					ELSE 'ETC' END AS REPORT_TYPE_NM
-				,PROJECT_NAME
-				,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT
-		    FROM REPORT_INFO
-			 WHERE REPORT_ID=#{REPORT_ID}
-		)A
-		LEFT JOIN COMPANY_INFO B
-		ON(A.COMPANY_ID=B.COMPANY_ID)
+	    SELECT J1.*,J2.USER_NAME FROM
+		(
+		    SELECT A.*,B.COMPANY_NAME FROM
+		    (
+			    SELECT 				 
+					 REPORT_ID
+					,REPORT_NAME
+					,COMPANY_ID
+					,REPORT_TYPE
+					,CASE
+						WHEN REPORT_TYPE=0 THEN '주간보고'
+						WHEN REPORT_TYPE=1 THEN '월간보고'
+						ELSE 'ETC' END AS REPORT_TYPE_NM
+					,PROJECT_NAME
+					,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT
+					,USER_ID
+			    FROM REPORT_INFO
+				 WHERE REPORT_ID=#{REPORT_ID}
+			)A
+			LEFT JOIN COMPANY_INFO B
+			ON(A.COMPANY_ID=B.COMPANY_ID)
+		)J1
+		LEFT JOIN
+		USER_INFO J2
+		ON(J1.USER_ID=J2.USER_ID)
 	</select>
 
 	<!-- req id 생성 -->
@@ -114,6 +126,7 @@
 			,COMPANY_ID
 			,PROJECT_NAME
 			,REG_DT
+			,USER_ID
 		)
 		VALUES (
 			 #{REPORT_ID}
@@ -122,6 +135,7 @@
 			,#{COMPANY_ID}
 			,#{PROJECT_NAME}
 			,CURDATE()
+			,#{USER_ID}
 		)
 	</insert>
 	
@@ -132,9 +146,9 @@
 			,REPORT_TYPE    =  #{REPORT_TYPE}
 			,COMPANY_ID     =  #{COMPANY_ID}
 			,PROJECT_NAME   =  #{PROJECT_NAME}
+			,USER_ID = #{USER_ID}
 	    WHERE REPORT_ID=#{REPORT_ID}
 	</update>
-	
 	
 		<!-- 사용자 삭제 -->
 	<delete id="delete" parameterType="reportVo">
