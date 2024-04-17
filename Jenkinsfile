@@ -41,7 +41,7 @@ pipeline {
             steps {
                 // `pipeline_admin` 프로젝트가 성공적으로 완료된 후에 `pipeline_user` 프로젝트를 트리거합니다.
                 script {
-                    build job: 'pipeline_user', wait: true
+                    build job: 'pipeline_user'
                 }
             }
         }
