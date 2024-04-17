@@ -203,7 +203,7 @@
 						<div class="form-group col_14">
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
-								<option value="noticeId">공지번호</option>
+								<!-- <option value="noticeId">공지번호</option> -->
 								<option value="noticeTitle">제목</option>
 								<option value="userName">작성자</option>
 		                    </select>

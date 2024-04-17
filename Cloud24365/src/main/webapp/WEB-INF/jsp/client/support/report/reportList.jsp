@@ -204,7 +204,7 @@
 						<div class="form-group col_14">
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
-								<option value="reportId">보고서번호</option>
+								<!-- <option value="reportId">보고서번호</option> -->
 								<option value="reportTitle">기관명</option>
 								<option value="reportTitle">프로젝트명</option>
 								<option value="userName">보고서명</option>

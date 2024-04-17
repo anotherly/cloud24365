@@ -204,7 +204,7 @@
 						<div class="form-group col_14">
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
-								<option value="reqId">문의번호</option>
+								<!-- <option value="reqId">문의번호</option> -->
 								<option value="reqType">문의유형</option>
 								<option value="reqTitle">제목</option>
 								<option value="rpName">중요도</option>

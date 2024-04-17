@@ -220,7 +220,7 @@ public class ReqController{
 		return mav;
 	}
 	//답변+파일리스트 가져오기
-	@RequestMapping(value="/client/support/request/ansHistoryList.ajax")
+	@RequestMapping(value="/request/ansHistoryList.ajax")
 	public @ResponseBody ModelAndView ansHistoryList( 
 			HttpServletRequest request
 			,@ModelAttribute("qnaVo") QnaVo inputVo) throws Exception{

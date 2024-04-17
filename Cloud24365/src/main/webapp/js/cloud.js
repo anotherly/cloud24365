@@ -34,7 +34,7 @@ function ansHistoryList(tagId){
 	//먼저 문의id 파라미터 받아서 
 	//해당 문의에 대한 답변리스트 가져온다
 	//그 답변리스트 각각에 대한 파일리스트를 가져온다
-	var dataList = ajaxMethod('/client/support/ansHistoryList.ajax',{"REQ_ID":tagId});
+	var dataList = ajaxMethod('/request/ansHistoryList.ajax',{"REQ_ID":tagId});
 	var ansList = dataList.ansList;
 	var fileList = dataList.fileList;
 	
