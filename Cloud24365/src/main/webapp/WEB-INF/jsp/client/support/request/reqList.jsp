@@ -58,7 +58,7 @@
                 style:    'multi',
                 selector: 'td:first-child'
             },
-            order: [[ 7, 'desc' ]]
+            order: [[ 0, 'desc' ]]
             ,responsive: true
            ,language : lang_kor // //or lang_eng
 		});
