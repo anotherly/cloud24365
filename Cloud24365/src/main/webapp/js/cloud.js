@@ -62,9 +62,7 @@ function ansHistoryList(tagId){
 				+'<div class="ctn_tbl_row">'
 					+'<div class="ctn_tbl_th">답변내용</div>'
 				    +'<div class="ctn_tbl_td">'
-				      	+'<textarea id="REQ_ANSWER" class="long-cont" style="height:200px;" readonly>'
-				      		+ansList[i].REQ_ANSWER
-				      	+'</textarea>'
+				      	+'<textarea id="REQ_ANSWER" class="long-cont" style="height:200px;" readonly>'+ansList[i].REQ_ANSWER+'</textarea>'
 				    +'</div>'
 				+'</div>'
 			;
@@ -81,4 +79,42 @@ function ansHistoryList(tagId){
 	return ansList.length;
 }
 
-
+function loadFaq(){
+	console.log("간추린 faq");
+	//먼저 문의id 파라미터 받아서 
+	//해당 문의에 대한 답변리스트 가져온다
+	//그 답변리스트 각각에 대한 파일리스트를 가져온다
+	var dataList = ajaxMethod('/client/support/faq/faqList.ajax');
+	var ansList = dataList.data;
+	
+	//데이터가 존재할 경우
+	if(ansList.length!=0){
+		$("#ansHistory").show();
+		
+		for (var i = 0; i < ansList.length; i++) {
+			var ansContents='';
+			if(i<5){
+				ansContents+=
+					'<div class="ctn_tbl_row" style="display: flex;flex-direction: column;">'
+					+'<div class="ctn_tbl_row">'
+					    +'<div class="ctn_tbl_td">'
+					    	+ansList[i].faq_TITLE
+					    	+'<span id="faq_show" class="show_hide" value="'+[i]+'">펼치기 ▼</span>'
+					    	+'<span id="faq_hide" class="show_hide" value="'+[i]+'" style="display:none;">접기 ▲</span>'
+					    +'</div>'
+					+'</div>'
+					+'<div class="ctn_tbl_row"  id="FAQ_ANSWER"  value="'+[i]+'" style="display:none;">'
+					    +'<div class="ctn_tbl_td">'
+					      	+'<textarea id="CONTENT" class="long-cont" style="height:200px;" readonly>'+ansList[i].content+'</textarea>'
+					    +'</div>'
+					+'</div>'
+				+'</div>'
+				;
+				$("#faqDiv").append(ansContents);
+			}else{
+				return;
+			}
+		}
+	}
+	return;
+}

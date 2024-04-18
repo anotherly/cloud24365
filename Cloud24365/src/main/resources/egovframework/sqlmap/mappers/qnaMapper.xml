@@ -117,7 +117,7 @@
 		)J2
 		ON(J1.ANS_USER=J2.USER_ID)
 			
-		ORDER BY REQ_DT DESC
+		ORDER BY REQ_DT DESC,REQ_ID DESC
 	</select>
 	
 	<select id="selectReqOne" parameterType="qnaVo" resultType="qnaVo">

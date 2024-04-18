@@ -12,6 +12,7 @@
 	<script>
 		$(document).ready(function() {
 			console.log("문의하기");
+			loadFaq();
 			$("#acDetailFrm").submit(function(e){
 				console.log("문의하기 등록");
 				let frm = $("#acDetailFrm").serialize();
@@ -47,6 +48,19 @@
 
 			});
 		});
+		
+		//jquery 동적으로 생성한 요소에 이벤트 바인딩 적용하기
+		$(document).on("click", "#faq_show", function(){
+			$(this).parent().parent().find("#faq_show").hide();
+			$(this).parent().parent().find("#faq_hide").show();
+			$(this).parent().parent().parent().find("#FAQ_ANSWER").show();
+		});
+		$(document).on("click", "#faq_hide", function(){
+			$(this).parent().parent().find("#faq_show").show();
+			$(this).parent().parent().find("#faq_hide").hide();
+			$(this).parent().parent().parent().find("#FAQ_ANSWER").hide();
+		});
+		
 	</script>
 	
 </head>
@@ -79,10 +93,10 @@
 		<!-- contents Start ------------------>
 		<div id="contents" class="contents-wrap">
 			<!-- work Start -->
-			<div id="work" class="work-wrap">
+			<div id="work" class="work-wrap" style="display:flex;flex-direction: row;justify-content: space-between;">
 			<form name="insertForm" id="acDetailFrm" method="post"  action='/client/support/request/reqList.do'  enctype="multipart/form-data">
                 <!-- contents_box Start -->
-                <div id="contents_box" class="contents_box">
+                <div id="contents_box" class="contents_box" style="width: 900px;">
                     <!-- 컨텐츠 테이블 헤더 Start -->
                     <div class="ctn_tbl_header">
                         <div class="ttl_ctn">문의하기</div><!-- 컨텐츠 타이틀 -->
@@ -115,7 +129,7 @@
                             <div class="ctn_tbl_th">파일첨부</div>
                             <div class="ctn_tbl_td">
 								<input type="file" name="multiFile" multiple> 
-								※ 첨부파일은 3개월 후 자동 삭제 됩니다 (첨부파일은 총 5MB 이내)
+								※ 첨부파일은 3개월 후 자동 삭제 됩니다 <br>(첨부파일은 총 5MB 이내)
 								<c:forEach var="fvo" items="${fileList}">
 									<a href="/download.ajax?FILE_ID=${fvo.FILE_ID}">${fvo.FILE_NAME}</a>
 							    </c:forEach>
@@ -125,10 +139,12 @@
                         <div class="ctn_tbl_row">
                             <div class="ctn_tbl_th fm_rep">문의내용</div>
                             <div class="ctn_tbl_td">
-                                <textarea id="REQ_QUESTION" name="REQ_QUESTION" class="long-cont" style="height:470px;" required></textarea>
+                                <textarea id="REQ_QUESTION" name="REQ_QUESTION" class="long-cont" style="height:405px;" required></textarea>
                             </div>
                         </div>
                     </div>
+                    <!-- area end -->
+                    
                 </div>
                 <!-- contents_box End -->
                         <!-- btn_box Start -->
@@ -144,6 +160,12 @@
                        </div>
                        <!-- btn_box End -->
                 </form>
+                                
+                 
+                <div id="faqDiv" class="faqClass" style="display:flex;width: 550px;height: 756px;background:#fff;flex-direction: column;padding: 30px;overflow: auto;">
+                	<h2>자주하는 질문 먼저 확인해보세요!</h2>
+                	<h4>TOP FAQ</h4>
+                </div>
                                 
                 <!-- footer Start ------------------>
                 <div id="footer" class="footer-wrap">

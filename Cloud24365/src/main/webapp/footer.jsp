@@ -8,12 +8,12 @@
 
 
 <style>
-	.right a {
+	.btn_box a {
 	    color: #37517e;
 	    transition: ease-in-out 0.3s;
 	    text-decoration:none;
 	}
-	.right a:hover{
+	.left a:hover{
 	    color: #47b2e4;
 	}
 </style>
@@ -22,10 +22,13 @@
     <div id="footer-inner" class="footer-inner">
         <!-- btn_box Start -->
         <div class="btn_box">
+        	<div class="left">
+        		<a href="https://hivesystem.net/">회사소개</a>
+				<a href="/client/svcInfo/termOfUse.do">이용약관</a>
+				<a href="/client/svcInfo/privacy.do">개인정보처리방침</a>
+        	</div>
             <div class="right">
-                	<a href="https://hivesystem.net/">회사소개</a>
-					<a href="/client/svcInfo/termOfUse.do">이용약관</a>
-					<a href="/client/svcInfo/privacy.do">개인정보처리방침</a>
+				장애 신고 Email : <a>msp_cloud@hivesystem.co.kr</a>
             </div>
         </div>
     </div>

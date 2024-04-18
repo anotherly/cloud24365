@@ -60,8 +60,8 @@
 					<textarea id="TEXT_VAL" class="long-cont" style="margin-top:50px;resize: none;" readonly>${data.TEXT_VAL}</textarea>
 			</div>	
 		</div>
+		<%@include file="/footer.jsp" %>
 	</div>	
-	<%@include file="/footer.jsp" %>
 </body>
 </html>
 

@@ -956,11 +956,15 @@ select.form-control {
     margin-top: 15px;
     margin-bottom: 0;
 }
+
+.btn_box div {
+    align-items: center;
+    font-weight: bold;
+}
+
 .btn_box .right {
 	display: flex;
     gap: 30px;
-    align-items: center;
-    font-weight: bold;
 }
 .btn_box .left {
     display: flex;
