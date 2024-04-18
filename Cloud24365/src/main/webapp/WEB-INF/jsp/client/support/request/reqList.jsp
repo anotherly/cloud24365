@@ -58,6 +58,7 @@
                 selector: 'td:first-child'
             }
             //,order: [[ 0, 'desc' ]]
+            ,"aaSorting": [[6, 'desc'], [0, 'desc']]
             ,responsive: true
            ,language : lang_kor // //or lang_eng
 		});
