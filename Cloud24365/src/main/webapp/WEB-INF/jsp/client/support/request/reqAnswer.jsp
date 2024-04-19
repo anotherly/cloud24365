@@ -90,7 +90,7 @@
                         <div class="ctn_tbl_row">
                             <div class="ctn_tbl_th">문의내용</div>
                             <div class="ctn_tbl_td">
-                                <textarea id="REQ_QUESTION" name="REQ_QUESTION" class="form-control" style="height:470px;"></textarea>
+                                <textarea id="REQ_QUESTION" name="REQ_QUESTION" class="form-control" style="height:400px;" required></textarea>
                             </div>
                         </div>
 				   

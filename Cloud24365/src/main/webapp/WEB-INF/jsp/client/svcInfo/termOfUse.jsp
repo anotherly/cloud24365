@@ -57,7 +57,7 @@
 				<!-- <div class="title">
 					<h3>이 용 약 관</h3>
 				</div> -->
-					<textarea id="TEXT_VAL" class="long-cont" style="margin-top:50px;resize: none;" readonly>${data.TEXT_VAL}</textarea>
+					<textarea id="TEXT_VAL" class="long-cont" style="margin-top:50px;resize: none;" disabled>${data.TEXT_VAL}</textarea>
 			</div>	
 		</div>
 		<%@include file="/footer.jsp" %>

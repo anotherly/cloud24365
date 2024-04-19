@@ -63,7 +63,7 @@
 		
 		$(".carousel-item").css("height","100%");
 		
-		setInterval(function(){
+		/* setInterval(function(){
 			    if (div1.style.display === 'none') {
 			        div1.style.display = 'block';
 			        div2.style.display = 'none';
@@ -71,7 +71,7 @@
 			        div2.style.display = 'block';
 			        div1.style.display = 'none';
 			    }
-		},5000);
+		},5000); */
 		
 		console.log("협력사사진 관리자 페이지");
 		$("#partnerList").empty();

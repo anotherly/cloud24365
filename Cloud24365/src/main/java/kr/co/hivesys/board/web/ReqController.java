@@ -203,7 +203,6 @@ public class ReqController{
 			}
 			
 			inputVo.setANS_ID(qnaService.creAnsId(inputVo));
-			inputVo.setREQ_STATUS("2");
 			/*파일 업로드 관련*/
 			if(multiFileList.size()!=0) {
 				//화면에 따른 변경부분

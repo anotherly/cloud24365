@@ -54,7 +54,7 @@
 		<div id="contents" class="contents-wrap list_ani">
 			<!-- work Start -->
 			<div id="work" class="work-wrap list_page">
-				<textarea id="TEXT_VAL" class="long-cont" style="margin-top:50px;resize: none;" readonly>${data.TEXT_VAL}</textarea>
+				<textarea id="TEXT_VAL" class="long-cont" style="margin-top:50px;resize: none;" disabled>${data.TEXT_VAL}</textarea>
 			</div>
 		</div>			
 		<%@include file="/footer.jsp" %>

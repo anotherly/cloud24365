@@ -105,7 +105,7 @@ function loadFaq(){
 					+'</div>'
 					+'<div class="ctn_tbl_row"  id="FAQ_ANSWER"  value="'+[i]+'" style="display:none;">'
 					    +'<div class="ctn_tbl_td">'
-					      	+'<textarea id="CONTENT" class="long-cont" style="height:200px;" readonly>'+ansList[i].content+'</textarea>'
+					      	+'<textarea id="CONTENT" class="long-cont" style="height:200px;" disabled>'+ansList[i].content+'</textarea>'
 					    +'</div>'
 					+'</div>'
 				+'</div>'

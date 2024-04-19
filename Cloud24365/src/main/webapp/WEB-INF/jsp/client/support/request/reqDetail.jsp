@@ -158,7 +158,7 @@
 						<div class="ctn_tbl_row">
 						    <div class="ctn_tbl_th">문의내용</div>
 						    <div class="ctn_tbl_td">
-						        <textarea id="REQ_QUESTION" name="REQ_QUESTION" class="long-cont" style="height:200px;" readonly>${reqVo.REQ_QUESTION}</textarea>
+						        <textarea id="REQ_QUESTION" name="REQ_QUESTION" class="long-cont" style="height:200px;" disabled>${reqVo.REQ_QUESTION}</textarea>
 						    </div>
 						</div>
 						 <c:if test="${reqVo.REQ_STATUS!=0}">
