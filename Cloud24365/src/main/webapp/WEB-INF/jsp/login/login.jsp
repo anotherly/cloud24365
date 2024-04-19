@@ -22,7 +22,8 @@
 		var sessionVo = '${login.USER_ID}'
 		if(sessionVo!=''){
 			console.log("로그인 세션 존재");
-			location.replace("/client/svcInfo/main.do");
+			//alert("로그인 세션 존재");
+			location.replace("/");
 		}
 		
 		$("#loginForm").submit( function(event){

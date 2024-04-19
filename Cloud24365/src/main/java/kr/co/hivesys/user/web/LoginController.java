@@ -152,7 +152,7 @@ public class LoginController {
                 		&&	!cvo.getMANAGER_NAME().equals("")
                 		
                 	) {
-                	url="/client/svcInfo/main.do";
+                	url="/";
 				} else {
 					url="/client/setting/account/actInfo.do";
 				}
