@@ -11,10 +11,10 @@ function stMainIdx(sessionVo,url){
 	if(sessionVo==''){
 		//console.log("로그인 세션X");//로그인 안되있음
 		console.log("로그인 페이지로 이동");
-		location.href="/login/login.do";
+		location.replace("/login/login.do");
 	}else{
 		//메인화면으로 이동
-		location.href="/main/main.do";
+		location.replace("/main/main.do");
 	}
 }
 

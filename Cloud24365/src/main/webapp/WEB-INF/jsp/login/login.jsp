@@ -19,6 +19,11 @@
 <script>
 	$(document).ready(function() {
 		console.log("로그인 컨텐츠");
+		var sessionVo = '${login.USER_ID}'
+		if(sessionVo!=''){
+			console.log("로그인 세션 존재");
+			location.replace("/client/svcInfo/main.do");
+		}
 		
 		$("#loginForm").submit( function(event){
 			console.log("로그인 버튼 클릭");

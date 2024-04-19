@@ -69,6 +69,17 @@ public class FaqController {
 		ModelAndView mav = new ModelAndView("jsonView");
 		try {
 			sList = faqService.selectList(inputVo);
+			
+			//개행 처리 ㅡㅡ
+			for (int i = 0; i < sList.size(); i++) {
+				FaqVo upvo = new FaqVo(); 
+				upvo = sList.get(i);
+				if(upvo.getCONTENT()!=null) {
+					upvo.setCONTENT(upvo.getCONTENT().replace("<br>","\r\n"));
+				}
+				sList.set(i, upvo);
+			}
+			
 			mav.addObject("data", sList);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -87,7 +98,9 @@ public class FaqController {
 		try {
 			inputVo = faqService.selectOne(thvo);
 			logger.debug("▶▶▶▶▶▶▶.결과값들:"+inputVo);
-			inputVo.setCONTENT(inputVo.getCONTENT().replace("<br>","\r\n"));
+			if(inputVo.getCONTENT()!=null) {
+				inputVo.setCONTENT(inputVo.getCONTENT().replace("<br>","\r\n"));
+			}
 			mav.addObject("data", inputVo);
 			mav.setViewName(url);
 		} catch (Exception e) {

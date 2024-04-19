@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpHeaders;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ui.ModelMap;
@@ -55,6 +56,12 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			
 			return false;
 		}
+		
+		//캐시 만료를 통한 뒤로가기 방지
+		response.setHeader(HttpHeaders.EXPIRES, "Thu, 27 Jul 2023 09:00:00 GMT"); // 현재시각보다 이전으로 만료시간을 설정
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-store, no-cache, must-revalidate, post-check=0, pre-check=0"); // str 로 "" 으로 넣는것보단, 상수형으로 넣어주는게 좋다. 
+        response.setHeader(HttpHeaders.PRAGMA, "no-cache");
+		
 		return true;
 	}
 
