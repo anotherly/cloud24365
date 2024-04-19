@@ -22,7 +22,6 @@
 		var sessionVo = '${login.USER_ID}'
 		if(sessionVo!=''){
 			console.log("로그인 세션 존재");
-			//alert("로그인 세션 존재");
 			location.replace("/");
 		}
 		
