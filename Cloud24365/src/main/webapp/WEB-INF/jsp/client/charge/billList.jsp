@@ -164,14 +164,6 @@
 			<div id="work" class="work-wrap list_page">
 				<!-- search_box Start -->
 	            <div class="search_box">
-			   
-					<div class="form-group col_14" style="width: 100%;">
-						<label class="form-control-label"><span class="langSpan">검색어 : </span></label>
-						<select class="form-control mw_30" id="searchType" name="searchType">
-	                        <option value="companyName">수신자(회사)</option>
-	                    </select>
-						<input class="form-control" type="text" id="searchValue" name="searchValue"  onkeyup="if(event.keyCode == 13)search();"/>
-					</div>
 					
 					<div class="form-group col_3" style="width: 80%;display: flex;flex-direction: row;margin-top: 13px;" >
 						<label class="form-control-label">
