@@ -23,6 +23,7 @@ import javax.swing.InputVerifier;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.io.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.omg.CORBA.NVList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -174,6 +175,7 @@ public class ChargeController{
 		try {
 			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
 			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
+			thvo.setCOMPANY_ID(nlVo.getCOMPANY_ID());
 			mnList = billService.manualList(thvo);
 			mav.addObject("data", mnList);
 		} catch (Exception e) {
