@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.co.hivesys.bill.mapper.BillMapper;
 import kr.co.hivesys.bill.service.BillService;
 import kr.co.hivesys.bill.vo.BillVo;
+import kr.co.hivesys.comm.file.vo.FileVo;
 
 @Service("billService")
 public class BillServiceImpl implements BillService{
@@ -51,5 +52,28 @@ public class BillServiceImpl implements BillService{
 	@Override
 	public int firstNumber(BillVo inputVo) {
 		return billMapper.firstNumber(inputVo);
+	}
+
+	
+	//#####################수동청구서#####################//
+	
+	@Override
+	public List<BillVo> manualList(BillVo inputVo) {
+		return billMapper.manualList(inputVo);
+	}
+
+	@Override
+	public int manualInsert(BillVo inputVo) {
+		return billMapper.manualInsert(inputVo);
+	}
+
+	@Override
+	public String createMnId(BillVo inputVo) {
+		return billMapper.createMnId(inputVo);
+	}
+
+	@Override
+	public FileVo firstFile() {
+		return billMapper.firstFile();
 	}
 }

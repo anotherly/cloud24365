@@ -87,4 +87,101 @@
         </foreach>
 	</delete>
 	
+	<!-- //#####################수동청구서#####################// -->
+	<select id="manualList" parameterType="billVo" resultType="billVo">
+	SELECT T1.*,T2.* FROM
+	(
+		SELECT J1.*,J2.COMPANY_NAME
+		FROM
+		(
+			SELECT 
+				 A.BILL_ID
+				,A.USER_ID
+				,A.COMPANY_ID
+				,A.SND_DT
+				,A.RCV_DT
+				,A.BILL_PRICE
+				,A.BILL_MN_FILE
+				,B.USER_NAME
+			FROM bill_snd A
+			LEFT JOIN
+			(SELECT USER_ID AS TID, USER_NAME FROM USER_INFO) B
+			ON(A.USER_ID=B.TID)
+		)J1
+		LEFT JOIN
+		(SELECT COMPANY_ID AS TTID, COMPANY_NAME FROM COMPANY_INFO) J2
+		ON(J1.COMPANY_ID=J2.TTID)
+	)T1
+	LEFT JOIN
+	(SELECT FILE_ID, FILE_NAME,FILE_ORIGIN FROM FILE_INFO)T2
+	ON(T1.BILL_ID=T2.FILE_ORIGIN)
+		WHERE 1= 1
+		<!-- 고객사 ID 여부-->	
+		<if test="COMPANY_ID !=null and COMPANY_ID neq ''">
+			and COMPANY_ID=#{COMPANY_ID}
+		</if>
+		<!-- 계약일(검색기간) -->	
+		<choose>
+		    <when test="searchRadio2 !=null and searchRadio2 neq ''">
+				AND <![CDATA[ SND_DT >= CURDATE() - INTERVAL #{searchRadio2} MONTH ]]>
+		    </when>
+		    <otherwise>
+		        <if test="sDate !=null and sDate neq '' and eDate !=null and eDate neq '' ">
+				    AND <![CDATA[ SND_DT >= #{sDate}  AND SND_DT <= #{eDate} ]]>
+				</if>
+		    </otherwise>
+		</choose>
+		<!-- 검색어 -->
+		<if test="searchValue !=null and searchValue neq ''"> 
+			AND COMPANY_NAME LIKE CONCAT('%',#{searchValue},'%')	
+		</if>
+	</select>
+
+
+	<!--  id 생성 -->
+	<select id="createMnId" parameterType="billVo" resultType="java.lang.String">
+		SELECT 
+		CONCAT(
+			'MANUAL'
+			,LPAD(IFNULL(
+			MAX( 
+			CAST(SUBSTR(BILL_ID,7,2) AS UNSIGNED)
+			),-1)+1,2,'0')
+			,DATE_FORMAT(CURDATE(),'%Y%m%d')
+		) 
+		FROM bill_snd a
+		WHERE 1=1 
+		AND <![CDATA[ SND_DT >= CURDATE() AND SND_DT < CURDATE() + INTERVAL 1 DAY ]]>
+	</select>
+	
+	<insert id="manualInsert" parameterType="billVo">
+	    
+		INSERT INTO BILL_SND(
+			 BILL_ID
+			,USER_ID
+			,COMPANY_ID
+			,SND_DT
+			,BILL_PRICE
+			,BILL_MN_FILE
+		)
+		VALUES (
+			 #{BILL_ID}
+			,#{USER_ID}
+			,#{COMPANY_ID}
+			,#{SND_DT}
+			,#{BILL_PRICE}
+			,#{BILL_MN_FILE}
+		)
+	</insert>
+	
+	<select id="firstFile" resultType="fileVo">
+	    SELECT * FROM FILE_INFO
+	    WHERE 
+	    FILE_ORIGIN =
+	    (
+	    	SELECT BILL_FILE_ID FROM bill_file
+	    	WHERE BILL_PRIOR = 1
+	    )
+	</select>
+	
 </mapper>

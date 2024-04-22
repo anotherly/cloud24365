@@ -1,7 +1,12 @@
 package kr.co.hivesys.charge.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.InputVerifier;
 
+import org.apache.commons.fileupload.disk.DiskFileItem;
+import org.apache.commons.io.IOUtils;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,13 +40,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.hivesys.comm.excel.ExcelComport;
 import kr.co.hivesys.comm.file.FileUploadSave;
 import kr.co.hivesys.comm.file.service.FileService;
+import kr.co.hivesys.comm.file.vo.FileVo;
 import kr.co.hivesys.company.service.CompanyService;
 import kr.co.hivesys.company.vo.CompanyVo;
+import kr.co.hivesys.bill.service.BillService;
+import kr.co.hivesys.bill.vo.BillVo;
 import kr.co.hivesys.charge.service.ChargeService;
 import kr.co.hivesys.charge.vo.ChargeVo;
 import kr.co.hivesys.user.service.UserService;
@@ -56,6 +67,9 @@ public class ChargeController{
 	
 	@Resource(name="chargeService")
 	private ChargeService chargeService;
+	
+	@Resource(name="billService")
+	private BillService billService;
 	
 	@Resource(name="userService")
 	private UserService userService;
@@ -142,4 +156,118 @@ public class ChargeController{
 		}
 		return mav;
 	}
+	
+
+	//############################수동청구서######################################
+	
+	
+	//수동청구서 목록
+	@RequestMapping(value= "/client/charge/billList.ajax")
+	public @ResponseBody ModelAndView billList(
+			@ModelAttribute("billVO") BillVo thvo,
+			HttpSession httpSession, HttpServletRequest request,Model model
+			) throws Exception{
+		logger.debug("▶▶▶▶▶▶▶.회원정보 조회 목록!!!!!!!!!!!!!!!!");
+		
+		ModelAndView mav = new ModelAndView("jsonView");
+		List<BillVo> mnList= null;
+		try {
+			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
+			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
+			mnList = billService.manualList(thvo);
+			mav.addObject("data", mnList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug("에러메시지 : "+e.toString());
+		}
+		return mav;
+	}
+	
+	//수동청구서 등록 페이지
+	@RequestMapping(value= "/client/charge/billInsert.do")
+	public @ResponseBody ModelAndView billInsert(
+			@ModelAttribute("billVO") BillVo thvo,
+			HttpSession httpSession, HttpServletRequest request,Model model
+			) throws Exception{
+		logger.debug("▶▶▶▶▶▶▶.수동청구서 등록화면!!!!!!!!!!!!!!!!");
+		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
+		ModelAndView mav = new ModelAndView(url);
+		List<CompanyVo> companyList = new ArrayList<>();
+		try {
+			FileVo fvo = new FileVo();
+			fvo=billService.firstFile();
+			mav.addObject("file", fvo);
+			companyList=companyService.selectCompanyList(new CompanyVo());
+			mav.addObject("companyList", companyList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug("에러메시지 : "+e.toString());
+		}
+		return mav;
+	}
+	
+	//등록 저장
+	@RequestMapping(value= "/client/charge/insertBill.ajax")
+	public ModelAndView insertReq(
+			@ModelAttribute("BillVo") BillVo inputVo
+			,@RequestParam("multiFile") List<MultipartFile> multiFileList
+			,HttpServletRequest request) throws Exception{
+		
+		url = request.getRequestURI().substring(request.getContextPath().length()).split(".do")[0];
+		ModelAndView mav = new ModelAndView("jsonView");
+		try {
+			//작성자는 로그인 사용자로
+			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
+			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
+			inputVo.setUSER_ID(nlVo.getUSER_ID());
+			//id 생성
+			inputVo.setBILL_FILE_ID(billService.createMnId(inputVo));
+			inputVo.setBILL_ID(inputVo.getBILL_FILE_ID());
+			/*파일 업로드 관련*/
+				//화면에 따른 변경부분
+				//경로,원본id
+			 	//String firstPath="C:\\";
+				String firstPath="/usr/local/tomcat/share_data/";
+				String inputPath = "resources/billManual/" +inputVo.getBILL_FILE_ID()+ "/";
+				String oriId = inputVo.getBILL_FILE_ID();
+				/*공통 적용 부분*/
+				FileVo fvo = new FileVo();
+				fvo.setFILE_DIR(inputPath);
+				fvo.setFILE_ORIGIN(oriId);
+				
+				FileVo orifileVo=billService.firstFile();
+				
+				File file = new File(firstPath+inputPath+orifileVo.getFILE_NAME());
+				File orifile = new File(firstPath+"resources"+orifileVo.getFILE_DIR()+orifileVo.getFILE_NAME());
+				
+				file.getParentFile().mkdirs();// 파일 상부의 모든 존재하지 않는 경로 생성
+				
+				//파일을 멀티파일로
+				
+				DiskFileItem fileItem = new DiskFileItem("file", Files.probeContentType(file.toPath()), false, file.getName(), (int) file.length() , file.getParentFile());    		       
+				InputStream input = new FileInputStream(orifile);
+				OutputStream os = fileItem.getOutputStream();
+				IOUtils.copy(input, os);    		        
+				MultipartFile multipartFile = new CommonsMultipartFile(fileItem);
+				//멀티파일을 서버에 저장
+				multipartFile.transferTo(file);
+				
+				fvo.setFILE_NAME(orifileVo.getFILE_NAME());
+				fvo.setFILE_ID(UUID.randomUUID().toString());
+				List<FileVo> fileList = new ArrayList<>();
+				fileList.add(fvo);
+				// db 작업 실행
+				fileService.insertFile(fileList);
+				
+			int cnt=billService.manualInsert(inputVo);
+			mav.addObject("cnt", cnt);
+		} catch (Exception e) {
+			e.printStackTrace();
+			logger.debug("에러메시지 : "+e.toString());
+			mav.addObject("msg","저장에 실패하였습니다");
+		}
+		return mav;
+		
+	}
+	
 }
