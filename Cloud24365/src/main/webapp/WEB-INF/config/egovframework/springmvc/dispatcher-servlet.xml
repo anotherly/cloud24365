@@ -73,7 +73,7 @@
     <mvc:interceptors>
         <!-- authInterceptor -->
        <mvc:interceptor>
-			<mvc:mapping path="/client/bill/**.do"/>
+			<mvc:mapping path="/client/charge/**.do"/>
 			<mvc:mapping path="/client/support/**/*.do"/>
 			<mvc:mapping path="/client/setting/**/*.do"/>
             <mvc:exclude-mapping path="/client/svcInfo/**.do"/>

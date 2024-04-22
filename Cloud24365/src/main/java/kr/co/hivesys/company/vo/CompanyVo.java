@@ -2,6 +2,8 @@ package kr.co.hivesys.company.vo;
 
 import java.util.List;
 
+import kr.co.hivesys.charge.vo.ChargeVo;
+
 public class CompanyVo {
 	private String COMPANY_ID;
 	private String BR_NUMBER;
@@ -49,6 +51,8 @@ public class CompanyVo {
 	public String COM_DIV;
 	public String ENROLL_ID;
 	public String ENROLL_NAME;
+	public String REG_DT;
+	public List<ChargeVo> chgList;
 	
 	//전체 수
 	public String SVC_ALL;
@@ -73,6 +77,18 @@ public class CompanyVo {
 	//라디오버튼 2
 	private String searchRadio2;
 	
+	public List<ChargeVo> getChgList() {
+		return chgList;
+	}
+	public void setChgList(List<ChargeVo> chgList) {
+		this.chgList = chgList;
+	}
+	public String getREG_DT() {
+		return REG_DT;
+	}
+	public void setREG_DT(String rEG_DT) {
+		REG_DT = rEG_DT;
+	}
 	public List<MspVo> getMspList() {
 		return mspList;
 	}

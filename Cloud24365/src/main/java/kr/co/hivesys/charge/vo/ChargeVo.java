@@ -2,57 +2,69 @@ package kr.co.hivesys.charge.vo;
 
 import java.util.List;
 
-import kr.co.hivesys.comm.file.vo.FileVo;
 
+import kr.co.hivesys.comm.file.vo.FileVo;
 public class ChargeVo extends FileVo{
 	
 	private String CHARGE_ID;
-	private String CHARGE_NAME;
-	private String CHARGE_TYPE;
-	private String CHARGE_TYPE_NM;
+	
 	private String COMPANY_ID;
+	
 	private String COMPANY_NAME;
-	private String PROJECT_NAME;
-	private String REG_DT;
 	
-	//범위값
-	private List<String> listArr;
-	//검색타입
-	private String searchType;
-	//검색값
-	private String searchValue;
-	//검색 시작 시간
-	private String sDate;
-	//검색 종료 시간
-	private String eDate;
-	//체크박스 버튼 
-	private String searchChk;
-	//라디오버튼 
-	private String searchRadio;
+	private String PRE_PRICE;
 	
+	private String BILL_DT;
+	private String BILL_RFDT;
+	private String DUE_DATE;
+	
+	private String SERVICE_TYPE;
+	private String SERVICE_TYPE_NM;
+	private String PRICE_TYPE;
+	
+	private String USE_DT;
+	private String BR_NUMBER;
+	private String MSP_PRICE;
+	private String IAAS_PRICE;
+	private String DATADR_PRICE;
+	
+	private String SUM_PRICE;
+	
+	public String getSERVICE_TYPE() {
+		return SERVICE_TYPE;
+	}
+	public void setSERVICE_TYPE(String sERVICE_TYPE) {
+		SERVICE_TYPE = sERVICE_TYPE;
+	}
+	public String getSERVICE_TYPE_NM() {
+		return SERVICE_TYPE_NM;
+	}
+	public void setSERVICE_TYPE_NM(String sERVICE_TYPE_NM) {
+		SERVICE_TYPE_NM = sERVICE_TYPE_NM;
+	}
+	public String getPRICE_TYPE() {
+		return PRICE_TYPE;
+	}
+	public void setPRICE_TYPE(String pRICE_TYPE) {
+		PRICE_TYPE = pRICE_TYPE;
+	}
+	public String getDUE_DATE() {
+		return DUE_DATE;
+	}
+	public void setDUE_DATE(String dUE_DATE) {
+		DUE_DATE = dUE_DATE;
+	}
+	public String getSUM_PRICE() {
+		return SUM_PRICE;
+	}
+	public void setSUM_PRICE(String sUM_PRICE) {
+		SUM_PRICE = sUM_PRICE;
+	}
 	public String getCHARGE_ID() {
 		return CHARGE_ID;
 	}
 	public void setCHARGE_ID(String cHARGE_ID) {
 		CHARGE_ID = cHARGE_ID;
-	}
-	public String getCHARGE_NAME() {
-		return CHARGE_NAME;
-	}
-	public void setCHARGE_NAME(String cHARGE_NAME) {
-		CHARGE_NAME = cHARGE_NAME;
-	}
-	public String getCHARGE_TYPE() {
-		return CHARGE_TYPE;
-	}
-	public void setCHARGE_TYPE(String cHARGE_TYPE) {
-		CHARGE_TYPE = cHARGE_TYPE;
-	}
-	public String getCHARGE_TYPE_NM() {
-		return CHARGE_TYPE_NM;
-	}
-	public void setCHARGE_TYPE_NM(String cHARGE_TYPE_NM) {
-		CHARGE_TYPE_NM = cHARGE_TYPE_NM;
 	}
 	public String getCOMPANY_ID() {
 		return COMPANY_ID;
@@ -66,67 +78,61 @@ public class ChargeVo extends FileVo{
 	public void setCOMPANY_NAME(String cOMPANY_NAME) {
 		COMPANY_NAME = cOMPANY_NAME;
 	}
-	public String getPROJECT_NAME() {
-		return PROJECT_NAME;
+	public String getPRE_PRICE() {
+		return PRE_PRICE;
 	}
-	public void setPROJECT_NAME(String pROJECT_NAME) {
-		PROJECT_NAME = pROJECT_NAME;
+	public void setPRE_PRICE(String pRE_PRICE) {
+		PRE_PRICE = pRE_PRICE;
 	}
-	public String getREG_DT() {
-		return REG_DT;
+	public String getBILL_DT() {
+		return BILL_DT;
 	}
-	public void setREG_DT(String rEG_DT) {
-		REG_DT = rEG_DT;
+	public void setBILL_DT(String bILL_DT) {
+		BILL_DT = bILL_DT;
 	}
-	public List<String> getListArr() {
-		return listArr;
+	public String getBILL_RFDT() {
+		return BILL_RFDT;
 	}
-	public void setListArr(List<String> listArr) {
-		this.listArr = listArr;
+	public void setBILL_RFDT(String bILL_RFDT) {
+		BILL_RFDT = bILL_RFDT;
 	}
-	public String getSearchType() {
-		return searchType;
+	public String getUSE_DT() {
+		return USE_DT;
 	}
-	public void setSearchType(String searchType) {
-		this.searchType = searchType;
+	public void setUSE_DT(String uSE_DT) {
+		USE_DT = uSE_DT;
 	}
-	public String getSearchValue() {
-		return searchValue;
+	public String getBR_NUMBER() {
+		return BR_NUMBER;
 	}
-	public void setSearchValue(String searchValue) {
-		this.searchValue = searchValue;
+	public void setBR_NUMBER(String bR_NUMBER) {
+		BR_NUMBER = bR_NUMBER;
 	}
-	public String getsDate() {
-		return sDate;
+	public String getMSP_PRICE() {
+		return MSP_PRICE;
 	}
-	public void setsDate(String sDate) {
-		this.sDate = sDate;
+	public void setMSP_PRICE(String mSP_PRICE) {
+		MSP_PRICE = mSP_PRICE;
 	}
-	public String geteDate() {
-		return eDate;
+	public String getIAAS_PRICE() {
+		return IAAS_PRICE;
 	}
-	public void seteDate(String eDate) {
-		this.eDate = eDate;
+	public void setIAAS_PRICE(String iAAS_PRICE) {
+		IAAS_PRICE = iAAS_PRICE;
 	}
-	public String getSearchChk() {
-		return searchChk;
+	public String getDATADR_PRICE() {
+		return DATADR_PRICE;
 	}
-	public void setSearchChk(String searchChk) {
-		this.searchChk = searchChk;
-	}
-	public String getSearchRadio() {
-		return searchRadio;
-	}
-	public void setSearchRadio(String searchRadio) {
-		this.searchRadio = searchRadio;
+	public void setDATADR_PRICE(String dATADR_PRICE) {
+		DATADR_PRICE = dATADR_PRICE;
 	}
 	@Override
 	public String toString() {
-		return "ChargeVo [CHARGE_ID=" + CHARGE_ID + ", CHARGE_NAME=" + CHARGE_NAME + ", CHARGE_TYPE=" + CHARGE_TYPE
-				+ ", CHARGE_TYPE_NM=" + CHARGE_TYPE_NM + ", COMPANY_ID=" + COMPANY_ID + ", COMPANY_NAME=" + COMPANY_NAME
-				+ ", PROJECT_NAME=" + PROJECT_NAME + ", REG_DT=" + REG_DT + ", listArr=" + listArr + ", searchType="
-				+ searchType + ", searchValue=" + searchValue + ", sDate=" + sDate + ", eDate=" + eDate + ", searchChk="
-				+ searchChk + ", searchRadio=" + searchRadio + "]";
+		return "ChargeVo [CHARGE_ID=" + CHARGE_ID + ", COMPANY_ID=" + COMPANY_ID + ", COMPANY_NAME=" + COMPANY_NAME
+				+ ", PRE_PRICE=" + PRE_PRICE + ", BILL_DT=" + BILL_DT + ", BILL_RFDT=" + BILL_RFDT + ", USE_DT="
+				+ USE_DT + ", BR_NUMBER=" + BR_NUMBER + ", MSP_PRICE=" + MSP_PRICE + ", IAAS_PRICE=" + IAAS_PRICE
+				+ ", DATADR_PRICE=" + DATADR_PRICE + "]";
 	}
+	
 	
 }

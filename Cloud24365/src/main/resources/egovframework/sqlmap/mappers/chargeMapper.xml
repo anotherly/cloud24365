@@ -9,137 +9,152 @@
 2020.07.23 정다빈     최초 생성 
 -->
 
-<select id="selectList" parameterType="reportVo" resultType="reportVo">
-		 SELECT A.*,B.COMPANY_NAME FROM  
-				(SELECT 
-					 REPORT_ID
-					,REPORT_NAME
-					,COMPANY_ID
-					,REPORT_TYPE
-					,CASE
-						WHEN REPORT_TYPE=0 THEN '주간보고'
-						WHEN REPORT_TYPE=1 THEN '월간보고'
-						ELSE 'ETC' END AS REPORT_TYPE_NM
-					,PROJECT_NAME
-					,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT 
-				FROM REPORT_INFO
-				WHERE 1=1
-				<!-- vo 필드값을 배열로 해서 조회하는 부분 -->
-				<!-- 서비스 상태 여부 -->
-				<if test="listArr != null and listArr.size != 0">
-				    AND REPORT_TYPE IN
-					<foreach collection="listArr" item="item" index="index" separator="," open="(" close=")">
-			            ${item}
-			        </foreach>
+<!-- 고객과금 -->
+
+	<select id="selectPriceList" parameterType="companyVo" resultType="chargeVo">
+	SELECT T.* FROM	
+	(
+	    SELECT 
+			ABS(DATEDIFF(BILL_DT,BILL_RFDT))+1 AS USE_DT
+			,IFNULL(PRE_PRICE_NNVL,0) AS PRE_PRICE
+			,J1.*,J2.* 
+		FROM
+		(
+			SELECT 
+			 A.COMPANY_ID
+			,CONCAT(A.COMPANY_ID,"-",DATE_FORMAT(A.REG_DT, '%Y%m%d'),"-",IFNULL(B.SERVICE_TYPE,3)) AS CHARGE_ID
+			
+			,A.COMPANY_NAME
+			,A.BILL_DT
+			,A.BILL_RFDT
+			,A.BR_NUMBER
+			,LAST_DAY(BILL_RFDT+ INTERVAL 1 MONTH) AS DUE_DATE
+			,A.IAAS_NHN
+			,A.IAAS_NAVER
+			,A.IAAS_KT
+			,A.IAAS_AWS
+			,A.SDR_NHN
+			,A.SDR_NAVER
+			,A.SDR_KT
+			,A.REG_DT
+			
+			,CASE
+		 	WHEN SERVICE_TYPE=0 THEN 'LITE'
+			WHEN SERVICE_TYPE=1 THEN 'STANDARD'
+			WHEN SERVICE_TYPE=2 THEN 'PREMIUM'
+			ELSE 
+				CASE
+					WHEN SDR_NHN ='N' AND  SDR_NAVER='N' AND SDR_KT='N' THEN 'IAAS' 
+					WHEN IAAS_NHN ='N' AND  IAAS_NAVER='N' AND IAAS_KT='N' AND IAAS_AWS='N' THEN 'DATA DR'
+					ELSE 'IAAS/DATA' END			
+			END AS SERVICE_TYPE_NM
+			
+			,B.* 
+			FROM 
+			company_info A
+			LEFT JOIN
+			(
+				SELECT mp.*, FORMAT(danga*buy_cnt , 0) AS PRE_PRICE_NNVL
+				from
+				(
+					SELECT 
+					mm.COMPANY_ID AS TID,
+					mm.CLOUD_TYPE,
+					mm.SERVICE_TYPE,
+					mm.BUY_CNT,
+					case 
+						when service_type=0 then 150000
+						when service_type=1 then 250000
+						ELSE 350000 END AS danga
+					FROM 
+					msp_charge mm
+				)mp
+			)B
+			ON(A.COMPANY_ID=B.TID)
+			WHERE 
+				B.CLOUD_TYPE IS NOT NULL
+				OR
+				( 
+					A.IAAS_NHN			='Y'
+					OR A.IAAS_NAVER		='Y'
+					OR A.IAAS_KT		='Y'
+					OR A.IAAS_AWS		='Y'
+				)
+				OR
+				 (	
+				 	A.SDR_NHN     		='Y'
+					OR A.SDR_NAVER 		='Y'
+					OR A.SDR_KT     	='Y'
+				)
+		)J1
+		LEFT JOIN 
+		(	
+		SELECT 
+			CHARGE_ID	AS TTID
+			,COMPANY_ID	AS CID
+			,PRICE_TYPE	
+			,MSP_PRICE	
+			,IAAS_PRICE	
+			,DATADR_PRICE
+			,SUM_PRICE	
+			FROM CHARGE_INFO 
+		)	
+		J2
+		ON(J1.CHARGE_ID=J2.TTID)
+	)T
+	WHERE 1=1
+		<!-- 고객사 ID 여부-->	
+		<if test="COMPANY_ID !=null and COMPANY_ID neq ''">
+				and T.COMPANY_ID=#{COMPANY_ID}
+		</if>
+		<!-- 계약일(검색기간) -->	
+		<choose>
+		    <when test="searchRadio2 !=null and searchRadio2 neq ''">
+				AND <![CDATA[ T.BILL_RFDT >= CURDATE() - INTERVAL #{searchRadio2} MONTH ]]>
+		    </when>
+		    <otherwise>
+		        <if test="sDate !=null and sDate neq '' and eDate !=null and eDate neq '' ">
+				    AND <![CDATA[ T.BILL_RFDT >= #{sDate}  AND T.BILL_RFDT <= #{eDate} ]]>
 				</if>
-				
-				<!-- 계약일(검색기간) -->	
-				<choose>
-				    <when test="searchRadio !=null and searchRadio neq ''">
-						AND <![CDATA[ REG_DT >= CURDATE() - INTERVAL #{searchRadio} MONTH ]]>
-				    </when>
-				    <otherwise>
-				         <if test="sDate !=null and sDate neq '' and eDate !=null and eDate neq '' ">
-						    AND <![CDATA[ REG_DT >= #{sDate}  AND REG_DT <= #{eDate} ]]>
-						</if>
-				    </otherwise>
-				</choose>
-				<!-- AND REPORT_DIV=#{REPORT_DIV} -->
-			) A
-			LEFT JOIN COMPANY_INFO B
-			ON(A.COMPANY_ID=B.COMPANY_ID)
-			WHERE 1=1
-			<!-- 검색어 -->
-			<if test="searchValue !=null and searchValue neq ''"> 
-				<choose>
-				    <when test="searchType eq 'reportId'">
-						AND A.REPORT_ID LIKE CONCAT('%',#{searchValue},'%')	        
-				    </when>
-				    <when test="searchType eq 'projectName'">
-				        AND A.PROJECT_NAME LIKE CONCAT('%',#{searchValue},'%')	
-				    </when>
-				    <when test="searchType eq 'reportName'">
-				        AND A.REPORT_NAME LIKE CONCAT('%',#{searchValue},'%')	
-				    </when>
-				    <otherwise>
-				        AND B.COMPANY_NAME LIKE CONCAT('%',#{searchValue},'%')	
-				    </otherwise>
-				</choose>
-			</if>
-		ORDER BY A.REG_DT DESC
+		    </otherwise>
+		</choose>
+		<!-- 검색어 -->
+		<if test="searchValue !=null and searchValue neq ''"> 
+			<choose>
+			    <when test="searchType eq 'companyName'">
+			        AND T.COMPANY_NAME LIKE CONCAT('%',#{searchValue},'%')	
+			    </when>
+			    <when test="searchType eq 'chargeId'">
+			        AND T.CHARGE_ID LIKE CONCAT('%',#{searchValue},'%')	
+			    </when>
+			    <otherwise>
+			        AND T.SERVICE_TYPE_NM LIKE CONCAT('%',#{searchValue},'%')	
+			    </otherwise>
+			</choose>
+		</if>
 	</select>
 	
-	<select id="selectOne" parameterType="reportVo" resultType="reportVo">
-	   	SELECT A.*,B.COMPANY_NAME FROM
-	    (
-		    SELECT 				 
-				 REPORT_ID
-				,REPORT_NAME
-				,COMPANY_ID
-				,REPORT_TYPE
-				,CASE
-					WHEN REPORT_TYPE=0 THEN '주간보고'
-					WHEN REPORT_TYPE=1 THEN '월간보고'
-					ELSE 'ETC' END AS REPORT_TYPE_NM
-				,PROJECT_NAME
-				,DATE_FORMAT(REG_DT,'%Y-%m-%d') AS REG_DT
-		    FROM REPORT_INFO
-			 WHERE REPORT_ID=#{REPORT_ID}
-		)A
-		LEFT JOIN COMPANY_INFO B
-		ON(A.COMPANY_ID=B.COMPANY_ID)
-	</select>
-
-	<!-- req id 생성 -->
-	<select id="creReportId" parameterType="reportVo" resultType="java.lang.String">
-		SELECT 
-		CONCAT(
-			'RP','-'
-			,DATE_FORMAT(CURDATE(),'%Y%m%d'),'-'
-			,LPAD(IFNULL(MAX( SUBSTR(REPORT_ID,13,2) ),-1)+1,2,'0')
-		) 
-		FROM REPORT_INFO a
-		WHERE 1=1 
-		AND <![CDATA[ REG_DT >= CURDATE() AND REG_DT < CURDATE() + INTERVAL 1 DAY ]]>
-	</select>
-
-	<!-- 사용자 등록 -->
-	<insert id="insert" parameterType="reportVo">
-		INSERT INTO REPORT_INFO(
-			 REPORT_ID
-			,REPORT_NAME
-			,REPORT_TYPE
-			,COMPANY_ID
-			,PROJECT_NAME
-			,REG_DT
-		)
-		VALUES (
-			 #{REPORT_ID}
-			,#{REPORT_NAME}
-			,#{REPORT_TYPE}
-			,#{COMPANY_ID}
-			,#{PROJECT_NAME}
-			,CURDATE()
-		)
+	<insert id="chargeInsert" parameterType="chargeVo">
+	    INSERT INTO CHARGE_INFO
+		 VALUES 
+	    <foreach collection="list" item="item" index="index" separator=",">
+            (
+            	 #{item.CHARGE_ID}
+            	,#{item.COMPANY_ID}
+            	,SUBSTRING_INDEX(#{item.CHARGE_ID},'-',-1)
+            	,#{item.MSP_PRICE}
+            	,#{item.IAAS_PRICE}
+            	,#{item.DATADR_PRICE}
+            	,#{item.SUM_PRICE}
+            )
+        </foreach>
 	</insert>
 	
-	<update id="update" parameterType="reportVo">
-	    UPDATE REPORT_INFO
-			SET
-			 REPORT_NAME    =  #{REPORT_NAME}
-			,REPORT_TYPE    =  #{REPORT_TYPE}
-			,COMPANY_ID     =  #{COMPANY_ID}
-			,PROJECT_NAME   =  #{PROJECT_NAME}
-	    WHERE REPORT_ID=#{REPORT_ID}
-	</update>
-	
-	
-		<!-- 사용자 삭제 -->
-	<delete id="delete" parameterType="reportVo">
-		DELETE FROM REPORT_INFO 
-		WHERE REPORT_ID IN
-		<foreach collection="chkList" item="item" index="index" separator="," open="(" close=")">
-            #{item}
+	<delete id="deleteCharge" parameterType="chargeVo">
+	    delete from CHARGE_INFO
+	    WHERE CHARGE_ID IN
+	    <foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+            #{item.CHARGE_ID}
         </foreach>
 	</delete>
 	

@@ -42,7 +42,7 @@
 		</ul>
 	</li>
 	<li class="menu-item">
-		<a id="/client/bill/list.do" class="menu-link"><i class="menu-icon n05"></i><div>과금 현황</div></a>
+		<a id="/client/charge/chargeList.do" class="menu-link"><i class="menu-icon n05"></i><div>과금 현황</div></a>
 	</li>
 	<li class="menu-item">
 		<a id="/client/support/notice/noticeList.do" class="menu-link menu-toggle"><i class="menu-icon n02"></i><div>고객지원</div></a>

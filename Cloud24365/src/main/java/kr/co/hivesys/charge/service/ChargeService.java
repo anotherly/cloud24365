@@ -3,19 +3,15 @@ package kr.co.hivesys.charge.service;
 import java.util.List;
 
 import kr.co.hivesys.charge.vo.ChargeVo;
+import kr.co.hivesys.company.vo.CompanyVo;
 
 
 public interface ChargeService {
-
-	List<ChargeVo> selectList(ChargeVo inputVo);
-
-	String crechargeId(ChargeVo inputVo);
 	
-	int insert(ChargeVo inputVo);
+	//과금 관련
+	List<ChargeVo> selectPriceList(CompanyVo thvo);
 
-	ChargeVo selectOne(ChargeVo inputVo);
+	int chargeInsert(List<ChargeVo> thvo);
 
-	int update(ChargeVo inputVo);
-
-	int delete(List<String> inputList);
+	void deleteCharge(List<ChargeVo> thvo);
 }
