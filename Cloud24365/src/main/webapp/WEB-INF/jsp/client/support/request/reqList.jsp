@@ -38,7 +38,7 @@
                 "dataType": "json",
             },  
             columns: [
-                {data:"REQ_ID"},
+                /* {data:"REQ_ID"}, */
                 {data:"REQ_STATUS_NM"},
                 {data:"REQ_TYPE_NM"},
                 {data:"REQ_IMPORTANT_NM"},
@@ -210,10 +210,8 @@
 						<div class="form-group col_14">
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
-								<!-- <option value="reqId">문의번호</option> -->
 								<option value="reqType">문의유형</option>
 								<option value="reqTitle">제목</option>
-								<option value="rpName">중요도</option>
 		                    </select>
 							<input class="form-control" type="text" id="searchValue" name="searchValue"  onkeyup="if(event.keyCode == 13)search();"/>
 						</div>
@@ -266,7 +264,7 @@
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th>문의번호</th>
+									<!-- <th>문의번호</th> -->
 									<th>상태</th>
 									<th>문의유형</th>
 									<th>중요도</th>
@@ -281,11 +279,11 @@
 				</div>
 				
 				 <!-- btn_box Start -->
-			            <div class="btn_box" style="margin-top:30px;">
-			                <div class="right">
-			                    <button class="btn btn_primary" style="" id="btnInsert" data-term="L.등록" title="등록"><span class="langSpan">문의글 등록</span></button>
-			                </div>
-			            </div>
+	            <div class="btn_box" style="margin-top:30px;">
+	                <div class="right">
+	                    <button class="btn btn_primary" style="" id="btnInsert" data-term="L.등록" title="등록"><span class="langSpan">문의글 등록</span></button>
+	                </div>
+	            </div>
 				
 				<div id="footer" class="footer-wrap">
 			        <%@include file="/footer.jsp" %>

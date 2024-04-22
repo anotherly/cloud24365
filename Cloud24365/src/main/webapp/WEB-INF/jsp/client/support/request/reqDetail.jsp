@@ -131,30 +131,7 @@
 							    ${reqVo.REQ_TYPE_NM}
 						    </div>
 						</div>
-						
-						<div class="ctn_tbl_row">
-							<div class="ctn_tbl_th">담당자</div>
-							<div class="ctn_tbl_td">
-								${reqVo.ANS_USER_NM}
-							</div>	
-						</div>
-						 		
-						<div class="ctn_tbl_row">
-							<div class="ctn_tbl_th">별첨파일</div>
-							<div class="ctn_tbl_td" >
-								<c:forEach var="fvo" items="${fileList}">
-									<a href="/download.ajax?FILE_ID=${fvo.FILE_ID}">${fvo.FILE_NAME}</a>
-							    </c:forEach>
-						    </div>
-						</div>
-						
-						<div class="ctn_tbl_row">
-							<div class="ctn_tbl_th">제목</div>
-							<div class="ctn_tbl_td" >
-								${reqVo.REQ_TITLE}
-						    </div>
-						</div>
-						                                        
+						                             
 						<div class="ctn_tbl_row">
 						    <div class="ctn_tbl_th">문의내용</div>
 						    <div class="ctn_tbl_td">

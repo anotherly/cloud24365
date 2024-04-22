@@ -36,16 +36,7 @@
                 "dataType": "json",
             },  
             columns: [
-            	
-            	{
-            		data:   "report_ID",
-	            	"render": function (data, type, row, meta) {
-	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
-                        return '<input type="checkbox" id="chk" name="chk" value="'+data+'">';
-	                },
-                },
-            	
-                {data:"report_ID"},
+                /* {data:"report_ID"}, */
                 {data:"report_TYPE_NM"},
                 {data:"company_NAME"},
                 {data:"report_NAME"},
@@ -205,7 +196,7 @@
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
 								<!-- <option value="reportId">보고서번호</option> -->
-								<option value="reportTitle">기관명</option>
+								<!-- <option value="reportTitle">기관명</option> -->
 								<option value="reportTitle">프로젝트명</option>
 								<option value="userName">보고서명</option>
 		                    </select>
@@ -262,8 +253,7 @@
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th><input type="checkbox" id="chkAll" class="chk"></th>
-									<th>보고서번호</th>
+									<!-- <th>보고서번호</th> -->
 									<th>보고서유형</th>
 									<th>기관명</th>
 									<th>보고서명</th>

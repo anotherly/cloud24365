@@ -37,18 +37,8 @@
             },  
             columns: [
             	
-            	{
-            		data:   "faq_ID",
-	            	"render": function (data, type, row, meta) {
-	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
-                        return '<input type="checkbox" id="chk" name="chk" value="'+data+'">';
-	                },
-                },
-            	
-                /* {data:"faq_ID"}, */
                 {data:"faq_TYPE_NM"},
                 {data:"faq_TITLE"},
-                {data:"user_NAME"},
                 {data:"faq_DT"},
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
@@ -197,7 +187,6 @@
 							<label class="form-control-label"><span class="langSpan">검색어</span></label>
 							<select class="form-control mw_30" id="searchType" name="searchType">
 								<option value="faqTitle">제목</option>
-								<option value="userName">작성자</option>
 		                    </select>
 							<input class="form-control" type="text" id="searchValue" name="searchValue"  onkeyup="if(event.keyCode == 13)search();"/>
 						</div>
@@ -252,11 +241,8 @@
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th><input type="checkbox" id="chkAll" class="chk"></th>
-									<!-- <th>번호</th> -->
 									<th>분류</th>
 									<th>제목</th>
-									<th>작성자</th>
 									<th>작성일자</th>
 								</tr>
 							</thead>

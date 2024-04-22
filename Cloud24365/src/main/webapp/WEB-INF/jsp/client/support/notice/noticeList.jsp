@@ -36,19 +36,8 @@
                 "dataType": "json",
             },  
             columns: [
-            	
-            	{
-            		data:   "notice_ID",
-	            	"render": function (data, type, row, meta) {
-	            		//console.log(meta.row+"	/	"+meta.col+"	/	"+row);
-                        return '<input type="checkbox" id="chk" name="chk" value="'+data+'">';
-	                },
-                },
-            	
-                {data:"notice_ID"},
                 {data:"notice_TYPE_NM"},
                 {data:"notice_TITLE"},
-                {data:"user_NAME"},
                 {data:"notice_DT"},
             ],
             "lengthMenu": [ [5, 10, 20], [5, 10, 20] ],
@@ -61,8 +50,8 @@
             select: {
                 style:    'multi',
                 selector: 'td:first-child'
-            },
-            order: [[ 5, 'desc' ]]
+            }
+            //,order: [[ 5, 'desc' ]]
             ,responsive: true
            ,language : lang_kor // //or lang_eng
 		});
@@ -205,7 +194,7 @@
 							<select class="form-control mw_30" id="searchType" name="searchType">
 								<!-- <option value="noticeId">공지번호</option> -->
 								<option value="noticeTitle">제목</option>
-								<option value="userName">작성자</option>
+								<!-- <option value="userName">작성자</option> -->
 		                    </select>
 							<input class="form-control" type="text" id="searchValue" name="searchValue"  onkeyup="if(event.keyCode == 13)search();"/>
 						</div>
@@ -260,11 +249,8 @@
 						<table id="tableList" class="table table-bordered" style="width: 100%;">
 							<thead>
 								<tr>
-									<th><input type="checkbox" id="chkAll" class="chk"></th>
-									<th>공지번호</th>
 									<th>분류</th>
 									<th>제목</th>
-									<th>작성자</th>
 									<th>작성일자</th>
 								</tr>
 							</thead>

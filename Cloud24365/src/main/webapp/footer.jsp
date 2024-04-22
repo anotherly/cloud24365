@@ -28,7 +28,7 @@
 				<a href="/client/svcInfo/privacy.do">개인정보처리방침</a>
         	</div>
             <div class="right">
-				장애 신고 Email : <a>msp_cloud@hivesystem.co.kr</a>
+				장애 신고 Email : <a>msp_cloud@hivesystem.net</a>
             </div>
         </div>
     </div>

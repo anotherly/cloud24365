@@ -28,6 +28,12 @@
 				FROM REPORT_INFO
 				WHERE 1=1
 				<!-- vo 필드값을 배열로 해서 조회하는 부분 -->
+				
+				<!-- 고객사 ID 여부-->	
+				<if test="COMPANY_ID !=null and COMPANY_ID neq ''">
+						and COMPANY_ID=#{COMPANY_ID}
+				</if>
+				
 				<!-- 서비스 상태 여부 -->
 				<if test="listArr != null and listArr.size != 0">
 				    AND REPORT_TYPE IN

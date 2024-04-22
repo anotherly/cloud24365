@@ -311,17 +311,15 @@
 						</div>
 					</div>
 					
+	 				<!-- btn_box Start -->
+		            <div class="btn_box" style="margin-top:30px;">
+		                <div class="right">
+		                    <button class="btn btn_primary" style="" id="btnInsert" data-term="L.등록" title="등록"><span class="langSpan">수동청구서 조회</span></button>
+		                </div>
+		            </div>
+					
 					<div id="footer" class="footer-wrap">
-				        <div id="footer-inner" class="footer-inner">
-				            <!-- btn_box Start -->
-				            <div class="btn_box">
-				                <div class="right">
-				                    <button type="submit" class="btn btn_primary" style="" id="btnUpdate"><span class="langSpan">저장</span></button>
-				                    <button type="button" class="btn" style="" id="billManuel" ><span class="langSpan">수동청구서 발송</span></button>
-				                </div>
-				            </div>
-				            <!-- btn_box End -->
-				        </div>
+				        <%@include file="/footer.jsp" %>
 				    </div>
 					
 				</div>
