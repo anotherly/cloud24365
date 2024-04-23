@@ -168,7 +168,7 @@ public class ChargeController{
 			@ModelAttribute("billVO") BillVo thvo,
 			HttpSession httpSession, HttpServletRequest request,Model model
 			) throws Exception{
-		logger.debug("▶▶▶▶▶▶▶.회원정보 조회 목록!!!!!!!!!!!!!!!!");
+		logger.debug("▶▶▶▶▶▶▶.수동청구서 목록!!!!!!!!!!!!!!!!");
 		
 		ModelAndView mav = new ModelAndView("jsonView");
 		List<BillVo> mnList= null;
@@ -176,6 +176,7 @@ public class ChargeController{
 			// 현재 세션에 대해 로그인한 사용자 정보를 가져옴
 			UserVO nlVo = (UserVO) request.getSession().getAttribute("login");
 			thvo.setCOMPANY_ID(nlVo.getCOMPANY_ID());
+			logger.debug("▶▶▶▶▶▶▶.	thvo.getCOMPANY_ID()!!!!!!!!!!!!!!!! : "+thvo.getCOMPANY_ID());
 			mnList = billService.manualList(thvo);
 			mav.addObject("data", mnList);
 		} catch (Exception e) {

@@ -89,7 +89,7 @@
 	
 	<!-- //#####################수동청구서#####################// -->
 	<select id="manualList" parameterType="billVo" resultType="billVo">
-	SELECT T1.*,T2.* FROM
+	SELECT T1.*,T2.* FROM 
 	(
 		SELECT J1.*,J2.COMPANY_NAME
 		FROM
