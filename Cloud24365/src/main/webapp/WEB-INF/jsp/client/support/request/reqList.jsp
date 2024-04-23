@@ -39,7 +39,12 @@
             },  
             columns: [
                 /* {data:"REQ_ID"}, */
-                {data:"REQ_STATUS_NM"},
+                {data:"REQ_STATUS_NM"
+                	,"render": function (data, type, row, meta) {
+	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
+                        return '<input type="hidden" id="chk" name="chk" value="'+row.req_ID+'">'+data;
+	                }
+                },
                 {data:"REQ_TYPE_NM"},
                 {data:"REQ_IMPORTANT_NM"},
                 {data:"ANS_USER_NM"},

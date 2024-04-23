@@ -36,7 +36,12 @@
                 "dataType": "json",
             },  
             columns: [
-                {data:"notice_TYPE_NM"},
+                {data:"notice_TYPE_NM"
+                	,"render": function (data, type, row, meta) {
+	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
+                        return '<input type="hidden" id="chk" name="chk" value="'+row.notice_ID+'">'+data;
+	                },		
+                },
                 {data:"notice_TITLE"},
                 {data:"notice_DT"},
             ],

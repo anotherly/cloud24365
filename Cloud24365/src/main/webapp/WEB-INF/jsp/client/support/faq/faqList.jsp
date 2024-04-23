@@ -36,8 +36,12 @@
                 "dataType": "json",
             },  
             columns: [
-            	
-                {data:"faq_TYPE_NM"},
+                {data:"faq_TYPE_NM"
+                	,"render": function (data, type, row, meta) {
+	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
+                        return '<input type="hidden" id="chk" name="chk" value="'+row.faq_ID+'">'+data;
+	                },	
+                },
                 {data:"faq_TITLE"},
                 {data:"faq_DT"},
             ],

@@ -37,7 +37,12 @@
             },  
             columns: [
                 /* {data:"report_ID"}, */
-                {data:"report_TYPE_NM"},
+                {data:"report_TYPE_NM"
+                	,"render": function (data, type, row, meta) {
+	            		console.log(meta.row+"	/	"+meta.col+"	/	"+row);
+                        return '<input type="hidden" id="chk" name="chk" value="'+row.report_ID+'">'+data;
+	                }	
+                },
                 {data:"company_NAME"},
                 {data:"report_NAME"},
                 {data:"project_NAME"},
