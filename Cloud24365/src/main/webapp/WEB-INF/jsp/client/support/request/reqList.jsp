@@ -96,7 +96,7 @@
 		//상세 화면 조회
 		$("#tableList").on("click", "tbody td:not(':first-child')", function(){
 			console.log("목록에서 상세요소 클릭");
-			var tagId = $(this).parent().children().first().text();
+			var tagId = $(this).parent().children().first().children().first().val();
 			$(this).attr('id');
 			if(tagId!="chkTd"){
 				location.href="/client/support/request/reqDetail.do?REQ_ID="+tagId; 
