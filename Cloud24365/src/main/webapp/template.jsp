@@ -312,7 +312,7 @@
     <!-- End Team Section -->
 
     <!-- ======= Pricing Section ======= -->
-    <section id="pricing" class="pricing">
+    <section id="pricing" class="pricing" style="margin-bottom: 150px;">
       <div class="container" data-aos="fade-up">
 
         <div class="section-title">
@@ -322,45 +322,45 @@
 
         <div class="row">
 
-          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100" style="height: 270px;">
             <div class="box">
               <h3>LITE 요금제</h3>
               <h4><sup>\</sup>150,000<span>per month</span></h4>
-              <ul>
+              <!-- <ul>
                 <li><i class="bx bx-check"></i> 서비스 1 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 2 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 3 지원 (변경요망)</li>
                 <li class="na"><i class="bx bx-x"></i> <span>서비스 4 지원 (변경요망)</span></li>
                 <li class="na"><i class="bx bx-x"></i> <span>서비스 5 지원 (변경요망)</span></li>
-              </ul>
+              </ul> -->
             </div>
           </div>
 
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200">
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="200"  style="height: 270px;">
             <div class="box featured">
               <h3>STANDARD 요금제</h3>
               <h4><sup>\</sup>250,000<span>per month</span></h4>
-              <ul>
+              <!-- <ul>
                 <li><i class="bx bx-check"></i> 서비스 1 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 2 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 3 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 4 지원 (변경요망)</li>
                 <li class="na"><i class="bx bx-x"></i> 서비스 5 지원 (변경요망)</li>
-              </ul>
+              </ul> -->
             </div>
           </div>
 
-          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300">
+          <div class="col-lg-4 mt-4 mt-lg-0" data-aos="fade-up" data-aos-delay="300"  style="height: 270px;">
             <div class="box">
               <h3>PREMIUM 요금제</h3>
               <h4><sup>\</sup>350,000<span>per month</span></h4>
-              <ul>
+              <!-- <ul>
                 <li><i class="bx bx-check"></i> 서비스 1 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 2 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 3 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 4 지원 (변경요망)</li>
                 <li><i class="bx bx-check"></i> 서비스 5 지원 (변경요망)</li>
-              </ul>
+              </ul> -->
             </div>
           </div>
 
