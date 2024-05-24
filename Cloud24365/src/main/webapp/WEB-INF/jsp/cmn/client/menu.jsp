@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <script>
 	$(document).ready(function() {
 		console.log("메뉴 화면");
+		var hideId ='${login.USER_ID}'
 		$(".menu-inner > .menu-item a").on('click',function(){
 			console.log("소메뉴 확장을 위한 메뉴 클릭");
 			//메뉴확장이 된 경우
@@ -31,6 +32,12 @@
 				location.href=$(this).attr("id");
 			}
 		});
+		//240524 추가
+		//기타 요청에 의해 사용자별로 메뉴 일부 hidden 처리해야할경우 사용
+		if(hideId=='tsavds'){
+			$("#hideMenu").hide();
+		}
+		
 	});
 </script>
 <ul class="menu-inner">
@@ -41,7 +48,7 @@
 			<li class="menu-item"><a id="/client/svcInfo/company.do" class="menu-link"><div>주요 고객사</div></a></li>
 		</ul>
 	</li>
-	<li class="menu-item">
+	<li class="menu-item" id="hideMenu">
 		<a id="/client/charge/chargeList.do" class="menu-link"><i class="menu-icon n05"></i><div>과금 현황</div></a>
 	</li>
 	<li class="menu-item">
@@ -53,7 +60,7 @@
 			<li class="menu-item"><a id="/client/support/report/reportList.do" class="menu-link"><div>보고서</div></a></li>
 		</ul>
 	</li>
-	<li class="menu-item">
+	<li class="menu-item"  id="hideMenu">
 		<a id="/client/setting/account/actInfo.do" class="menu-link menu-toggle"><i class="menu-icon n07"></i><div>설정</div></a>
 		<ul class="menu-sub">
 			<li class="menu-item"><a id="/client/setting/account/actInfo.do" class="menu-link"><div>내정보조회</div></a></li>

@@ -179,7 +179,7 @@
 						<div class="ctn_tbl_row">
 							<div class="ctn_tbl_th fm_rep">이름</div>
 							<div class="ctn_tbl_td">
-								<input type="text" name="USER_NAME" class="form-control"  maxlength="20" onkeyup="valiChkAll(this,1,1);" onkeydown="valiChkAll(this,1,1);" required>
+								<input type="text" name="USER_NAME" class="form-control"  maxlength="20" onkeyup="valiChkAll(this,1,1,1,1);" onkeydown="valiChkAll(this,1,1,1,1);" required>
 							</div>
 						</div>
 						
@@ -207,14 +207,14 @@
 						<div class="ctn_tbl_row">
 							<div class="ctn_tbl_th">직급</div>
 							<div class="ctn_tbl_td">
-								<input type="text" name="USER_RANK"  maxlength="10" onkeyup="valiChkAll(this,1,1);" onkeydown="valiChkAll(this,1,1);" class="form-control">					
+								<input type="text" name="USER_RANK"  maxlength="10" onkeyup="valiChkAll(this,1,1,1,1);" onkeydown="valiChkAll(this,1,1,1,1);" class="form-control">					
 							</div>
 						</div>
 
 						<div class="ctn_tbl_row">
 							<div class="ctn_tbl_th">부서</div>
 							<div class="ctn_tbl_td">
-								<input type="text" name="USER_DEPT"  maxlength="20" onkeyup="valiChkAll(this,1,1);" onkeydown="valiChkAll(this,1,1);" class="form-control">					
+								<input type="text" name="USER_DEPT"  maxlength="20" onkeyup="valiChkAll(this,1,1,1,1);" onkeydown="valiChkAll(this,1,1,1,1);" class="form-control">					
 							</div>
 						</div>
 						
