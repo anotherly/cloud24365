@@ -34,11 +34,14 @@
 		});
 		//240524 추가
 		//기타 요청에 의해 사용자별로 메뉴 일부 hidden 처리해야할경우 사용
-		$(".menu-inner > li").each(function(){
-		    if($(this).attr("id")=="hideMenu"){
-		    	$(this).hide();
-		    }
-		});
+		if(hideId=='tsavds'){
+			$(".menu-inner > li").each(function(){
+			    if($(this).attr("id")=="hideMenu"){
+			    	$(this).hide();
+			    }
+			});
+		}
+		
 		
 	});
 </script>
