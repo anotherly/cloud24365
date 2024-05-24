@@ -34,9 +34,11 @@
 		});
 		//240524 추가
 		//기타 요청에 의해 사용자별로 메뉴 일부 hidden 처리해야할경우 사용
-		if(hideId=='tsavds'){
-			$("#hideMenu").hide();
-		}
+		$(".menu-item").each(function(){
+		    if($(this).attr("id")=="hideMenu"){
+		    	$(this).hide();
+		    }
+		});
 		
 	});
 </script>
@@ -48,7 +50,7 @@
 			<li class="menu-item"><a id="/client/svcInfo/company.do" class="menu-link"><div>주요 고객사</div></a></li>
 		</ul>
 	</li>
-	<li class="menu-item" id="hideMenu">
+	<li class="menu-item" id="hideMenu1">
 		<a id="/client/charge/chargeList.do" class="menu-link"><i class="menu-icon n05"></i><div>과금 현황</div></a>
 	</li>
 	<li class="menu-item">
@@ -60,7 +62,7 @@
 			<li class="menu-item"><a id="/client/support/report/reportList.do" class="menu-link"><div>보고서</div></a></li>
 		</ul>
 	</li>
-	<li class="menu-item"  id="hideMenu">
+	<li class="menu-item"  id="hideMenu2">
 		<a id="/client/setting/account/actInfo.do" class="menu-link menu-toggle"><i class="menu-icon n07"></i><div>설정</div></a>
 		<ul class="menu-sub">
 			<li class="menu-item"><a id="/client/setting/account/actInfo.do" class="menu-link"><div>내정보조회</div></a></li>
