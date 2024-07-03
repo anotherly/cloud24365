@@ -31,17 +31,16 @@ pipeline {
                 // 여기에 WAR 파일을 특정 위치로 이동하는 명령어 추가
                 sh 'echo Deploying the build'
 		dir('Cloud24365') {
-			sh 'cp target/firstSamplePro-1.0.0.war /kwsong/'
-			sh 'cd /kwsong && mv firstSamplePro-1.0.0.war Cloud24365.war'
+			sh 'cp target/firstSamplePro-1.0.0.war /hivesystem/admin_application/'
 		}
             }
         }
         // `user` 배포 단계
         stage('Deploy User') {
             steps {
-                // `pipeline_admin` 프로젝트가 성공적으로 완료된 후에 `pipeline_user` 프로젝트를 트리거합니다.
+                // 스크립트 실행
                 script {
-                    sh '/kwsong/web_u.sh'
+                    sh '/hivesystem/sh/deploy_user.sh'
                 }
             }
         }
