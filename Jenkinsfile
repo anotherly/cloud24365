@@ -31,7 +31,7 @@ pipeline {
                 // 여기에 WAR 파일을 특정 위치로 이동하는 명령어 추가
                 sh 'echo Deploying the build'
 		dir('Cloud24365') {
-			sh 'cp target/firstSamplePro-1.0.0.war /hivesystem/admin_application/'
+			sh 'cp target/firstSamplePro-1.0.0.war /hivesystem/user_application/'
 		}
             }
         }
